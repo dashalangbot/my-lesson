@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Do the Academy Awards Work?</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#EDECEB;--warm-white:#F5F4F3;--ink:#1B2D40;--muted:#6B7A8A;
+  --accent:#730F26;--accent-light:#F2E0E4;
+  --gold:#D4A87A;--gold-light:#FFF8EE;
+  --success:#2E7D52;--success-light:#E8F5EE;
+  --pp:#1d4ed8;--pp-light:#EFF6FF;--pp-border:#93c5fd;
+  --ppc:#7c3aed;--ppc-light:#F5F0FF;--ppc-border:#c4b5fd;
+  --border:#D8D5D2;--radius:12px;--shadow:0 4px 24px rgba(27,45,64,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Helvetica,Arial,sans-serif;background:var(--cream);color:var(--ink);font-size:16px;line-height:1.7;}
+
+.lesson-header{background:linear-gradient(135deg,#1B2D40 0%,#2C1654 50%,#8B1A1A 100%);color:#F5F0EB;padding:40px 40px 36px;position:relative;overflow:hidden;border-radius:16px;margin:16px 16px 0;}
+.lesson-header::before{content:'';position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(212,168,122,.25),transparent 70%);}
+.stars-deco{position:absolute;top:20px;left:40px;font-size:13px;letter-spacing:6px;opacity:.35;color:var(--gold);}
+.lesson-label{font-family:'Caveat',cursive;font-size:18px;font-weight:600;color:var(--gold);margin-bottom:8px;margin-top:20px;position:relative;}
+.lesson-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4.5vw,48px);font-weight:600;line-height:1.15;margin-bottom:10px;position:relative;}
+.lesson-subtitle{font-size:14px;color:rgba(245,240,235,.65);margin-bottom:24px;position:relative;}
+.goals-block{background:rgba(255,255,255,.08);border:1px solid rgba(212,168,122,.3);border-radius:10px;padding:16px 20px;position:relative;}
+.goals-title{font-family:'Caveat',cursive;font-size:17px;font-weight:700;color:var(--gold);margin-bottom:10px;}
+.goal-item{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:rgba(245,240,235,.88);margin-bottom:7px;line-height:1.5;}
+.goal-check{color:var(--gold);font-size:15px;flex-shrink:0;}
+
+.tabs-wrap{margin:0 16px;background:var(--warm-white);border:1.5px solid var(--border);border-top:none;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(27,45,64,.08);}
+.tabs-bar{display:flex;gap:2px;padding:0 20px;border-bottom:1.5px solid var(--border);overflow-x:auto;scrollbar-width:none;}
+.tabs-bar::-webkit-scrollbar{display:none;}
+.tab-btn{padding:14px 16px;font-family:Helvetica,Arial,sans-serif;font-size:13px;font-weight:500;color:var(--muted);background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.tab-btn:hover{color:var(--ink);}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600;}
+.tab-time{font-size:11px;color:var(--muted);font-family:'Caveat',cursive;}
+.tab-hint{text-align:center;font-family:'Caveat',cursive;font-size:15px;color:var(--muted);padding:8px 20px 10px;background:#EEECEA;border-radius:0 0 14px 14px;margin:0 16px;border:1.5px solid var(--border);border-top:none;}
+
+.tab-panel{display:none;padding:36px 40px;max-width:900px;margin:0 auto;}
+.tab-panel.active{display:block;animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.section-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+.teacher-note{background:#FFFBEA;border:1.5px solid #F0E068;border-radius:var(--radius);padding:14px 18px;font-family:'Caveat',cursive;font-size:16px;line-height:1.6;color:#5A4800;margin:16px 0;}
+
+
+/* DARK MODE */
+body.dark{--cream:#1A1F2E;--warm-white:#232A3B;--ink:#E8EDF5;--muted:#8A9AB5;--border:#2E3A50;--gold-light:#2A2210;--accent-light:#2A1520;--pp-light:#1A1F35;--ppc-light:#1E1A30;--success-light:#142316;--red-light:#2A1515;}
+body.dark .lesson-header{filter:brightness(.85);}
+body.dark .vp-input,body.dark .open-textarea,body.dark .fill-input,body.dark .chat-input{background:#1A1F2E;color:#E8EDF5;border-color:#2E3A50;}
+body.dark .comp-opt,body.dark .mcq-opt{background:#232A3B;color:#E8EDF5;}
+body.dark input[type="text"]{background:#232A3B;color:#E8EDF5;border-color:#2E3A50;}
+body.dark .vocab-from-video{background:#2A1520;border-left-color:var(--accent);}
+body.dark .chat-window,body.dark .chat-messages{background:#1A1F2E;}
+body.dark .msg-bubble{background:#232A3B;border-color:#2E3A50;}
+body.dark .fb-ok{background:#142316;color:#6fcf97;}
+body.dark .fb-err{background:#2A1515;color:#eb5757;}
+body.dark .score-box,body.dark .ai-intro{filter:brightness(.9);}
+
+/* VIDEO */
+.video-wrap{margin-bottom:24px;}
+.video-wrap>div{position:relative;height:0;padding-bottom:56.25%;}
+.video-wrap iframe{position:absolute;left:0;top:0;width:100%;height:100%;border-radius:10px;}
+.quote-block{background:var(--accent-light);border-left:4px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:12px 18px;margin:10px 0;font-size:14px;line-height:1.7;font-style:italic;}
+.quote-block strong{color:var(--accent);font-style:normal;}
+
+/* COMPREHENSION */
+.comp-question{background:var(--warm-white);border:1.5px solid var(--border);border-left:4px solid var(--gold);border-radius:var(--radius);padding:16px 20px;margin-bottom:12px;}
+.comp-question p{font-size:14.5px;font-weight:600;margin-bottom:10px;}
+.comp-opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:13.5px;transition:all .18s;background:var(--cream);user-select:none;margin-bottom:6px;line-height:1.5;}
+.comp-opt:last-child{margin-bottom:0;}
+.comp-opt:hover{border-color:var(--accent);background:var(--accent-light);}
+.comp-opt.correct-ans{border-color:var(--success);background:var(--success-light);color:var(--success);font-weight:600;pointer-events:none;}
+.comp-opt.wrong-ans{border-color:var(--accent);background:var(--accent-light);color:var(--accent);pointer-events:none;}
+.comp-feedback{font-size:13px;margin-top:8px;padding:8px 12px;border-radius:8px;display:none;}
+.comp-feedback.show{display:block;}
+.comp-feedback.good{background:var(--success-light);color:var(--success);}
+.comp-feedback.bad{background:var(--accent-light);color:var(--accent);}
+
+/* VOCAB */
+.vocab-card{background:var(--warm-white);border:1.5px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;transition:box-shadow .2s;}
+.vocab-card:hover{box-shadow:var(--shadow);}
+.vocab-card-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none;gap:12px;}
+.vocab-card-header:hover{background:rgba(0,0,0,.02);}
+.vocab-card-body{padding:0 20px 20px;border-top:1px solid var(--border);display:none;}
+.vocab-card.open .vocab-card-body{display:block;}
+.vocab-card.open{box-shadow:var(--shadow);}
+.vocab-chevron{font-size:12px;color:var(--muted);transition:transform .2s;flex-shrink:0;}
+.vocab-card.open .vocab-chevron{transform:rotate(180deg);}
+.vocab-known{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:4px 10px;border-radius:20px;border:1.5px solid var(--border);cursor:pointer;transition:all .18s;color:var(--muted);flex-shrink:0;}
+.vocab-known.known{background:var(--success-light);color:var(--success);border-color:var(--success);}
+.vocab-known.known::before{content:"✓ ";}
+.vocab-known:not(.known)::before{content:"○ ";}
+.vocab-en{font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;color:var(--accent);}
+.vocab-ru{font-size:13px;color:var(--muted);margin-bottom:8px;}
+.vocab-from-video{background:var(--accent-light);border-radius:6px;padding:10px 14px;font-size:13.5px;font-style:italic;color:var(--ink);margin-bottom:10px;border-left:3px solid var(--accent);}
+.vfv-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:3px;font-style:normal;display:block;}
+.vocab-note{font-size:13.5px;color:var(--ink);line-height:1.65;border-top:1px solid var(--border);padding-top:10px;margin-top:8px;}
+.colloc-title{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:8px 0 5px;border-top:1px solid var(--border);padding-top:8px;}
+.colloc-item{font-size:13px;line-height:1.7;}
+.colloc-en{font-weight:600;color:var(--accent);}
+.colloc-ru{color:var(--muted);}
+.vocab-practice{border-top:1px solid var(--border);padding-top:12px;margin-top:10px;}
+.practice-label{font-family:'Caveat',cursive;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px;display:block;}
+.vp-input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:8px 12px;font-size:14px;color:var(--ink);background:#fff;resize:none;outline:none;font-family:Helvetica,Arial,sans-serif;line-height:1.5;transition:border-color .2s;}
+.vp-input:focus{border-color:var(--accent);}
+.vp-input.vp-correct{border-color:var(--success);}
+.vp-input.vp-wrong{border-color:var(--accent);}
+.vp-check-btn{background:var(--ink);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:12px;font-weight:600;cursor:pointer;margin-top:10px;}
+.char-counter{font-size:11px;color:var(--muted);font-family:'Caveat',cursive;margin-top:4px;display:block;}
+.char-counter.ready{color:var(--success);}
+.vp-check-btn:disabled{opacity:.38;cursor:not-allowed;}
+.speak-btn{background:none;border:1.5px solid var(--border);border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .18s;color:var(--muted);flex-shrink:0;}
+.speak-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+.speak-btn.speaking{background:var(--accent);color:#fff;border-color:var(--accent);animation:pulse .8s ease infinite alternate;}
+@keyframes pulse{from{transform:scale(1)}to{transform:scale(1.08)}}
+
+/* GRAMMAR */
+.rule-card{border-radius:var(--radius);padding:20px 24px;margin:14px 0;}
+.rule-card.pp{background:var(--pp-light);border:2px solid var(--pp-border);}
+.rule-card.ppc{background:var(--ppc-light);border:2px solid var(--ppc-border);}
+.rule-title{font-family:'Caveat',cursive;font-size:21px;font-weight:700;margin-bottom:8px;}
+.rt-pp{color:var(--pp);}
+.rt-ppc{color:var(--ppc);}
+.rule-formula{font-family:'Courier New',monospace;background:var(--ink);color:var(--gold);padding:9px 16px;border-radius:8px;font-size:14px;display:inline-block;margin-bottom:10px;}
+.ex-card{background:var(--warm-white);border:1.5px solid var(--border);border-radius:var(--radius);padding:13px 18px;margin-bottom:10px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.ex-text{flex:1;}
+.ex-en{font-size:15px;line-height:1.6;}
+.ex-ru{font-size:13px;color:var(--muted);margin-top:2px;}
+.hl-pp{color:var(--pp);font-weight:700;}
+.hl-ppc{color:var(--ppc);font-weight:700;}
+.compare-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+.compare-table th{padding:11px 16px;text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.th-pp{background:var(--pp-light);color:var(--pp);}
+.th-ppc{background:var(--ppc-light);color:var(--ppc);}
+.th-cat{background:var(--cream);color:var(--muted);width:160px;}
+.compare-table td{padding:11px 16px;border-top:1px solid var(--border);vertical-align:top;line-height:1.6;}
+.td-pp{background:rgba(29,78,216,.03);}
+.td-ppc{background:rgba(124,58,237,.03);}
+.mistake-block{background:#FFF8F8;border:1.5px solid #F0D0D0;border-radius:var(--radius);padding:18px 22px;margin:14px 0;}
+.mistake-title{font-family:'Caveat',cursive;font-size:17px;font-weight:700;color:var(--accent);margin-bottom:12px;}
+.wrong-l{color:#C0392B;font-weight:600;font-size:14.5px;margin-bottom:3px;}
+.right-l{color:var(--success);font-weight:600;font-size:14.5px;margin-bottom:3px;}
+.why-l{font-size:13px;color:var(--muted);font-style:italic;margin-bottom:12px;}
+
+/* PRACTICE */
+.exercise-block{background:var(--warm-white);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;}
+.ex-header{display:flex;align-items:center;margin-bottom:12px;}
+.ex-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;font-size:12px;font-weight:700;margin-right:8px;flex-shrink:0;}
+.ex-type{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;}
+.ex-q{font-size:15px;line-height:1.65;margin-bottom:10px;font-weight:500;}
+.ex-hint{font-size:12.5px;color:var(--muted);font-style:italic;margin-bottom:10px;}
+.fill-input{border:none;border-bottom:2px solid var(--accent);background:transparent;font-size:15px;color:var(--ink);padding:2px 6px;min-width:170px;outline:none;font-family:Helvetica,Arial,sans-serif;transition:border-color .2s;}
+.fill-input.correct{border-bottom-color:var(--success);color:var(--success);}
+.fill-input.wrong{border-bottom-color:var(--accent);color:var(--accent);}
+.mcq-options{display:flex;flex-direction:column;gap:8px;}
+.mcq-opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:14px;transition:all .18s;background:var(--cream);user-select:none;line-height:1.5;}
+.mcq-opt:hover{border-color:var(--accent);background:var(--accent-light);}
+.mcq-opt.correct-ans{border-color:var(--success);background:var(--success-light);color:var(--success);font-weight:600;pointer-events:none;}
+.mcq-opt.wrong-ans{border-color:var(--accent);background:var(--accent-light);color:var(--accent);pointer-events:none;}
+.open-textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-size:14px;color:var(--ink);background:var(--cream);resize:none;outline:none;font-family:Helvetica,Arial,sans-serif;line-height:1.6;transition:border-color .2s;}
+.open-textarea:focus{border-color:var(--pp);}
+.check-btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .18s;margin-top:10px;}
+.check-btn:hover{opacity:.82;}
+.check-btn:disabled{opacity:.38;cursor:not-allowed;}
+.feedback-inline{margin-top:10px;font-size:13.5px;line-height:1.65;padding:10px 14px;border-radius:8px;display:none;}
+.feedback-inline.show{display:block;}
+.feedback-inline.good{background:var(--success-light);color:#1C5C38;border:1px solid #A8D9BF;}
+.feedback-inline.bad{background:var(--accent-light);color:#7A1010;border:1px solid #F0C0C0;}
+.fb-ok{background:#d1fae5;color:#065f46;border-radius:8px;padding:10px 14px;margin-bottom:6px;font-size:13.5px;line-height:1.7;}
+.fb-err{background:#fee2e2;color:#991b1b;border-radius:8px;padding:10px 14px;margin-bottom:6px;font-size:13.5px;line-height:1.7;}
+.fb-note{color:#555;font-size:13px;padding:3px 0;line-height:1.6;}
+.score-box{background:linear-gradient(135deg,var(--ink),#2C1654);border-radius:var(--radius);padding:24px 28px;text-align:center;color:#F0ECEA;margin-top:20px;display:none;}
+.score-box.show{display:block;animation:fadeUp .4s ease;}
+.score-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:600;color:var(--gold);line-height:1;}
+
+/* AI CHAT */
+.ai-intro{background:linear-gradient(135deg,#1B2D40,#2C1654);border-radius:var(--radius);padding:22px 26px;margin-bottom:20px;display:flex;align-items:flex-start;gap:16px;}
+.ai-avatar{width:46px;height:46px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:2px solid rgba(212,168,122,.4);}
+.ai-intro-text{color:#F0ECEA;}
+.ai-intro-text strong{font-family:'Caveat',cursive;font-size:20px;font-weight:700;color:var(--gold);display:block;margin-bottom:4px;}
+.ai-intro-text p{font-size:13.5px;opacity:.78;}
+.quick-prompts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.quick-btn{border:1.5px solid var(--border);background:var(--warm-white);color:var(--muted);border-radius:20px;padding:7px 14px;font-size:12.5px;cursor:pointer;transition:all .18s;font-family:Helvetica,Arial,sans-serif;font-weight:500;}
+.quick-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+.chat-window{background:var(--warm-white);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;height:500px;}
+.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;}
+.chat-messages::-webkit-scrollbar{width:4px;}
+.chat-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px;}
+.msg{display:flex;gap:10px;max-width:90%;animation:fadeUp .3s ease;}
+.msg.user{align-self:flex-end;flex-direction:row-reverse;}
+.msg-avatar{width:32px;height:32px;border-radius:50%;background:var(--accent-light);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:2px;}
+.msg.user .msg-avatar{background:var(--accent);}
+.msg-bubble{background:var(--cream);border:1.5px solid var(--border);border-radius:0 12px 12px 12px;padding:12px 16px;font-size:14px;line-height:1.65;color:var(--ink);}
+.msg.user .msg-bubble{background:var(--accent);border-color:var(--accent);color:#fff;border-radius:12px 0 12px 12px;}
+.chat-input-area{border-top:1.5px solid var(--border);padding:12px 16px;display:flex;gap:10px;align-items:flex-end;background:var(--warm-white);}
+.chat-input{flex:1;border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-family:Helvetica,Arial,sans-serif;font-size:14px;color:var(--ink);background:var(--cream);resize:none;min-height:42px;max-height:120px;line-height:1.5;transition:border-color .2s;outline:none;}
+.chat-input:focus{border-color:var(--accent);}
+.send-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;width:42px;height:42px;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;transition:opacity .2s;flex-shrink:0;}
+.send-btn:hover{opacity:.85;}
+.send-btn:disabled{opacity:.38;cursor:not-allowed;}
+.typing-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:typingBounce 1.2s infinite;display:inline-block;}
+.typing-dot:nth-child(2){animation-delay:.2s;}
+.typing-dot:nth-child(3){animation-delay:.4s;}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+
+@media(max-width:640px){
+  .lesson-header{padding:28px 20px;margin:8px 8px 0;}
+  .tabs-wrap,.tab-hint{margin:0 8px;}
+  .tab-btn{padding:12px 10px;font-size:12px;}
+  .tab-panel{padding:24px 16px;}
+  .compare-table{font-size:12px;}
+  .compare-table th,.compare-table td{padding:8px 10px;}
+}
+</style>
+</head>
+<body>
+
+<header class="lesson-header">
+  <div class="stars-deco">★ ★ ★ ★ ★</div>
+  <button id="darkToggle" onclick="toggleDark()" title="Toggle dark mode"
+    style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:white;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:Helvetica,Arial,sans-serif;z-index:10;">🌙 Dark</button>
+  <div class="lesson-label">Video Lesson · Listening + Vocab + Grammar · B1–B2</div>
+  <h1 class="lesson-title">How Do the Academy Awards Work?</h1>
+  <p class="lesson-subtitle">HowStuffWorks — real conversational English, how the Oscar voting works, Present Perfect Simple and Continuous</p>
+  <div class="goals-block">
+    <div class="goals-title">🎬 После этого урока ты сможешь...</div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>Understand fast conversational American English with humour and cultural references</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>Explain how the Oscar nomination and voting process works</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>Use 8 key phrases from the video in your own speech</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>Confidently distinguish Present Perfect Simple and Continuous in real context</span></div>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <nav class="tabs-bar">
+    <button class="tab-btn active" onclick="switchTab('video',this)">▶ Video <span class="tab-time">· ~5 min</span></button>
+    <button class="tab-btn" onclick="switchTab('comp',this)">✅ Comprehension <span class="tab-time">· ~10 min</span></button>
+    <button class="tab-btn" onclick="switchTab('vocab',this)">🎬 Vocab <span class="tab-time">· ~20 min</span></button>
+    <button class="tab-btn" onclick="switchTab('grammar',this)">📐 Grammar <span class="tab-time">· ~20 min</span></button>
+    <button class="tab-btn" onclick="switchTab('practice',this)">✏️ Practice <span class="tab-time">· ~25 min</span></button>
+    <button class="tab-btn" onclick="switchTab('ai',this)">✦ AI Coach</button>
+  </nav>
+</div>
+<div class="tab-hint" style="display:flex;align-items:center;justify-content:center;gap:12px;">
+  <span style="font-size:13px;">👆 Click to switch</span>
+  <span id="tabProgress" style="font-family:Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;background:var(--accent);color:white;border-radius:20px;padding:3px 10px;letter-spacing:.5px;">1 / 6</span>
+</div>
+
+<!-- ══ VIDEO ══ -->
+<div id="tab-video" class="tab-panel active">
+
+  <div class="teacher-note">🎧 The video is about 4 minutes. The speaker talks fast — that is normal. Use subtitles if you need them. Complete the tasks below as you watch.</div>
+
+  <!-- PRE-VIDEO QUESTIONS -->
+  <div style="background:var(--warm-white);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:20px;">
+    <div class="section-label">🎯 Before you watch — What do you already know?</div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:18px;">Answer from your own knowledge. There are no wrong answers here — just your best guess before watching.</p>
+
+    <div style="margin-bottom:16px;">
+      <p style="font-size:14.5px;font-weight:600;margin-bottom:10px;">1. The Oscars are officially called the Academy Awards. What do you think the "Academy" refers to?</p>
+      <div style="display:flex;flex-direction:column;gap:6px;" id="bq1">
+        <div class="comp-opt" onclick="answerBQ(this,'bq1','b')"><span>A)</span> A film school in Los Angeles</div>
+        <div class="comp-opt" onclick="answerBQ(this,'bq1','b')" data-val="b"><span>B)</span> A professional organisation of people who work in the film industry</div>
+        <div class="comp-opt" onclick="answerBQ(this,'bq1','b')"><span>C)</span> A government committee that reviews films</div>
+      </div>
+      <div class="comp-feedback" id="bqfb1"></div>
+    </div>
+
+    <div style="margin-bottom:16px;">
+      <p style="font-size:14.5px;font-weight:600;margin-bottom:10px;">2. Who do you think gets to vote for the Oscars?</p>
+      <div style="display:flex;flex-direction:column;gap:6px;" id="bq2">
+        <div class="comp-opt" onclick="answerBQ(this,'bq2','a')"><span>A)</span> The general public — anyone can vote online</div>
+        <div class="comp-opt" onclick="answerBQ(this,'bq2','a')" data-val="a"><span>B)</span> Members of the Academy — film industry professionals invited to join</div>
+        <div class="comp-opt" onclick="answerBQ(this,'bq2','a')"><span>C)</span> Film critics and journalists</div>
+      </div>
+      <div class="comp-feedback" id="bqfb2"></div>
+    </div>
+
+    <div style="margin-bottom:6px;">
+      <p style="font-size:14.5px;font-weight:600;margin-bottom:10px;">3. A major controversy surrounded the Oscars in 2016. What do you think it was about?</p>
+      <div style="display:flex;flex-direction:column;gap:6px;" id="bq3">
+        <div class="comp-opt" onclick="answerBQ(this,'bq3','b')"><span>A)</span> The ceremony was too long and people turned off their TVs</div>
+        <div class="comp-opt" onclick="answerBQ(this,'bq3','b')" data-val="b"><span>B)</span> All acting nominees were white for the second year in a row, sparking a diversity debate</div>
+        <div class="comp-opt" onclick="answerBQ(this,'bq3','b')"><span>C)</span> The wrong winner was announced by mistake</div>
+      </div>
+      <div class="comp-feedback" id="bqfb3"></div>
+    </div>
+  </div>
+
+
+
+  <div class="video-wrap">
+    <div>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/neCWtVeQWuA?si=t7naS_NIyt88LYvc" title="How do the Academy Awards work?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- TASK 1: NUMBERS -->
+  <div style="background:var(--warm-white);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;">
+    <div class="section-label">📊 Task 1 — What do these numbers refer to?</div>
+    <p style="font-size:14.5px;color:var(--muted);margin-bottom:20px;">Watch the video and match each number to what it describes. Write your answer in the box.</p>
+
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div style="background:var(--accent);color:white;border-radius:8px;padding:6px 16px;font-family:'Courier New',monospace;font-size:18px;font-weight:700;min-width:90px;text-align:center;">1927</div>
+        <input type="text" id="nq1" placeholder="This number refers to…" style="flex:1;min-width:200px;border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;font-size:14px;outline:none;font-family:Helvetica,Arial,sans-serif;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div style="background:var(--accent);color:white;border-radius:8px;padding:6px 16px;font-family:'Courier New',monospace;font-size:18px;font-weight:700;min-width:90px;text-align:center;">40</div>
+        <input type="text" id="nq2" placeholder="This number refers to…" style="flex:1;min-width:200px;border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;font-size:14px;outline:none;font-family:Helvetica,Arial,sans-serif;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div style="background:var(--accent);color:white;border-radius:8px;padding:6px 16px;font-family:'Courier New',monospace;font-size:18px;font-weight:700;min-width:90px;text-align:center;">7</div>
+        <input type="text" id="nq3" placeholder="This number refers to…" style="flex:1;min-width:200px;border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;font-size:14px;outline:none;font-family:Helvetica,Arial,sans-serif;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div style="background:var(--accent);color:white;border-radius:8px;padding:6px 16px;font-family:'Courier New',monospace;font-size:18px;font-weight:700;min-width:90px;text-align:center;">6,124</div>
+        <input type="text" id="nq4" placeholder="This number refers to…" style="flex:1;min-width:200px;border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;font-size:14px;outline:none;font-family:Helvetica,Arial,sans-serif;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div style="background:var(--accent);color:white;border-radius:8px;padding:6px 16px;font-family:'Courier New',monospace;font-size:18px;font-weight:700;min-width:90px;text-align:center;">94%</div>
+        <input type="text" id="nq5" placeholder="This number refers to…" style="flex:1;min-width:200px;border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;font-size:14px;outline:none;font-family:Helvetica,Arial,sans-serif;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+    </div>
+
+    <button onclick="checkNumbers()" style="margin-top:18px;background:var(--accent);color:white;border:none;border-radius:8px;padding:10px 22px;font-size:13px;font-weight:600;cursor:pointer;">Check answers ✦</button>
+    <div id="nqFeedback" style="margin-top:12px;display:none;"></div>
+  </div>
+
+  <!-- TASK 2: VOCAB PRE-PRACTICE -->
+  <div style="background:var(--warm-white);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;">
+    <div class="section-label">🔤 Task 2 — Vocab in context: what does the speaker mean?</div>
+    <p style="font-size:14.5px;color:var(--muted);margin-bottom:20px;">These phrases appear in the video. Based on context, choose the closest meaning. Then check your answer — you will study them properly in the Vocab tab.</p>
+
+    <div class="comp-question" id="vq1">
+      <p>1. "Bear with me, it is complicated." The speaker says this at the very beginning. What does <em>bear with me</em> mean here?</p>
+      <div class="comp-opt" onclick="answerVQ(this,'vq1','b')"><span>A)</span> Stop listening to me</div>
+      <div class="comp-opt" onclick="answerVQ(this,'vq1','b')" data-val="b"><span>B)</span> Please be patient — I need a moment to explain</div>
+      <div class="comp-opt" onclick="answerVQ(this,'vq1','b')"><span>C)</span> This topic is too difficult for you</div>
+      <div class="comp-feedback" id="vqfb1"></div>
+    </div>
+
+    <div class="comp-question" id="vq2">
+      <p>2. "Films with synchronized sound were the <em>hot new craze</em>." What does <em>hot new craze</em> mean?</p>
+      <div class="comp-opt" onclick="answerVQ(this,'vq2','a')" data-val="a"><span>A)</span> A new thing that everyone is suddenly excited about</div>
+      <div class="comp-opt" onclick="answerVQ(this,'vq2','a')"><span>B)</span> A dangerous new technology</div>
+      <div class="comp-opt" onclick="answerVQ(this,'vq2','a')"><span>C)</span> An old and established tradition</div>
+      <div class="comp-feedback" id="vqfb2"></div>
+    </div>
+
+    <div class="comp-question" id="vq3">
+      <p>3. "It has to meet <em>a whole bunch of</em> technical criteria." What does <em>a whole bunch of</em> mean?</p>
+      <div class="comp-opt" onclick="answerVQ(this,'vq3','b')"><span>A)</span> A small number of</div>
+      <div class="comp-opt" onclick="answerVQ(this,'vq3','b')" data-val="b"><span>B)</span> A lot of (informal)</div>
+      <div class="comp-opt" onclick="answerVQ(this,'vq3','b')"><span>C)</span> Exactly five</div>
+      <div class="comp-feedback" id="vqfb3"></div>
+    </div>
+
+    <div class="comp-question" id="vq4">
+      <p>4. "That is <em>the gist of it</em> for the general categories." What does <em>the gist of it</em> mean?</p>
+      <div class="comp-opt" onclick="answerVQ(this,'vq4','c')"><span>A)</span> The most complicated part</div>
+      <div class="comp-opt" onclick="answerVQ(this,'vq4','c')"><span>B)</span> The exact details</div>
+      <div class="comp-opt" onclick="answerVQ(this,'vq4','c')" data-val="c"><span>C)</span> The main idea / the summary</div>
+      <div class="comp-feedback" id="vqfb4"></div>
+    </div>
+
+    <div class="comp-question" id="vq5">
+      <p>5. "You have got <em>a foot in the door</em>!" The speaker says this after explaining how to get Academy membership. What does it mean?</p>
+      <div class="comp-opt" onclick="answerVQ(this,'vq5','b')"><span>A)</span> You have entered the building</div>
+      <div class="comp-opt" onclick="answerVQ(this,'vq5','b')" data-val="b"><span>B)</span> You have your first opportunity to get into a competitive system</div>
+      <div class="comp-opt" onclick="answerVQ(this,'vq5','b')"><span>C)</span> You have broken the rules</div>
+      <div class="comp-feedback" id="vqfb5"></div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- ══ COMPREHENSION ══ -->
+<div id="tab-comp" class="tab-panel">
+
+  <div style="text-align:right;margin-bottom:8px;"><a onclick="document.querySelector('.tab-btn').click()" style="font-size:12px;color:var(--muted);cursor:pointer;text-decoration:none;font-family:Helvetica,Arial,sans-serif;">▶ Back to video</a></div>
+  <div class="teacher-note">💡 10 questions — from factual to analytical. If you missed something, rewatch the video.</div>
+
+  <div class="comp-question" id="cq1">
+    <p>1. When was the Academy of Motion Picture Arts and Sciences founded?</p>
+    <div class="comp-opt" onclick="answerComp(this,'cq1','a')" data-val="a"><span>A)</span> 1927</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq1','b')"><span>B)</span> 1939</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq1','c')"><span>C)</span> 1945</div>
+    <div class="comp-feedback" id="cfb1"></div>
+  </div>
+
+  <div class="comp-question" id="cq2">
+    <p>2. Which of the following is NOT one of the criteria for a film to be eligible for Oscar consideration?</p>
+    <div class="comp-opt" onclick="answerComp(this,'cq2','a')"><span>A)</span> It must be more than 40 minutes long</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq2','b')" data-val="b"><span>B)</span> It must have been released on a streaming platform</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq2','c')"><span>C)</span> It must have run for at least 7 days in a Los Angeles theater</div>
+    <div class="comp-feedback" id="cfb2"></div>
+  </div>
+
+  <div class="comp-question" id="cq3">
+    <p>3. In the first round of voting, who votes for Best Cinematography?</p>
+    <div class="comp-opt" onclick="answerComp(this,'cq3','a')"><span>A)</span> All Academy members</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq3','b')" data-val="b"><span>B)</span> Only cinematographers in the Academy</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq3','c')"><span>C)</span> The Board of Governors</div>
+    <div class="comp-feedback" id="cfb3"></div>
+  </div>
+
+  <div class="comp-question" id="cq4">
+    <p>4. Which accounting firm handles the vote counting?</p>
+    <div class="comp-opt" onclick="answerComp(this,'cq4','a')"><span>A)</span> Deloitte</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq4','b')"><span>B)</span> Ernst & Young</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq4','c')" data-val="c"><span>C)</span> PricewaterhouseCoopers</div>
+    <div class="comp-feedback" id="cfb4"></div>
+  </div>
+
+  <div class="comp-question" id="cq5">
+    <p>5. How can someone become a member of the Academy? (Choose the most complete answer)</p>
+    <div class="comp-opt" onclick="answerComp(this,'cq5','a')" data-val="a"><span>A)</span> By being sponsored by two existing members of your branch, OR by being nominated for an Oscar</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq5','b')"><span>B)</span> By applying online and paying a membership fee</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq5','c')"><span>C)</span> By winning an Oscar</div>
+    <div class="comp-feedback" id="cfb5"></div>
+  </div>
+
+  <div class="comp-question" id="cq6">
+    <p>6. According to the LA Times investigation in 2012, what percentage of Academy voters were white?</p>
+    <div class="comp-opt" onclick="answerComp(this,'cq6','a')"><span>A)</span> 77%</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq6','b')" data-val="b"><span>B)</span> 94%</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq6','c')"><span>C)</span> 62%</div>
+    <div class="comp-feedback" id="cfb6"></div>
+  </div>
+
+  <div class="comp-question" id="cq7">
+    <p>7. What triggered the Academy to announce diversity reforms in 2016?</p>
+    <div class="comp-opt" onclick="answerComp(this,'cq7','a')"><span>A)</span> A government investigation into Hollywood</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq7','b')" data-val="b"><span>B)</span> All acting nominees were white for the second year in a row</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq7','c')"><span>C)</span> A protest outside the Oscar ceremony</div>
+    <div class="comp-feedback" id="cfb7"></div>
+  </div>
+
+  <div class="comp-question" id="cq8">
+    <p>8. The host says "we have yet to see if it works out." What does this phrase mean?</p>
+    <div class="comp-opt" onclick="answerComp(this,'cq8','a')"><span>A)</span> We have already seen that it did not work</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq8','b')"><span>B)</span> We will never know the result</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq8','c')" data-val="c"><span>C)</span> The result has not been seen yet — we are still waiting</div>
+    <div class="comp-feedback" id="cfb8"></div>
+  </div>
+
+  <div class="comp-question" id="cq9">
+    <p>9. The host jokes that without the calendar-year rule, a "rogue faction" could nominate Tim Allen's <em>Jungle 2 Jungle</em> every year. What point is he making?</p>
+    <div class="comp-opt" onclick="answerComp(this,'cq9','a')" data-val="a"><span>A)</span> The calendar-year rule prevents the same bad films from being nominated repeatedly</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq9','b')"><span>B)</span> Tim Allen's film was genuinely good and deserved a nomination</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq9','c')"><span>C)</span> The Academy has no rules about which films can be nominated</div>
+    <div class="comp-feedback" id="cfb9"></div>
+  </div>
+
+  <div class="comp-question" id="cq10">
+    <p>10. The host compares the Academy's Board of Governors to the "Board of Sorcerers." What effect does this have?</p>
+    <div class="comp-opt" onclick="answerComp(this,'cq10','a')"><span>A)</span> It criticises the Board for being corrupt</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq10','b')" data-val="b"><span>B)</span> It uses humour to highlight how secretive and mysterious the Academy's selection process seems</div>
+    <div class="comp-opt" onclick="answerComp(this,'cq10','c')"><span>C)</span> It suggests the Board has magical powers to choose winners</div>
+    <div class="comp-feedback" id="cfb10"></div>
+  </div>
+
+</div>
+
+<!-- ══ VOCAB ══ -->
+<div id="tab-vocab" class="tab-panel">
+  <div style="text-align:right;margin-bottom:8px;"><a onclick="document.querySelector('.tab-btn').click()" style="font-size:12px;color:var(--muted);cursor:pointer;text-decoration:none;font-family:Helvetica,Arial,sans-serif;">▶ Back to video</a></div>
+  <div class="teacher-note">🎙 8 phrases straight from the video. First you hear how a native speaker uses them — then you practise yourself.</div>
+  <div id="vocabGrid"></div>
+</div>
+
+<!-- ══ GRAMMAR ══ -->
+<div id="tab-grammar" class="tab-panel">
+
+  <div style="text-align:right;margin-bottom:8px;"><a onclick="document.querySelector('.tab-btn').click()" style="font-size:12px;color:var(--muted);cursor:pointer;text-decoration:none;font-family:Helvetica,Arial,sans-serif;">▶ Back to video</a></div>
+  <div class="teacher-note">💡 The host uses both tenses in the video — PP Simple and PP Continuous. Let's look at exactly how and why.</div>
+
+  <div class="section-label">Present Perfect Simple — result matters now</div>
+  <div class="rule-card pp">
+    <div class="rule-title rt-pp">Present Perfect Simple</div>
+    <div class="rule-formula">have / has + V3</div>
+    <p style="font-size:14px;line-height:1.65;margin-bottom:6px;">Use when the <strong>result matters now</strong> — something happened and its effect is visible in the present. When it happened is not important.</p>
+  </div>
+
+  <div class="ex-card">
+    <div class="ex-text">
+      <div class="ex-en">"They <span class="hl-pp">have been</span> the ones running the show since synchronized sound." <button class="speak-btn" onclick="speakText(this,'They have been the ones running the show since synchronized sound was introduced.')">🔊</button></div>
+      <div class="ex-ru">→ Они управляют этим с тех пор — и до сих пор. Результат виден сейчас.</div>
+    </div>
+  </div>
+  <div class="ex-card">
+    <div class="ex-text">
+      <div class="ex-en">"This <span class="hl-pp">has been</span> the process for years, but is not without its critics." <button class="speak-btn" onclick="speakText(this,'This has been the process for years, but it is not without its critics.')">🔊</button></div>
+      <div class="ex-ru">→ Процесс существует давно — и сейчас тоже. PP Simple с for.</div>
+    </div>
+  </div>
+  <div class="ex-card">
+    <div class="ex-text">
+      <div class="ex-en">"We <span class="hl-pp">have yet to see</span> if it works out." <button class="speak-btn" onclick="speakText(this,'We have yet to see if it works out.')">🔊</button></div>
+      <div class="ex-ru">→ Фиксированная фраза: результат ещё не наступил. = We still have not seen it.</div>
+    </div>
+  </div>
+  <div class="ex-card">
+    <div class="ex-text">
+      <div class="ex-en">"Every acting nominee <span class="hl-pp">was</span> white — for the second year in a row." <button class="speak-btn" onclick="speakText(this,'Every acting nominee was white, for the second year in a row.')">🔊</button></div>
+      <div class="ex-ru">→ Здесь Past Simple — конкретный год, конкретное событие. Заметь контраст с PP выше.</div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:24px;">Present Perfect Continuous — process and duration</div>
+  <div class="rule-card ppc">
+    <div class="rule-title rt-ppc">Present Perfect Continuous</div>
+    <div class="rule-formula">have / has + been + V-ing</div>
+    <p style="font-size:14px;line-height:1.65;margin-bottom:6px;">Use when <strong>duration matters</strong> — an action started in the past, continued, and its traces are visible now. Often with for / since.</p>
+  </div>
+
+  <div class="ex-card">
+    <div class="ex-text">
+      <div class="ex-en">"Critics <span class="hl-ppc">have been saying</span> for years that the process needs reform." <button class="speak-btn" onclick="speakText(this,'Critics have been saying for years that the process needs reform.')">🔊</button></div>
+      <div class="ex-ru">→ Говорят давно — и продолжают. Акцент на длительности.</div>
+    </div>
+  </div>
+  <div class="ex-card">
+    <div class="ex-text">
+      <div class="ex-en">"The Academy <span class="hl-ppc">has been changing</span> its membership rules since 2016." <button class="speak-btn" onclick="speakText(this,'The Academy has been changing its membership rules since 2016.')">🔊</button></div>
+      <div class="ex-ru">→ Изменения идут с 2016 — процесс ещё не завершён.</div>
+    </div>
+  </div>
+  <div class="ex-card">
+    <div class="ex-text">
+      <div class="ex-en">"People <span class="hl-ppc">have been noticing</span> the lack of diversity for years." <button class="speak-btn" onclick="speakText(this,'People have been noticing the lack of diversity for years.')">🔊</button></div>
+      <div class="ex-ru">→ Замечают уже давно — и сейчас тоже. Процесс продолжается.</div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:24px;">⚖️ PP Simple vs PP Continuous — when to use which</div>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th class="th-cat">Ситуация</th>
+        <th class="th-pp">✅ PP Simple</th>
+        <th class="th-ppc">🔄 PP Continuous</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Акцент</strong></td><td class="td-pp">Result / completed fact</td><td class="td-ppc">Process / duration</td></tr>
+      <tr><td><strong>With numbers</strong></td><td class="td-pp">She has won <em>three</em> Oscars.</td><td class="td-ppc">❌ Нельзя с числом</td></tr>
+      <tr><td><strong>Duration</strong></td><td class="td-pp">He has worked there for years. (факт)</td><td class="td-ppc">He has been working there for years. (процесс)</td></tr>
+      <tr><td><strong>Completed?</strong></td><td class="td-pp">I have written the script. (готово)</td><td class="td-ppc">I have been writing the script. (ещё не готово)</td></tr>
+      <tr><td><strong>From the video</strong></td><td class="td-pp">The process <span class="hl-pp">has been</span> the same for years.</td><td class="td-ppc">Critics <span class="hl-ppc">have been saying</span> it needs reform.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="mistake-block">
+    <div class="mistake-title">⚠️ Common mistakes</div>
+    <div>
+      <div class="wrong-l">❌ I have been seen this film three times.</div>
+      <div class="right-l">✅ I have seen this film three times.</div>
+      <div class="why-l">There is a number (three) → PP Simple only.</div>
+    </div>
+    <div>
+      <div class="wrong-l">❌ She has been knowing him for years.</div>
+      <div class="right-l">✅ She has known him for years.</div>
+      <div class="why-l">"Know" is a stative verb — PPC cannot be used with it.</div>
+    </div>
+    <div>
+      <div class="wrong-l">❌ They have changed the rules in 2016.</div>
+      <div class="right-l">✅ They changed the rules in 2016.</div>
+      <div class="why-l">Specific year → Past Simple, not PP.</div>
+    </div>
+    <div>
+      <div class="wrong-l">❌ I have been writing the script — here it is!</div>
+      <div class="right-l">✅ I have written the script — here it is!</div>
+      <div class="why-l">The result is ready and you are showing it → PP Simple.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ PRACTICE ══ -->
+<div id="tab-practice" class="tab-panel">
+
+  <div style="margin-bottom:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <div class="section-label" style="margin:0;">Progress</div>
+      <span id="scoreDisplay" style="font-family:'Caveat',cursive;font-size:16px;color:var(--muted);">0 / 5</span>
+    </div>
+    <div style="background:var(--border);border-radius:10px;height:6px;"><div id="progressBar" style="height:100%;border-radius:10px;background:linear-gradient(to right,var(--pp),var(--ppc));transition:width .4s ease;width:0%"></div></div>
+    <div style="margin-bottom:16px;"></div>
+  </div>
+
+  <!-- EX 1 -->
+  <div class="exercise-block">
+    <div class="ex-header"><span class="ex-num">1</span><span style="font-size:14.5px;font-weight:600;">PP Simple or Continuous?</span><span class="ex-type">MCQ</span></div>
+    <p class="ex-q">The Academy ___ its membership rules since the #OscarsSoWhite controversy.</p>
+    <div class="mcq-options" id="mcq1">
+      <div class="mcq-opt" onclick="doMCQ('mcq1',this,'wrong')">has changed <span style="font-size:12px;color:var(--muted);">(PP Simple — completed result)</span></div>
+      <div class="mcq-opt" onclick="doMCQ('mcq1',this,'correct')">has been changing <span style="font-size:12px;color:var(--muted);">(PPC — ongoing process since a point)</span></div>
+    </div>
+    <div class="feedback-inline" id="fi1"></div>
+  </div>
+
+  <!-- EX 2 -->
+  <div class="exercise-block">
+    <div class="ex-header"><span class="ex-num">2</span><span style="font-size:14.5px;font-weight:600;">PP Simple or Continuous?</span><span class="ex-type">MCQ</span></div>
+    <p class="ex-q">PricewaterhouseCoopers ___ the Oscar votes for decades — they are the most trusted name in ballot counting.</p>
+    <div class="mcq-options" id="mcq2">
+      <div class="mcq-opt" onclick="doMCQ('mcq2',this,'correct')">has been counting <span style="font-size:12px;color:var(--muted);">(PPC — repeated ongoing activity over decades)</span></div>
+      <div class="mcq-opt" onclick="doMCQ('mcq2',this,'wrong')">has counted <span style="font-size:12px;color:var(--muted);">(PP Simple — completed, specific result)</span></div>
+    </div>
+    <div class="feedback-inline" id="fi2"></div>
+  </div>
+
+  <!-- EX 3 fill-in -->
+  <div class="exercise-block">
+    <div class="ex-header"><span class="ex-num">3</span><span style="font-size:14.5px;font-weight:600;">Fill in — PP Simple</span><span class="ex-type">Fill in</span></div>
+    <p class="ex-q">Diversity critics ___ (raise) concerns about the Academy for years, and finally in 2016 the organization _____ (announce) major reforms.</p>
+    <p class="ex-hint">First gap: PP Continuous. Second gap: Past Simple — there is a specific year.</p>
+    <p style="font-size:15px;line-height:2;">Diversity critics <input class="fill-input" id="f3a" placeholder="have been..." oninput="checkFillProgress()"> concerns for years, and finally in 2016 the organization <input class="fill-input" id="f3b" placeholder="announced" oninput="checkFillProgress()"> major reforms.</p>
+    <div class="feedback-inline" id="fi3"></div>
+  </div>
+
+  <!-- EX 4 error correction -->
+  <div class="exercise-block">
+    <div class="ex-header"><span class="ex-num">4</span><span style="font-size:14.5px;font-weight:600;">Error correction</span><span class="ex-type">Error Correction</span></div>
+    <p class="ex-q">❌ "The Academy has been founded in 1927 and has run the Oscars ever since."</p>
+    <p class="ex-hint">One error. Fix it and write the corrected sentence:</p>
+    <input type="text" class="fill-input" id="f4" style="width:100%;min-width:auto;" placeholder="The Academy was founded in..." oninput="checkFillProgress()">
+    <div class="feedback-inline" id="fi4"></div>
+  </div>
+
+  <!-- EX 5 fill-in -->
+  <div class="exercise-block">
+    <div class="ex-header"><span class="ex-num">5</span><span style="font-size:14.5px;font-weight:600;">Choose the correct form</span><span class="ex-type">Fill in</span></div>
+    <p class="ex-q">I ___ (watch) this documentary three times already. I think the voting process is fascinating.</p>
+    <p class="ex-hint">PP Simple or Continuous? Think about the number "three times."</p>
+    <p><input class="fill-input" id="f5" placeholder="have..." oninput="checkFillProgress()"></p>
+    <div class="feedback-inline" id="fi5"></div>
+  </div>
+
+  <button class="check-btn" id="checkAllBtn" onclick="checkAllFill()" style="width:100%;padding:14px;font-size:14px;margin-bottom:16px;" disabled>Check fill-in answers ✦</button>
+
+  <!-- EX 6 open -->
+  <div class="exercise-block">
+    <div class="ex-header"><span class="ex-num">6</span><span style="font-size:14.5px;font-weight:600;">Your opinion</span><span class="ex-type">Open · AI Check</span></div>
+    <p class="ex-q">Do you think the Oscars are still relevant today? Write 4–5 sentences. Use <strong>at least 1 PP Simple and 1 PP Continuous</strong>, and at least <strong>2 vocabulary words</strong> from this lesson.</p>
+    <p class="ex-hint">Suggested vocab: recognition of excellence · under consideration · in-depth · kick off · run the show · eligible · criteria</p>
+    <textarea class="open-textarea" id="open6" rows="5" placeholder="I think the Oscars have been losing relevance for years… / The Academy has never fully represented… / Critics have been saying for a long time that…" oninput="checkOpenBtn()"></textarea>
+    <button class="check-btn" id="checkOpen6" onclick="checkOpen()" disabled>✨ Check with AI</button>
+    <div id="aifb6" style="margin-top:10px;"></div>
+  </div>
+
+  <div class="score-box" id="scoreBox">
+    <div style="font-family:'Caveat',cursive;font-size:20px;color:var(--gold);margin-bottom:8px;">Score</div>
+    <div class="score-num" id="scoreNum">0/3</div>
+    <div id="scoreMsg" style="font-size:14px;opacity:.8;margin-top:6px;"></div>
+  </div>
+
+</div>
+
+<!-- ══ AI COACH ══ -->
+<div id="tab-ai" class="tab-panel">
+  <div class="ai-intro">
+    <div class="ai-avatar">✦</div>
+    <div class="ai-intro-text">
+      <strong>English Coach — AI</strong>
+      <p>Ask about PP Simple vs Continuous, vocab from the video, or Oscar facts. Write a sentence and I will check it. I reply in Russian if you write in Russian.</p>
+    </div>
+  </div>
+  <div class="quick-prompts">
+    <button class="quick-btn" onclick="sendQuick('Explain the difference between has changed and has been changing with 3 Oscar-related examples.')">has changed vs has been changing</button>
+    <button class="quick-btn" onclick="sendQuick('When do I use Present Perfect Simple and when Continuous? Give me a simple rule I can remember.')">Simple rule for PP vs PPC</button>
+    <button class="quick-btn" onclick="sendQuick('What does kick off mean? Give me 4 examples from different contexts — work, sports, school, events.')">What does kick off mean?</button>
+    <button class="quick-btn" onclick="sendQuick('Check my sentence: The Academy has been founded in 1927 and has been running the Oscars ever since.')">Check my sentence</button>
+    <button class="quick-btn" onclick="sendQuick('What is the most famous Oscar snub in history? Tell me in English and use PP Simple and Continuous.')">Famous Oscar snubs</button>
+    <button class="quick-btn" onclick="sendQuick('Practice with me: ask me questions about the video using PP Simple and Continuous. I will answer.')">Practice conversation</button>
+  </div>
+  <div class="chat-window">
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg ai">
+        <div class="msg-avatar">✦</div>
+        <div class="msg-bubble">Ready! Ask me about PP Simple vs Continuous, vocab from the video, or just write a sentence and I will give you feedback. С чего начнём?</div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <textarea class="chat-input" id="chatInput" placeholder="Ask anything…" rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const GEMINI_API_KEY = null;
+const ELEVEN_API_KEY = null;
+const ELEVEN_VOICE_ID = 'EXAVITQu4vr4xnSDxMaL';
+let currentAudio = null;
+
+// ── VOCAB ──
+const VOCAB = [
+  {en:'bear with me',ru:'потерпи / подожди немного',
+   fromVideo:'"Bear with me, it is complicated."',
+   note:'Used when you need the listener s patience — you are about to explain something complex or long. Very common in presentations and meetings.',
+   collocations:[{en:'bear with me for a moment',ru:'подождите секунду'},{en:'bear with me while I explain',ru:'потерпите пока я объясню'},{en:'if you can bear with me',ru:'если вы можете немного подождать'}]},
+  {en:'throw away (sth)',ru:'выбросить / отмахнуться от чего-то',
+   fromVideo:'"I am gonna throw away my invisible idol." (He mimes tossing an Oscar aside.)',
+   note:'Literally: to discard. Figuratively: to dismiss casually, to waste. "Throw-away line" = a casual remark said without much emphasis.',
+   collocations:[{en:'throw away an idea',ru:'отмахнуться от идеи'},{en:'a throw-away comment',ru:'брошенное вскользь замечание'},{en:'throw away a chance',ru:'упустить шанс'}]},
+  {en:'hot new craze',ru:'новое повальное увлечение / хайп',
+   fromVideo:'"Since films with synchronized sound were the hot new craze."',
+   note:'Informal. A craze = a sudden popular trend. "Hot" intensifies it. Used for anything that is suddenly popular — tech, food, fitness.',
+   collocations:[{en:'the hot new craze in fitness',ru:'новое повальное увлечение в фитнесе'},{en:'become the latest craze',ru:'стать последним трендом'},{en:'just a craze — it will pass',ru:'просто мода — пройдёт'}]},
+  {en:'check it out',ru:'посмотри / проверь / рекомендую',
+   fromVideo:'"Check it out. The Ring is a good movie."',
+   note:'Informal, very common in American English. Can mean: go see it, look at this, or investigate. Also used as a recommendation.',
+   collocations:[{en:'check it out — it is amazing',ru:'посмотри — это потрясающе'},{en:'check out this article',ru:'посмотри эту статью'},{en:'you should check it out',ru:'тебе стоит посмотреть'}]},
+  {en:'a whole bunch of',ru:'целая куча / масса чего-то',
+   fromVideo:'"It has to meet a whole bunch of technical criteria."',
+   note:'Informal American English. = a lot of. More emphatic and casual than "many." Can be used for things or people.',
+   collocations:[{en:'a whole bunch of people',ru:'целая куча народу'},{en:'a whole bunch of problems',ru:'куча проблем'},{en:'a whole bunch of reasons',ru:'масса причин'}]},
+  {en:'rogue faction',ru:'группировка отступников / самовольная группа',
+   fromVideo:'"This prevents a rogue faction of the Academy from nominating Jungle 2 Jungle every year."',
+   note:'"Rogue" = acting outside rules or authority. "Faction" = a subgroup within an organization. Together: a rebellious subgroup acting against the rules.',
+   collocations:[{en:'a rogue faction within the party',ru:'группировка отступников внутри партии'},{en:'go rogue',ru:'действовать на свой страх и риск'},{en:'rogue element',ru:'неуправляемый элемент'}]},
+  {en:'go through (a list)',ru:'просмотреть / пройтись по списку',
+   fromVideo:'"Academy members go through that huge list of all eligible movies."',
+   note:'= to look at or examine something item by item. Very common in work and daily life. Not to be confused with "go through" meaning to experience something difficult.',
+   collocations:[{en:'go through the agenda',ru:'пройтись по повестке дня'},{en:'go through your emails',ru:'просмотреть письма'},{en:'go through the checklist',ru:'пройтись по чеклисту'}]},
+  {en:'and so forth / and so on',ru:'и так далее / и тому подобное',
+   fromVideo:'"Cinematographers vote for best cinematography, editors for best editing, and so forth and so on."',
+   note:'Used to indicate a continuing list without naming everything. Slightly more formal than "etc." In speech: both phrases are often combined for emphasis.',
+   collocations:[{en:'actors, directors, and so forth',ru:'актёры, режиссёры и так далее'},{en:'deadlines, budgets, and so on',ru:'дедлайны, бюджеты и тому подобное'},{en:'rules, regulations, and so forth',ru:'правила, инструкции и так далее'}]},
+  {en:'otherwise',ru:'иначе / в противном случае / а то',
+   fromVideo:'"Everybody gets to vote for Best Picture — because otherwise, who would?"',
+   note:'Three uses: (1) if not / or else. (2) in other ways ("she is otherwise healthy"). (3) apart from that. The video uses meaning 1 — showing a consequence.',
+   collocations:[{en:'otherwise it will not work',ru:'иначе это не сработает'},{en:'do it now, otherwise you will forget',ru:'сделай сейчас, а то забудешь'},{en:'otherwise known as',ru:'также известный как'}]},
+  {en:'the gist of it',ru:'суть / главная идея',
+   fromVideo:'"That s the gist of it for the general categories."',
+   note:'"Gist" = the main point or essence, without all the details. Very useful in conversations when summarizing. "Get the gist" = understand the main idea.',
+   collocations:[{en:'that is the gist of it',ru:'вот в чём суть'},{en:'get the gist',ru:'уловить суть'},{en:'give me the gist',ru:'скажи мне главное'}]},
+  {en:'get a foot in the door',ru:'получить шанс / зацепиться / войти в систему',
+   fromVideo:'"Just get Gary Busey and Dakota Fanning to sponsor you, and you have got a foot in the door!"',
+   note:'Idiom. Origins: door-to-door salespeople who put a foot in the door to prevent it from closing. Now means: get an initial opportunity in a competitive field.',
+   collocations:[{en:'get a foot in the door at a company',ru:'устроиться в компанию'},{en:'this internship is a foot in the door',ru:'эта стажировка — шанс зацепиться'},{en:'use connections to get a foot in the door',ru:'использовать связи чтобы попасть в систему'}]},
+  {en:'(sth) in a row',ru:'подряд / один за другим',
+   fromVideo:'"For the second year in a row, every single acting nominee was white."',
+   note:'Used for consecutive events — wins, losses, meetings, years. Always after a number: "three times in a row", "two years in a row".',
+   collocations:[{en:'win three times in a row',ru:'победить три раза подряд'},{en:'late for work five days in a row',ru:'опаздывать на работу пять дней подряд'},{en:'the second year in a row',ru:'второй год подряд'}]},
+  {en:'egregious',ru:'вопиющий / из ряда вон / возмутительный',
+   fromVideo:'"What do you think is the most egregious Oscar snub in history?"',
+   note:'Means shockingly bad — so bad it stands out. Formal-sounding but used in commentary and opinion pieces. Stronger than "terrible" or "outrageous."',
+   collocations:[{en:'an egregious mistake',ru:'вопиющая ошибка'},{en:'an egregious example of bias',ru:'вопиющий пример предвзятости'},{en:'egregious behaviour',ru:'возмутительное поведение'}]},
+  {en:'to be eligible (for)',ru:'иметь право на / соответствовать требованиям',
+   fromVideo:'"In order to even be considered for Oscar nominations, a movie has to meet some basic criteria."',
+   note:'Eligible = you qualify, you meet the rules. Very common in legal, HR, award contexts. Opposite: ineligible.',
+   collocations:[{en:'eligible for an award',ru:'соответствовать требованиям для награды'},{en:'eligible voters',ru:'избиратели имеющие право голоса'},{en:'not eligible to apply',ru:'не имеет права подавать заявку'}]},
+  {en:'criteria (singular: criterion)',ru:'критерии (ед.ч.: критерий)',
+   fromVideo:'"It has to meet a whole bunch of technical criteria."',
+   note:'"Criteria" is PLURAL. "One criterion" — "several criteria". A very common mistake: "criterias" does not exist in English.',
+   collocations:[{en:'meet the criteria',ru:'соответствовать критериям'},{en:'strict selection criteria',ru:'строгие критерии отбора'},{en:'set the criteria',ru:'установить критерии'}]},
+  {en:'to kick off',ru:'дать старт / запустить / начать',
+   fromVideo:'"The Academy sends it out to all voting members to kick off the nomination process."',
+   note:'Informal but widely used — events, meetings, seasons, campaigns. "Kickoff" (noun): the start of something.',
+   collocations:[{en:'kick off the meeting',ru:'открыть встречу'},{en:'kick off awards season',ru:'дать старт сезону наград'},{en:'kick off a campaign',ru:'запустить кампанию'}]},
+  {en:'in-depth',ru:'глубокий / детальный / обстоятельный',
+   fromVideo:'"The LA Times published an in-depth investigation of the Oscars."',
+   note:'Always hyphenated before a noun. Means thorough, detailed, going beyond the surface. Opposite: superficial.',
+   collocations:[{en:'an in-depth investigation',ru:'детальное расследование'},{en:'in-depth analysis',ru:'глубокий анализ'},{en:'in-depth knowledge',ru:'обстоятельные знания'}]},
+  {en:'to run the show',ru:'управлять / руководить / быть главным',
+   fromVideo:'"They have been the ones running the show since films with synchronized sound were the hot new craze."',
+   note:'Idiom. Informal. About who is in charge — could be a person, organization, or system. Slightly theatrical origin.',
+   collocations:[{en:'who runs the show here?',ru:'кто здесь главный?'},{en:'she runs the show',ru:'она всем руководит'},{en:'let the data run the show',ru:'пусть данные решают'}]},
+];
+
+function buildVocabCards(){
+  const grid = document.getElementById('vocabGrid');
+  VOCAB.forEach((w,i)=>{
+    const colls = w.collocations.map(c=>
+      '<div class="colloc-item"><span class="colloc-en">'+c.en+'</span> <span class="colloc-ru">— '+c.ru+'</span></div>'
+    ).join('');
+    const safeEn = w.en.replace(/[()]/g,'').replace(/'/g,'');
+    const card = document.createElement('div');
+    card.className = 'vocab-card';
+    card.id = 'vcard'+i;
+    // Header (always visible - clickable)
+    card.innerHTML =
+      '<div class="vocab-card-header" onclick="toggleVocab('+i+')">' +
+        '<div style="flex:1">' +
+          '<div class="vocab-en" style="font-size:18px;margin-bottom:2px;">'+w.en+'</div>' +
+          '<div class="vocab-ru" style="margin:0;">'+w.ru+'</div>' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:8px;">' +
+          '<button class="vocab-known" id="vknown'+i+'" onclick="event.stopPropagation();markKnown('+i+')" title="Mark as known">I know this</button>' +
+          '<button class="speak-btn" oonclick="event.stopPropagation();speakWord('+i+')" title="Listen">🔊</button>' +
+          '<span class="vocab-chevron">▼</span>' +
+        '</div>' +
+      '</div>' +
+      // Body (hidden by default, shown when open)
+      '<div class="vocab-card-body">' +
+        '<div class="vocab-from-video" style="margin-top:12px;"><span class="vfv-label">From the video:</span>'+w.fromVideo+'</div>' +
+        '<div class="vocab-note" style="margin-top:10px;">'+w.note+'</div>' +
+        '<div class="colloc-title">Collocations:</div>'+colls+
+        '<div class="vocab-practice">' +
+          '<span class="practice-label">✍️ Write 2 sentences with «'+w.en+'»</span>' +
+          '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:6px;">' +
+            '<textarea class="vp-input" rows="1" placeholder="Sentence 1…" id="vp'+i+'_1" oninput="updateCharCounter('+i+')"></textarea>' +
+            '<textarea class="vp-input" rows="1" placeholder="Sentence 2…" id="vp'+i+'_2" oninput="updateCharCounter('+i+')"></textarea>' +
+          '</div>' +
+          '<span class="char-counter" id="vcc'+i+'">Write at least one sentence to check</span>' +
+          '<button class="vp-check-btn" id="vbtn'+i+'" onclick="checkVocabPractice(this,'+i+')" disabled>✨ Check with AI</button>' +
+          '<div id="vpfb'+i+'" style="display:none;margin-top:10px;"></div>' +
+        '</div>' +
+      '</div>';
+    grid.appendChild(card);
+  });
+  // Open first card by default
+  toggleVocab(0);
+}
+
+
+function speakWord(i){
+  const text = VOCAB[i].en.replace(/[()]/g,'');
+  const btn = document.querySelector('#vcard'+i+' .speak-btn');
+  speakText(btn, text);
+}
+
+function toggleVocab(i) {
+  const card = document.getElementById('vcard'+i);
+  const isOpen = card.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.vocab-card').forEach(c => c.classList.remove('open'));
+  // Open clicked if it was closed
+  if (!isOpen) card.classList.add('open');
+}
+
+function markKnown(i) {
+  const btn = document.getElementById('vknown'+i);
+  btn.classList.toggle('known');
+  if (btn.classList.contains('known')) {
+    btn.title = 'Mark as unknown';
+    // Optionally dim the card header
+    document.getElementById('vcard'+i).querySelector('.vocab-en').style.opacity = '.5';
+    document.getElementById('vcard'+i).querySelector('.vocab-ru').style.opacity = '.5';
+  } else {
+    btn.title = 'Mark as known';
+    document.getElementById('vcard'+i).querySelector('.vocab-en').style.opacity = '1';
+    document.getElementById('vcard'+i).querySelector('.vocab-ru').style.opacity = '1';
+  }
+}
+
+function updateCharCounter(i) {
+  const s1 = (document.getElementById('vp'+i+'_1')?.value||'').trim();
+  const s2 = (document.getElementById('vp'+i+'_2')?.value||'').trim();
+  const total = s1.length + s2.length;
+  const counter = document.getElementById('vcc'+i);
+  const btn = document.getElementById('vbtn'+i);
+  if (total === 0) {
+    counter.textContent = 'Write at least one sentence to check';
+    counter.className = 'char-counter';
+    btn.disabled = true;
+  } else if (s1.length < 5 && s2.length < 5) {
+    counter.textContent = 'Too short — write a complete sentence';
+    counter.className = 'char-counter';
+    btn.disabled = true;
+  } else {
+    counter.textContent = (s1 && s2 ? '2 sentences ready' : '1 sentence ready') + ' ✓';
+    counter.className = 'char-counter ready';
+    btn.disabled = false;
+  }
+}
+
+buildVocabCards();
+
+
+
+
+// ── PRE-VIDEO QUESTIONS ──
+const bqCorrect = {bq1:'b', bq2:'b', bq3:'b'};
+const bqOK = {
+  bq1:'Correct! The Academy of Motion Picture Arts and Sciences is a professional organisation of film industry members — actors, directors, editors, and more.',
+  bq2:'Right! Only invited members of the Academy vote. It is a private, invitation-only organisation — not open to the public.',
+  bq3:'Exactly. The #OscarsSoWhite movement started after all acting nominees were white two years running. The video covers this in the final section.',
+};
+const bqBad = {
+  bq1:'Not quite — watch the video! The Academy is a professional organisation of film industry members, not a school or government body.',
+  bq2:'Not quite — the public does not vote. Only Academy members do. Watch the video to find out how you become a member!',
+  bq3:'Not quite — the wrong winner moment was actually 2017. The 2016 controversy was about a total lack of diversity in the acting nominations.',
+};
+function answerBQ(el, qid, clicked) {
+  const container = document.getElementById(qid);
+  if (container.dataset.answered) return;
+  container.dataset.answered = '1';
+  container.querySelectorAll('.comp-opt').forEach(o => o.style.pointerEvents = 'none');
+  const num = qid.replace('bq','');
+  const fb = document.getElementById('bqfb' + num);
+  const isCorrect = clicked === bqCorrect[qid];
+  el.classList.add(isCorrect ? 'correct-ans' : 'wrong-ans');
+  if (!isCorrect) {
+    container.querySelectorAll('.comp-opt').forEach(o => {
+      const v = (o.getAttribute('onclick') || '').match(/'([ab])'\)/)?.[1];
+      if (v === bqCorrect[qid]) o.classList.add('correct-ans');
+    });
+  }
+  fb.textContent = (isCorrect ? 'checkmark ' : 'cross ') + (isCorrect ? bqOK[qid] : bqBad[qid]);
+  fb.textContent = (isCorrect ? '✅ ' : '❌ ') + (isCorrect ? bqOK[qid] : bqBad[qid]);
+  fb.className = 'comp-feedback show ' + (isCorrect ? 'good' : 'bad');
+}
+
+// ── NUMBER QUIZ ──
+function checkNumbers() {
+  const answers = {
+    nq1: {key: '1927', ans: 'The year the Academy of Motion Picture Arts and Sciences was founded.'},
+    nq2: {key: '40',   ans: 'The minimum length of a film in minutes to be eligible for nomination.'},
+    nq3: {key: '7',    ans: 'The minimum number of days a film must run in a Los Angeles theater.'},
+    nq4: {key: '6124', ans: 'The number of eligible Academy voters in 2014.'},
+    nq5: {key: '94',   ans: 'The percentage of Academy voters who were white (according to the 2012 LA Times investigation).'},
+  };
+  let html = '';
+  let correct = 0;
+  Object.entries(answers).forEach(([id, data]) => {
+    const val = (document.getElementById(id).value || '').trim().toLowerCase();
+    const hasKey = val.includes(data.key.toLowerCase()) || val.length > 5;
+    if (hasKey) correct++;
+    html += '<div class="' + (hasKey ? 'fb-ok' : 'fb-err') + '" style="margin-bottom:8px;">' +
+      '<strong>' + data.key + '</strong> — ' + data.ans + '</div>';
+  });
+  const fb = document.getElementById('nqFeedback');
+  fb.innerHTML = '<div style="font-family:Caveat,cursive;font-size:16px;margin-bottom:10px;color:var(--muted);">Answers:</div>' + html;
+  fb.style.display = 'block';
+}
+
+// ── VOCAB PRE-PRACTICE ──
+const vqCorrect = {vq1:'b', vq2:'a', vq3:'b', vq4:'c', vq5:'b'};
+const vqOK = {
+  vq1:'Exactly! "Bear with me" = please be patient. Very useful in presentations when you need time to explain.',
+  vq2:'Right! A craze is a sudden trend everyone is excited about. "Hot" makes it even more emphatic.',
+  vq3:'Correct! "A whole bunch of" is informal American English for "a lot of." Very casual and natural.',
+  vq4:'Exactly! "The gist" = the main idea, the summary. "That is the gist of it" = that is the short version.',
+  vq5:'Right! "A foot in the door" = your first opportunity in a competitive system. It is an idiom from door-to-door sales.',
+};
+const vqBad = {
+  vq1:'Not quite — "bear with me" asks for patience. The speaker is saying: please wait while I explain this complicated thing.',
+  vq2:'Not quite — "craze" means a trend or fad. "Hot new craze" = the exciting new thing everyone was talking about.',
+  vq3:'Not quite — "a whole bunch of" is informal for "a lot of." Nothing precise about the number.',
+  vq4:'Not quite — "gist" means the essence or main point, not the details. "Get the gist" = understand the main idea.',
+  vq5:'Not quite — this is an idiom. "A foot in the door" = getting your first chance to enter a competitive field or organisation.',
+};
+function answerVQ(el, qid, clicked) {
+  const container = document.getElementById(qid);
+  if (container.dataset.answered) return;
+  container.dataset.answered = '1';
+  container.querySelectorAll('.comp-opt').forEach(o => o.style.pointerEvents = 'none');
+  const num = qid.replace('vq','');
+  const fb = document.getElementById('vqfb' + num);
+  const isCorrect = clicked === vqCorrect[qid];
+  el.classList.add(isCorrect ? 'correct-ans' : 'wrong-ans');
+  if (!isCorrect) {
+    container.querySelectorAll('.comp-opt').forEach(o => {
+      const v = (o.getAttribute('onclick') || '').match(/'([abc])'\)/)?.[1];
+      if (v === vqCorrect[qid]) o.classList.add('correct-ans');
+    });
+  }
+  fb.textContent = (isCorrect ? '✅ ' : '❌ ') + (isCorrect ? vqOK[qid] : vqBad[qid]);
+  fb.className = 'comp-feedback show ' + (isCorrect ? 'good' : 'bad');
+}
+
+// ── MINI QUIZ (pre-watch) ──
+let mqAnswered = 0;
+function guessMQ(el, id, type) {
+  const container = el.parentElement;
+  if (container.dataset.answered) return;
+  container.dataset.answered = '1';
+  container.querySelectorAll('.mq-opt').forEach(o => o.style.pointerEvents = 'none');
+  const fb = document.getElementById(id + 'fb');
+  if (type === 'correct') {
+    el.style.borderColor = 'var(--success)';
+    el.style.background = 'var(--success-light)';
+    el.style.color = 'var(--success)';
+    fb.textContent = '✅ Correct! Watch to confirm.';
+    fb.style.background = 'var(--success-light)';
+    fb.style.color = 'var(--success)';
+  } else {
+    el.style.borderColor = 'var(--accent)';
+    el.style.background = 'var(--accent-light)';
+    el.style.color = 'var(--accent)';
+    container.querySelectorAll('.mq-opt').forEach(o => {
+      const fn = o.getAttribute('onclick') || '';
+      if (fn.includes('correct')) { o.style.borderColor='var(--success)'; o.style.background='var(--success-light)'; o.style.color='var(--success)'; }
+    });
+    fb.textContent = '❌ Not quite — watch to find out!';
+    fb.style.background = 'var(--accent-light)';
+    fb.style.color = 'var(--accent)';
+  }
+  fb.style.display = 'block';
+  mqAnswered++;
+  if (mqAnswered === 3) {
+    const score = ['mq1','mq2','mq3'].filter(id => document.getElementById(id+'fb').textContent.startsWith('✅')).length;
+    const sb = document.getElementById('mqScore');
+    sb.textContent = score + '/3 correct before watching — nice! Now watch the video and check your answers in Comprehension.';
+    sb.style.display = 'block';
+  }
+}
+
+// ── TABS ──
+const TAB_ORDER = ['video','comp','vocab','grammar','practice','ai'];
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+  // Update progress
+  const idx = TAB_ORDER.indexOf(name);
+  const prog = document.getElementById('tabProgress');
+  if (prog) prog.textContent = (idx+1) + ' / ' + TAB_ORDER.length;
+  // Scroll to top of content
+  document.querySelector('.tabs-wrap').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── SPEECH ──
+async function speakText(btn,text){
+  if(currentAudio){currentAudio.pause();currentAudio=null;document.querySelectorAll('.speak-btn.speaking').forEach(b=>b.classList.remove('speaking'));if(btn&&btn.classList.contains('speaking'))return;}
+  if(btn)btn.classList.add('speaking');
+  try{
+    const res=await fetch('/api/elevenlabs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,model_id:'eleven_turbo_v2',voice_settings:{stability:.5,similarity_boost:.75}})});
+    if(!res.ok)throw new Error('EL');
+    const blob=await res.blob();const url=URL.createObjectURL(blob);
+    currentAudio=new Audio(url);currentAudio.play();
+    currentAudio.onended=()=>{if(btn)btn.classList.remove('speaking');URL.revokeObjectURL(url);currentAudio=null;};
+  }catch(e){
+    if(btn)btn.classList.remove('speaking');
+    if(window.speechSynthesis){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=0.88;if(btn){btn.classList.add('speaking');u.onend=()=>btn.classList.remove('speaking');}window.speechSynthesis.speak(u);}
+  }
+}
+
+// ── COMPREHENSION ──
+const compCorrect={cq1:'a',cq2:'b',cq3:'b',cq4:'c',cq5:'a',cq6:'b',cq7:'b',cq8:'c',cq9:'a',cq10:'b'};
+const compOK={
+  cq1:'Right — founded in 1927, back when synchronized sound was the hot new thing.',
+  cq2:'Correct! Streaming is not mentioned as a criterion. The film must show in a physical LA theater.',
+  cq3:'Exactly — each branch votes for its own category. Only Best Picture is open to all.',
+  cq4:'Right — PricewaterhouseCoopers handles the vote counting.',
+  cq5:'Correct — two paths: sponsored by two branch members, or nominated for an Oscar.',
+  cq6:'Right — 94% white, 77% male, median age 62.',
+  cq7:'Correct — the second consecutive year with an all-white acting nominees list sparked the #OscarsSoWhite movement.',
+  cq8:'Exactly — "have yet to see" = we still have not seen the result. A useful fixed phrase.',
+  cq9:'Right! The joke implies that without this rule, obsessive fans could game the system — it shows the rule has a real protective function.',
+  cq10:'Correct — the humorous comparison highlights how secretive and exclusive the Board seems. It is classic HowStuffWorks tone: informative but self-aware.'
+};
+const compBad={
+  cq1:'Not quite — 1927 is correct. This was when synchronized sound was the new craze.',
+  cq2:'Not quite — streaming is not one of the criteria mentioned. Rewatch the eligibility section.',
+  cq3:'Not quite — branches vote for their own categories. All members only vote for Best Picture.',
+  cq4:'Not quite — it is PricewaterhouseCoopers, the accounting firm.',
+  cq5:'Not quite — you do not need to WIN an Oscar, just be nominated. And there is a sponsorship route too.',
+  cq6:'Not quite — 77% is the percentage of male voters. 94% is the percentage of white voters.',
+  cq7:'Not quite — rewatch the last section. The trigger was two years in a row of all-white acting nominees.',
+  cq8:'Not quite — "have yet to see" means we still have not seen it. It is about something that has NOT happened yet.',
+  cq9:'Not quite — this is a joke at Tim Allen. The rule protects the Oscars from being gamed by devoted fans of mediocre films.',
+  cq10:'Not quite — it is humour, not criticism. The host points out how mysterious and exclusive the selection feels from the outside.'
+};
+function answerComp(el,qid,clicked){
+  // Save state
+  try { sessionStorage.setItem('oc_'+qid, clicked); } catch(e){}
+  const container=document.getElementById(qid);
+  if(container.dataset.answered)return;
+  container.dataset.answered='1';
+  const opts=container.querySelectorAll('.comp-opt');
+  const num=qid.replace('cq','');
+  const fb=document.getElementById('cfb'+num);
+  const isCorrect=clicked===compCorrect[qid];
+  opts.forEach(o=>o.style.pointerEvents='none');
+  el.classList.add(isCorrect?'correct-ans':'wrong-ans');
+  if(!isCorrect){opts.forEach(o=>{const v=o.getAttribute('onclick').match(/'([abc])'\)/)?.[1];if(v===compCorrect[qid])o.classList.add('correct-ans');});}
+  fb.textContent=(isCorrect?'✅ ':'❌ ')+(isCorrect?compOK[qid]:compBad[qid]);
+  fb.className='comp-feedback show '+(isCorrect?'good':'bad');
+}
+
+// ── VOCAB PRACTICE ──
+async function checkVocabPractice(btn,idx){
+  const s1=document.getElementById('vp'+idx+'_1').value.trim();
+  const s2=document.getElementById('vp'+idx+'_2').value.trim();
+  if(!s1&&!s2)return;
+  const word=VOCAB[idx].en;
+  const fbWrap=document.getElementById('vpfb'+idx);
+  const wordCore=word.replace(/[()]/g,'').toLowerCase().split(' ').filter(w=>w.length>2);
+  const s1Has=wordCore.some(w=>s1.toLowerCase().includes(w));
+  const s2Has=wordCore.some(w=>s2.toLowerCase().includes(w));
+  if((s1&&!s1Has)||(s2&&!s2Has)){
+    let msg='';
+    if(s1&&!s1Has)msg+='<div class="fb-err">❌ Sentence 1: use the phrase «'+word+'»</div>';
+    if(s2&&!s2Has)msg+='<div class="fb-err">❌ Sentence 2: use the phrase «'+word+'»</div>';
+    fbWrap.innerHTML=msg;fbWrap.style.display='block';return;
+  }
+  btn.disabled=true;btn.innerHTML='⏳ Checking...';
+  fbWrap.innerHTML='<div class="fb-note" style="font-style:italic;color:#aaa;">Checking...</div>';
+  fbWrap.style.display='block';
+  const sys='You are a warm English teacher for B1-B2 Russian-speaking students. Check these two sentences for correct usage of the target phrase, grammar, and naturalness. Reply in Russian. Start each line with checkmark or cross emoji. Be specific and encouraging. Max 80 words.';
+  const user='Target: "'+word+'". S1: '+s1+'. S2: '+s2;
+  try{
+    const r=await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{role:'user',parts:[{text:sys+' '+user}]}],generationConfig:{temperature:.2,maxOutputTokens:3000}})});
+    const d=await r.json();
+    fbWrap.innerHTML=renderFeedback(d.candidates?.[0]?.content?.parts?.[0]?.text||'');
+  }catch(e){fbWrap.innerHTML='<div class="fb-err">Error: '+e.message+'</div>';}
+  btn.disabled=false;btn.innerHTML='✨ Check with AI';
+  // Scroll feedback into view
+  setTimeout(()=>{ const fb=document.getElementById('vpfb'+idx); if(fb) fb.scrollIntoView({behavior:'smooth',block:'nearest'}); }, 100);
+}
+
+// ── PRACTICE ──
+function doMCQ(groupId,el,type){
+  const group=document.getElementById(groupId);
+  if(group.dataset.answered)return;
+  group.dataset.answered='1';
+  group.querySelectorAll('.mcq-opt').forEach(o=>o.style.pointerEvents='none');
+  const num=groupId.replace('mcq','');
+  const fb=document.getElementById('fi'+num);
+  if(type==='correct'){
+    el.classList.add('correct-ans');
+    const msgs={
+      mcq1:'Right! "Has been changing" — PPC, because the reforms are an ongoing process that started in 2016 and is still happening.',
+      mcq2:'Correct! "Has been counting" — PPC, because they count the votes repeatedly every year. Ongoing, repeated activity over a long period.'
+    };
+    fb.textContent='✅ '+(msgs[groupId]||'Correct!');fb.className='feedback-inline show good';
+  }else{
+    el.classList.add('wrong-ans');
+    group.querySelectorAll('.mcq-opt').forEach(o=>{if(!o.classList.contains('wrong-ans'))o.classList.add('correct-ans');});
+    const msgs={
+      mcq1:'Not quite — "has changed" implies a single completed change. But reforms are still ongoing → PPC.',
+      mcq2:'Not quite — "has counted" suggests one specific completed count. But PricewaterhouseCoopers has been doing this repeatedly for decades → PPC.'
+    };
+    fb.textContent='❌ '+(msgs[groupId]||'Not quite.');fb.className='feedback-inline show bad';
+  }
+}
+function checkFillProgress(){
+  const a=(document.getElementById('f3a')?.value.trim().length||0)>2;
+  const b=(document.getElementById('f3b')?.value.trim().length||0)>2;
+  const f4=(document.getElementById('f4')?.value.trim().length||0)>5;
+  const f5=(document.getElementById('f5')?.value.trim().length||0)>2;
+  document.getElementById('checkAllBtn').disabled=!(a&&b&&f4&&f5);
+}
+function checkOpenBtn(){document.getElementById('checkOpen6').disabled=document.getElementById('open6').value.trim().length<20;}
+function checkAllFill(){
+  const checks=[
+    {ids:['f3a','f3b'],answers:[['have been raising'],['announced']],fi:'fi3',
+     ok:'Correct! PPC "have been raising" (ongoing process) + Past Simple "announced" (specific year 2016).',
+     bad:'Two parts: (1) "have been raising" — PPC, ongoing criticism. (2) "announced" — Past Simple, specific event in 2016.'},
+    {ids:['f4'],answers:[['was founded']],fi:'fi4',
+     ok:'Correct! "Was founded in 1927" — Past Simple because of the specific year. "Has run" is fine after.',
+     bad:'The error: "has been founded" → should be "was founded in 1927." Specific year = Past Simple, not PP.'},
+    {ids:['f5'],answers:[['have watched','have seen']],fi:'fi5',
+     ok:'Correct! "Have watched three times" — PP Simple because of the number "three times."',
+     bad:'"Three times" = a completed count → PP Simple, not Continuous. Answer: "I have watched this documentary three times."'},
+  ];
+  let score=0;
+  checks.forEach(c=>{
+    const vals=c.ids.map(id=>document.getElementById(id)?.value.trim().toLowerCase()||'');
+    const ok=c.answers.every((ans,i)=>ans.some(a=>vals[i].includes(a.toLowerCase())));
+    const fb=document.getElementById(c.fi);
+    c.ids.forEach(id=>{const inp=document.getElementById(id);if(inp){inp.disabled=true;inp.classList.add(ok?'correct':'wrong');}});
+    if(ok){score++;fb.textContent='✅ '+c.ok;fb.className='feedback-inline show good';}
+    else{fb.textContent='❌ '+c.bad;fb.className='feedback-inline show bad';}
+  });
+  document.getElementById('checkAllBtn').disabled=true;
+  const pct=Math.round(score/3*100);
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('scoreDisplay').textContent=score+' / 3';
+  document.getElementById('scoreBox').classList.add('show');
+  document.getElementById('scoreNum').textContent=score+'/3';
+  const msgs=['Review the Grammar tab and try again 💪','Almost there — review the examples 📚','Perfect score! 🏆'];
+  document.getElementById('scoreMsg').textContent=msgs[Math.min(score,2)];
+}
+async function checkOpen(){
+  const btn=document.getElementById('checkOpen6');
+  const text=document.getElementById('open6').value.trim();
+  const fb=document.getElementById('aifb6');
+  btn.disabled=true;btn.innerHTML='⏳ Checking...';
+  fb.innerHTML='<div class="fb-note" style="font-style:italic;color:#aaa;">Checking...</div>';
+  const sys='You are a warm English teacher for B1-B2 Russian-speaking students. Check: (1) Is there at least 1 PP Simple used correctly? (2) Is there at least 1 PP Continuous used correctly? (3) Are 2+ vocabulary words from the lesson used naturally? Target vocab: recognition of excellence, eligible, criteria, kick off, in-depth, run the show, under consideration, have yet to. (4) General grammar. Reply in Russian. Start lines with checkmark or cross emoji. Be specific. Max 150 words.';
+  try{
+    const r=await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{role:'user',parts:[{text:sys+' Student text: "'+text+'"'}]}],generationConfig:{temperature:.2,maxOutputTokens:3000}})});
+    const d=await r.json();
+    fb.innerHTML=renderFeedback(d.candidates?.[0]?.content?.parts?.[0]?.text||'');
+  }catch(e){fb.innerHTML='<div class="fb-err">Error: '+e.message+'</div>';}
+  btn.disabled=false;btn.innerHTML='✨ Check with AI';
+}
+
+function renderFeedback(reply){
+  return reply.split('\n').filter(l=>l.trim()).map(line=>{
+    if(line.startsWith('✅'))return'<div class="fb-ok">'+line+'</div>';
+    if(line.startsWith('❌'))return'<div class="fb-err">'+line+'</div>';
+    return'<div class="fb-note">'+line+'</div>';
+  }).join('');
+}
+
+
+// ── RESTORE COMP STATE ──
+function restoreCompState(){
+  const cqs = ['cq1','cq2','cq3','cq4','cq5','cq6','cq7','cq8','cq9','cq10'];
+  cqs.forEach(qid=>{
+    try {
+      const saved = sessionStorage.getItem('oc_'+qid);
+      if(saved){
+        const container=document.getElementById(qid);
+        if(!container||container.dataset.answered) return;
+        const opts=container.querySelectorAll('.comp-opt');
+        opts.forEach(o=>{
+          const match=(o.getAttribute('onclick')||'').match(/'([abc])'\)/);
+          if(match&&match[1]===saved) answerComp(o,qid,saved);
+        });
+      }
+    } catch(e){}
+  });
+}
+setTimeout(restoreCompState, 200);
+
+// ── DARK MODE ──
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  const btn = document.getElementById('darkToggle');
+  if(btn) btn.textContent = document.body.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
+  localStorage.setItem('belang_dark', document.body.classList.contains('dark') ? '1' : '0');
+}
+// Restore preference
+if(localStorage.getItem('belang_dark')==='1'){document.body.classList.add('dark');const b=document.getElementById('darkToggle');if(b)b.textContent='☀️ Light';}
+
+// ── AI CHAT ──
+let practiceContext = ''; // updated as student completes exercises
+const SYS='You are a warm English coach for B1-B2 Russian-speaking students. Topic: HowStuffWorks video about how the Academy Awards work. Grammar focus: Present Perfect Simple vs Present Perfect Continuous. Vocab focus: recognition of excellence, eligible, criteria, kick off, in-depth, run the show, under consideration, have yet to. Check sentences, explain grammar, discuss Oscar facts. Reply in same language as student.';
+const chatHistory=[];
+async function sendMessage(){
+  const input=document.getElementById('chatInput');
+  const text=input.value.trim();
+  if(!text)return;
+  appendMsg(text,'user');input.value='';autoResize(input);
+  chatHistory.push({role:'user',content:text});
+  document.getElementById('sendBtn').disabled=true;
+  const typing=appendTyping();
+  try{
+    const msgs=chatHistory.slice(0,-1).map(h=>({role:h.role==='assistant'?'model':'user',parts:[{text:h.content}]}));
+    msgs.push({role:'user',parts:[{text:text}]});
+    const r=await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_instruction:{parts:[{text:SYS}]},contents:msgs,generationConfig:{maxOutputTokens:800,temperature:.7}})});
+    const d=await r.json();
+    const reply=d.candidates?.[0]?.content?.parts?.[0]?.text||'No response.';
+    typing.remove();appendMsg(reply,'ai');
+    chatHistory.push({role:'assistant',content:reply});
+  }catch(e){typing.remove();appendMsg('Error: '+e.message,'ai');}
+  document.getElementById('sendBtn').disabled=false;
+}
+function sendQuick(text){document.getElementById('chatInput').value=text;sendMessage();}
+function appendMsg(text,role){
+  const c=document.getElementById('chatMessages');
+  const div=document.createElement('div');div.className='msg '+(role==='user'?'user':'ai');
+  const av=document.createElement('div');av.className='msg-avatar';av.textContent=role==='user'?'🙋':'✦';
+  const bubble=document.createElement('div');bubble.className='msg-bubble';bubble.innerHTML=text.replace(/\n/g,'<br>');
+  div.appendChild(av);div.appendChild(bubble);c.appendChild(div);c.scrollTop=c.scrollHeight;return div;
+}
+function appendTyping(){
+  const c=document.getElementById('chatMessages');
+  const div=document.createElement('div');div.className='msg ai';
+  div.innerHTML='<div class="msg-avatar">✦</div><div class="msg-bubble"><div style="display:flex;gap:4px;padding:4px 0;"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+  c.appendChild(div);c.scrollTop=c.scrollHeight;return div;
+}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}}
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
+</script>
+</body>
+</html>
