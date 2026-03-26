@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pair Practice — Oscar Vocab · 60 min</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#EDECEB;--warm-white:#F5F4F3;--ink:#1B2D40;--muted:#6B7A8A;
+  --accent:#730F26;--accent-light:#F2E0E4;
+  --gold:#D4A87A;--gold-light:#FFF8EE;
+  --success:#2E7D52;--success-light:#E8F5EE;
+  --pa:#1d4ed8;--pa-light:#EFF6FF;--pa-border:#93c5fd;
+  --pb:#be185d;--pb-light:#FDF2F8;--pb-border:#f9a8d4;
+  --border:#D8D5D2;--radius:12px;--shadow:0 4px 24px rgba(27,45,64,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Helvetica,Arial,sans-serif;background:var(--cream);color:var(--ink);font-size:16px;line-height:1.7;}
+
+.lesson-header{background:linear-gradient(135deg,#1B2D40 0%,#2C1654 50%,#8B1A1A 100%);color:#F5F0EB;padding:40px 40px 36px;position:relative;overflow:hidden;border-radius:16px;margin:16px 16px 0;}
+.lesson-header::before{content:'';position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(212,168,122,.25),transparent 70%);}
+.stars-deco{position:absolute;top:20px;left:40px;font-size:13px;letter-spacing:6px;opacity:.35;color:var(--gold);}
+.lesson-label{font-family:'Caveat',cursive;font-size:18px;font-weight:600;color:var(--gold);margin-bottom:8px;margin-top:20px;position:relative;}
+.lesson-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4.5vw,48px);font-weight:600;line-height:1.15;margin-bottom:10px;position:relative;}
+.lesson-subtitle{font-size:14px;color:rgba(245,240,235,.65);margin-bottom:24px;position:relative;}
+.goals-block{background:rgba(255,255,255,.08);border:1px solid rgba(212,168,122,.3);border-radius:10px;padding:16px 20px;position:relative;}
+.goals-title{font-family:'Caveat',cursive;font-size:17px;font-weight:700;color:var(--gold);margin-bottom:10px;}
+.goal-item{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:rgba(245,240,235,.88);margin-bottom:7px;line-height:1.5;}
+.goal-check{color:var(--gold);font-size:15px;flex-shrink:0;}
+
+.tabs-wrap{margin:0 16px;background:var(--warm-white);border:1.5px solid var(--border);border-top:none;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(27,45,64,.08);}
+.tabs-bar{display:flex;gap:2px;padding:0 16px;border-bottom:1.5px solid var(--border);overflow-x:auto;scrollbar-width:none;}
+.tabs-bar::-webkit-scrollbar{display:none;}
+.tab-btn{padding:13px 14px;font-family:Helvetica,Arial,sans-serif;font-size:13px;font-weight:500;color:var(--muted);background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.tab-btn:hover{color:var(--ink);}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600;}
+.tab-time{font-size:11px;color:var(--muted);font-family:'Caveat',cursive;}
+.tab-hint{text-align:center;font-family:'Caveat',cursive;font-size:14px;color:var(--muted);padding:6px 20px 8px;background:#EEECEA;border-radius:0 0 14px 14px;margin:0 16px;border:1.5px solid var(--border);border-top:none;display:flex;align-items:center;justify-content:center;gap:10px;}
+
+.tab-panel{display:none;padding:32px 40px;max-width:900px;margin:0 auto;}
+.tab-panel.active{display:block;animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.section-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.teacher-note{background:#FFFBEA;border:1.5px solid #F0E068;border-radius:var(--radius);padding:13px 18px;font-family:'Caveat',cursive;font-size:16px;line-height:1.6;color:#5A4800;margin:14px 0;}
+
+/* PLAYER CARDS */
+.player-split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+@media(max-width:600px){.player-split{grid-template-columns:1fr;}}
+.player-card{border-radius:var(--radius);border:2px solid;padding:18px 20px;}
+.pa-card{background:var(--pa-light);border-color:var(--pa-border);}
+.pb-card{background:var(--pb-light);border-color:var(--pb-border);}
+.player-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.pa-label{color:var(--pa);}
+.pb-label{color:var(--pb);}
+.player-role{font-size:14.5px;font-weight:600;margin-bottom:6px;line-height:1.4;}
+.player-task{font-size:13.5px;color:var(--muted);line-height:1.6;}
+.player-cues{margin-top:10px;border-top:1px solid rgba(0,0,0,.07);padding-top:10px;}
+.cue-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px;}
+.cue-item{font-size:13px;line-height:1.7;}
+.cue-word{font-weight:700;}
+.pa-word{color:var(--pa);}
+.pb-word{color:var(--pb);}
+
+/* VOCAB REFERENCE */
+.vocab-ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+@media(max-width:600px){.vocab-ref-grid{grid-template-columns:1fr;}}
+.vocab-ref-chip{background:var(--warm-white);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;}
+.vrc-en{font-weight:700;color:var(--accent);font-size:14px;}
+.vrc-ru{font-size:12px;color:var(--muted);}
+.vrc-ex{font-size:12px;color:var(--ink);font-style:italic;margin-top:3px;}
+
+/* PROMPT BOXES */
+.prompt-dark{background:var(--ink);color:#F0ECEA;border-radius:var(--radius);padding:18px 22px;margin-bottom:14px;}
+.prompt-dark strong{color:var(--gold);}
+.prompt-gold{background:var(--gold-light);border:1.5px solid #E8D0A0;border-radius:var(--radius);padding:16px 20px;margin-bottom:14px;font-size:15px;font-weight:600;}
+.prompt-blue{background:var(--pa-light);border-left:3px solid var(--pa);border-radius:0 var(--radius) var(--radius) 0;padding:12px 16px;margin-bottom:10px;font-size:14px;}
+.prompt-pink{background:var(--pb-light);border-left:3px solid var(--pb);border-radius:0 var(--radius) var(--radius) 0;padding:12px 16px;margin-bottom:10px;font-size:14px;}
+
+/* TIMER */
+.timer-bar{background:white;border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 18px;display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.timer-display{font-family:'Courier New',monospace;font-size:22px;font-weight:700;color:var(--ink);min-width:58px;}
+.timer-track{flex:1;height:6px;background:#F0ECE6;border-radius:3px;overflow:hidden;}
+.timer-fill{height:100%;border-radius:3px;transition:width 1s linear,background .5s;}
+.timer-btn{border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;}
+.t-start{background:var(--success);color:white;}
+.t-reset{background:#F0ECE6;color:#aaa;}
+
+/* SCENARIO */
+.scenario-card{background:linear-gradient(135deg,#1B2D40,#2C1654);border-radius:var(--radius);padding:20px 26px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden;}
+.scenario-card::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(212,168,122,.1);}
+.scenario-emoji{font-size:34px;margin-bottom:8px;display:block;}
+.scenario-text{font-size:16px;color:white;line-height:1.6;position:relative;}
+.scenario-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;}
+
+/* WRITE AREA */
+.write-box{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:14px;color:var(--ink);background:#fff;resize:none;outline:none;font-family:Helvetica,Arial,sans-serif;line-height:1.6;transition:border-color .2s;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.write-box:focus{border-color:var(--accent);}
+.player-write-wrap{margin-bottom:12px;}
+.pw-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;display:block;}
+.pa-pil{color:var(--pa);}
+.pb-pil{color:var(--pb);}
+
+/* BUTTONS */
+.btn-spin{background:linear-gradient(135deg,var(--pa),var(--accent));color:#fff;border:none;border-radius:10px;padding:11px 24px;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:transform .15s;}
+.btn-spin:hover{transform:translateY(-1px);}
+.btn-check{background:var(--ink);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:13px;font-weight:600;cursor:pointer;margin-top:10px;}
+.btn-check:disabled{opacity:.38;cursor:not-allowed;}
+
+/* SCOREBOARD */
+.scoreboard{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;}
+.score-card{border-radius:var(--radius);border:2px solid;padding:16px;text-align:center;}
+.sa-card{background:var(--pa-light);border-color:var(--pa-border);}
+.sb-card{background:var(--pb-light);border-color:var(--pb-border);}
+.score-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.sa-name{color:var(--pa);}
+.sb-name{color:var(--pb);}
+.score-num{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:600;line-height:1;}
+.sa-num{color:var(--pa);}
+.sb-num{color:var(--pb);}
+.score-btns{display:flex;gap:6px;justify-content:center;margin-top:8px;}
+.s-btn{border:none;border-radius:6px;width:34px;height:34px;font-size:17px;cursor:pointer;font-weight:700;}
+.s-btn-plus{background:var(--success-light);color:var(--success);}
+.s-btn-minus{background:#FFF0F0;color:var(--accent);}
+
+/* AI FEEDBACK */
+.fb-ok{background:#d1fae5;color:#065f46;border-radius:8px;padding:10px 14px;margin-bottom:6px;font-size:13.5px;line-height:1.7;}
+.fb-err{background:#fee2e2;color:#991b1b;border-radius:8px;padding:10px 14px;margin-bottom:6px;font-size:13.5px;line-height:1.7;}
+.fb-note{color:#555;font-size:13px;padding:3px 0;line-height:1.6;}
+
+@media(max-width:640px){
+  .lesson-header{padding:28px 20px;margin:8px 8px 0;}
+  .tabs-wrap,.tab-hint{margin:0 8px;}
+  .tab-btn{padding:11px 10px;font-size:12px;}
+  .tab-panel{padding:22px 16px;}
+}
+</style>
+</head>
+<body>
+
+<header class="lesson-header">
+  <div class="stars-deco">★ ★ ★ ★ ★</div>
+  <div class="lesson-label">Pair Practice · 2 Students · B1–B2 · 60 min</div>
+  <h1 class="lesson-title">Oscar Talk — Pair Edition 🎬</h1>
+  <p class="lesson-subtitle">Все 12 vocab слов из урока — в живых парных активностях. Говорите, спорите, угадывайте и пишите вместе.</p>
+  <div class="goals-block">
+    <div class="goals-title">После этого урока вы сможете...</div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>Использовать все 12 vocab слов в живом разговоре — не думая о них</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>Объяснить слово партнёру, не называя его — и угадать слово по описанию</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>Спорить, соглашаться и выражать мнение на английском</span></div>
+    <div class="goal-item"><span class="goal-check">✓</span><span>Написать совместный текст используя весь изученный vocab</span></div>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <nav class="tabs-bar">
+    <button class="tab-btn active" onclick="switchTab('warmup',this)">🔥 Warm-up <span class="tab-time">· 10 min</span></button>
+    <button class="tab-btn" onclick="switchTab('taboo',this)">🃏 Taboo <span class="tab-time">· 15 min</span></button>
+    <button class="tab-btn" onclick="switchTab('debate',this)">🎤 Debate <span class="tab-time">· 15 min</span></button>
+    <button class="tab-btn" onclick="switchTab('roleplay',this)">🎭 Role Play <span class="tab-time">· 10 min</span></button>
+    <button class="tab-btn" onclick="switchTab('write',this)">✍️ Write Together <span class="tab-time">· 10 min</span></button>
+    <button class="tab-btn" onclick="switchTab('score',this)">📊 Score</button>
+  </nav>
+</div>
+<div class="tab-hint">
+  <span>👆 Switch between activities</span>
+  <span id="tabProgress" style="font-size:11px;font-weight:700;background:var(--accent);color:white;border-radius:20px;padding:3px 10px;letter-spacing:.5px;">1 / 6</span>
+</div>
+
+<!-- VOCAB REFERENCE STRIP (always visible context) -->
+
+<!-- ══ WARM-UP ══ -->
+<div id="tab-warmup" class="tab-panel active">
+
+  <div class="teacher-note">🎬 Start here! Both students see the same vocab list below — but each has different questions. Speak in English the whole time. 5 minutes each.</div>
+
+  <div class="section-label">📋 Vocab reminder — 12 words from the lesson</div>
+  <div class="vocab-ref-grid">
+    <div class="vocab-ref-chip"><div class="vrc-en">to be nominated</div><div class="vrc-ru">быть номинированным</div></div>
+    <div class="vocab-ref-chip"><div class="vrc-en">to take home (an award)</div><div class="vrc-ru">забрать / унести награду</div></div>
+    <div class="vocab-ref-chip"><div class="vrc-en">to be hyped</div><div class="vrc-ru">много хайпа вокруг</div></div>
+    <div class="vocab-ref-chip"><div class="vrc-en">to be snubbed</div><div class="vrc-ru">быть обделённым</div></div>
+    <div class="vocab-ref-chip"><div class="vrc-en">record-breaking</div><div class="vrc-ru">рекордный</div></div>
+    <div class="vocab-ref-chip"><div class="vrc-en">overrated / underrated</div><div class="vrc-ru">переоценённый / недооценённый</div></div>
+    <div class="vocab-ref-chip"><div class="vrc-en">to make waves</div><div class="vrc-ru">произвести фурор</div></div>
+    <div class="vocab-ref-chip"><div class="vrc-en">to live up to the hype</div><div class="vrc-ru">оправдать ожидания</div></div>
+    <div class="vocab-ref-chip"><div class="vrc-en">host</div><div class="vrc-ru">ведущий / хозяин</div></div>
+    <div class="vocab-ref-chip"><div class="vrc-en">for the first time</div><div class="vrc-ru">впервые</div></div>
+    <div class="vocab-ref-chip"><div class="vrc-en">acceptance speech</div><div class="vrc-ru">речь лауреата</div></div>
+    <div class="vocab-ref-chip"><div class="vrc-en">to blow someone away</div><div class="vrc-ru">поразить / ошеломить</div></div>
+  </div>
+
+  <div class="timer-bar">
+    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#bbb;">WARM-UP</span>
+    <span class="timer-display" id="wuTimer">10:00</span>
+    <div class="timer-track"><div class="timer-fill" id="wuFill" style="width:100%;background:var(--success)"></div></div>
+    <button class="timer-btn t-start" id="wuStartBtn" onclick="timerToggle('wu',10)">▶ Start</button>
+    <button class="timer-btn t-reset" onclick="timerReset('wu',10)">↺</button>
+  </div>
+
+  <div class="player-split">
+    <div class="player-card pa-card">
+      <div class="player-label pa-label">🎭 Student A</div>
+      <div class="player-role">Answer these questions first:</div>
+      <div class="player-task" style="margin-top:8px;">
+        ① Have you ever watched the Oscars? Did you enjoy it?<br><br>
+        ② Name a film that you think is <span class="pa-word">overrated</span> and one that is <span class="pa-word">underrated</span>. Why?<br><br>
+        ③ Has a film ever completely <span class="pa-word">blown you away</span>? Which one and what happened?<br><br>
+        ④ If you were <span class="pa-word">nominated</span> for an Oscar, what would your <span class="pa-word">acceptance speech</span> be about?
+      </div>
+    </div>
+    <div class="player-card pb-card">
+      <div class="player-label pb-label">🎭 Student B</div>
+      <div class="player-role">Listen, react, then answer yours:</div>
+      <div class="player-task" style="margin-top:8px;">
+        ① What film has <span class="pb-word">made waves</span> recently — in cinemas or on streaming?<br><br>
+        ② Have you ever felt that a film was too <span class="pb-word">hyped</span> — and then it didn't <span class="pb-word">live up to the hype</span>?<br><br>
+        ③ Who do you think was <span class="pb-word">snubbed</span> at any awards show you've seen? Was it fair?<br><br>
+        ④ Who would you want to <span class="pb-word">host</span> the Oscars — and why? Has anyone done a <span class="pb-word">record-breaking</span> job?
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt-dark">
+    <strong>💬 Follow-up challenge:</strong> After both students answer, pick ONE question and continue the conversation for 2 minutes. Try to use at least <strong>4 different vocab words</strong> naturally. Your partner counts them silently.
+  </div>
+
+  <div class="scoreboard">
+    <div class="score-card sa-card"><div class="score-name sa-name">Student A</div><div class="score-num sa-num" id="wuScoreA">0</div><div class="score-btns"><button class="s-btn s-btn-plus" onclick="addScore('wu','A',1)">+</button><button class="s-btn s-btn-minus" onclick="addScore('wu','A',-1)">−</button></div></div>
+    <div class="score-card sb-card"><div class="score-name sb-name">Student B</div><div class="score-num sb-num" id="wuScoreB">0</div><div class="score-btns"><button class="s-btn s-btn-plus" onclick="addScore('wu','B',1)">+</button><button class="s-btn s-btn-minus" onclick="addScore('wu','B',-1)">−</button></div></div>
+  </div>
+</div>
+
+<!-- ══ TABOO ══ -->
+<div id="tab-taboo" class="tab-panel">
+
+  <div class="teacher-note">🃏 Classic Taboo — explain the word WITHOUT saying it. 30 seconds per word. Take turns. +1 point if your partner guesses correctly.</div>
+
+  <div class="timer-bar">
+    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#bbb;">TABOO</span>
+    <span class="timer-display" id="tbTimer">00:30</span>
+    <div class="timer-track"><div class="timer-fill" id="tbFill" style="width:100%;background:var(--pa)"></div></div>
+    <button class="timer-btn t-start" id="tbStartBtn" onclick="timerToggle('tb',0.5)">▶ Start</button>
+    <button class="timer-btn t-reset" onclick="timerReset('tb',0.5)">↺</button>
+  </div>
+
+  <div style="text-align:center;margin-bottom:16px;">
+    <button class="btn-spin" onclick="drawTabooCard()">🃏 Draw a word</button>
+  </div>
+
+  <div id="tabooCard" style="display:none;">
+    <div class="scenario-card">
+      <span class="scenario-emoji" id="tabooEmoji">🏆</span>
+      <div class="scenario-label">Explain this word — WITHOUT saying it!</div>
+      <div class="scenario-text" id="tabooWord" style="font-size:22px;font-weight:700;color:var(--gold);"></div>
+      <div style="margin-top:10px;font-size:13px;color:rgba(255,255,255,.5);" id="tabooForbidden"></div>
+    </div>
+    <div class="prompt-dark" id="tabooHint" style="margin-top:0;"></div>
+  </div>
+
+  <div class="prompt-dark" style="margin-top:8px;">
+    <strong>Rules:</strong> No gestures. No saying the word or its translation. Use sentences — "It is what you say when a film gets a lot of attention before it comes out…" <br><br>
+    <strong>Bonus challenge:</strong> Use the word correctly in a sentence after guessing it. +1 extra point!
+  </div>
+
+  <div class="scoreboard">
+    <div class="score-card sa-card"><div class="score-name sa-name">Student A</div><div class="score-num sa-num" id="tbScoreA">0</div><div class="score-btns"><button class="s-btn s-btn-plus" onclick="addScore('tb','A',1)">+</button><button class="s-btn s-btn-minus" onclick="addScore('tb','A',-1)">−</button></div></div>
+    <div class="score-card sb-card"><div class="score-name sb-name">Student B</div><div class="score-num sb-num" id="tbScoreB">0</div><div class="score-btns"><button class="s-btn s-btn-plus" onclick="addScore('tb','B',1)">+</button><button class="s-btn s-btn-minus" onclick="addScore('tb','B',-1)">−</button></div></div>
+  </div>
+</div>
+
+<!-- ══ DEBATE ══ -->
+<div id="tab-debate" class="tab-panel">
+
+  <div class="teacher-note">🎤 One student argues FOR, one AGAINST. You have 2 minutes each, then 2 minutes open discussion. Use as many vocab words as possible — your partner counts them!</div>
+
+  <div class="timer-bar">
+    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#bbb;">DEBATE</span>
+    <span class="timer-display" id="dbTimer">02:00</span>
+    <div class="timer-track"><div class="timer-fill" id="dbFill" style="width:100%;background:var(--accent)"></div></div>
+    <button class="timer-btn t-start" id="dbStartBtn" onclick="timerToggle('db',2)">▶ Start</button>
+    <button class="timer-btn t-reset" onclick="timerReset('db',2)">↺</button>
+  </div>
+
+  <div style="text-align:center;margin-bottom:16px;">
+    <button class="btn-spin" onclick="drawDebate()">🎲 Draw a debate topic</button>
+  </div>
+
+  <div id="debateArea" style="display:none;">
+    <div class="prompt-gold" id="debateTopic" style="text-align:center;font-size:16px;"></div>
+    <div class="player-split">
+      <div class="player-card pa-card">
+        <div class="player-label pa-label">🎭 Student A</div>
+        <div class="player-role" id="debatePosA"></div>
+        <div class="player-cues">
+          <div class="cue-label">Useful phrases to start:</div>
+          <div class="cue-item">"I strongly believe that…"</div>
+          <div class="cue-item">"The evidence is clear — it has…"</div>
+          <div class="cue-item">"You cannot deny that…"</div>
+        </div>
+      </div>
+      <div class="player-card pb-card">
+        <div class="player-label pb-label">🎭 Student B</div>
+        <div class="player-role" id="debatePosB"></div>
+        <div class="player-cues">
+          <div class="cue-label">Useful phrases to counter:</div>
+          <div class="cue-item">"That may be true, but…"</div>
+          <div class="cue-item">"Actually, I would argue that…"</div>
+          <div class="cue-item">"The problem with that view is…"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt-dark">
+    <strong>Vocab challenge:</strong> Try to use these words in your argument:<br>
+    <span style="color:var(--gold);">nominated · overrated/underrated · make waves · live up to the hype · snubbed · record-breaking · blown away · acceptance speech</span><br><br>
+    Count how many vocab words your partner uses. Most vocab = +2 bonus points!
+  </div>
+
+  <div class="scoreboard">
+    <div class="score-card sa-card"><div class="score-name sa-name">Student A</div><div class="score-num sa-num" id="dbScoreA">0</div><div class="score-btns"><button class="s-btn s-btn-plus" onclick="addScore('db','A',1)">+</button><button class="s-btn s-btn-minus" onclick="addScore('db','A',-1)">−</button></div></div>
+    <div class="score-card sb-card"><div class="score-name sb-name">Student B</div><div class="score-num sb-num" id="dbScoreB">0</div><div class="score-btns"><button class="s-btn s-btn-plus" onclick="addScore('db','B',1)">+</button><button class="s-btn s-btn-minus" onclick="addScore('db','B',-1)">−</button></div></div>
+  </div>
+</div>
+
+<!-- ══ ROLE PLAY ══ -->
+<div id="tab-roleplay" class="tab-panel">
+
+  <div class="teacher-note">🎭 Each student gets a role. Speak for 3 minutes, then swap. Use at least 3 vocab words each. The other student reacts naturally.</div>
+
+  <div class="timer-bar">
+    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#bbb;">ROLE PLAY</span>
+    <span class="timer-display" id="rpTimer">03:00</span>
+    <div class="timer-track"><div class="timer-fill" id="rpFill" style="width:100%;background:var(--pb)"></div></div>
+    <button class="timer-btn t-start" id="rpStartBtn" onclick="timerToggle('rp',3)">▶ Start</button>
+    <button class="timer-btn t-reset" onclick="timerReset('rp',3)">↺</button>
+  </div>
+
+  <div style="text-align:center;margin-bottom:16px;">
+    <button class="btn-spin" onclick="drawRolePlay()">🎴 Draw a scenario</button>
+  </div>
+
+  <div id="rpArea" style="display:none;">
+    <div class="scenario-card">
+      <span class="scenario-emoji" id="rpEmoji">🎬</span>
+      <div class="scenario-label">Situation</div>
+      <div class="scenario-text" id="rpSituation"></div>
+    </div>
+    <div class="player-split">
+      <div class="player-card pa-card">
+        <div class="player-label pa-label">🎭 Student A</div>
+        <div class="player-role" id="rpRoleA"></div>
+        <div class="player-cues">
+          <div class="cue-label">Must use at least:</div>
+          <div class="player-task" id="rpCuesA"></div>
+        </div>
+      </div>
+      <div class="player-card pb-card">
+        <div class="player-label pb-label">🎭 Student B</div>
+        <div class="player-role" id="rpRoleB"></div>
+        <div class="player-cues">
+          <div class="cue-label">Must use at least:</div>
+          <div class="player-task" id="rpCuesB"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scoreboard">
+    <div class="score-card sa-card"><div class="score-name sa-name">Student A</div><div class="score-num sa-num" id="rpScoreA">0</div><div class="score-btns"><button class="s-btn s-btn-plus" onclick="addScore('rp','A',1)">+</button><button class="s-btn s-btn-minus" onclick="addScore('rp','A',-1)">−</button></div></div>
+    <div class="score-card sb-card"><div class="score-name sb-name">Student B</div><div class="score-num sb-num" id="rpScoreB">0</div><div class="score-btns"><button class="s-btn s-btn-plus" onclick="addScore('rp','B',1)">+</button><button class="s-btn s-btn-minus" onclick="addScore('rp','B',-1)">−</button></div></div>
+  </div>
+</div>
+
+<!-- ══ WRITE TOGETHER ══ -->
+<div id="tab-write" class="tab-panel">
+
+  <div class="teacher-note">✍️ This is the final challenge. You write TOGETHER — one paragraph each, continuing the same story. Use as many vocab words as possible. AI checks both.</div>
+
+  <div class="timer-bar">
+    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#bbb;">WRITE TOGETHER</span>
+    <span class="timer-display" id="wtTimer">10:00</span>
+    <div class="timer-track"><div class="timer-fill" id="wtFill" style="width:100%;background:var(--success)"></div></div>
+    <button class="timer-btn t-start" id="wtStartBtn" onclick="timerToggle('wt',10)">▶ Start</button>
+    <button class="timer-btn t-reset" onclick="timerReset('wt',10)">↺</button>
+  </div>
+
+  <div style="text-align:center;margin-bottom:14px;">
+    <button class="btn-spin" onclick="drawWritePrompt()">🎲 Draw a writing prompt</button>
+  </div>
+
+  <div id="writeArea" style="display:none;">
+    <div class="prompt-gold" id="writePromptText" style="text-align:center;"></div>
+
+    <div style="background:var(--pa-light);border:1.5px solid var(--pa-border);border-radius:var(--radius);padding:14px 18px;margin-bottom:6px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--pa);margin-bottom:8px;">🎭 Student A — write the first paragraph (4–5 sentences)</div>
+      <textarea class="write-box" id="writeA" rows="4" placeholder="Start the story or review here…"></textarea>
+    </div>
+
+    <div style="background:var(--pb-light);border:1.5px solid var(--pb-border);border-radius:var(--radius);padding:14px 18px;margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--pb);margin-bottom:8px;">🎭 Student B — continue with the second paragraph (4–5 sentences)</div>
+      <textarea class="write-box" id="writeB" rows="4" placeholder="Continue from where Student A left off…"></textarea>
+    </div>
+
+    <div style="background:#F5F0FF;border:1px solid var(--pa-border);border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:13px;">
+      <strong>Vocab checklist:</strong> nominated · take home · hyped · overrated/underrated · live up to the hype · snubbed · record-breaking · blow away · make waves · host · acceptance speech · for the first time
+    </div>
+
+    <button class="btn-check" id="wtCheckBtn" onclick="checkWriteTogether()">✨ Check both paragraphs with AI</button>
+
+    <div id="wtFeedbackA" style="margin-top:12px;"></div>
+    <div id="wtFeedbackB" style="margin-top:8px;"></div>
+  </div>
+
+  <div class="scoreboard">
+    <div class="score-card sa-card"><div class="score-name sa-name">Student A</div><div class="score-num sa-num" id="wtScoreA">0</div><div class="score-btns"><button class="s-btn s-btn-plus" onclick="addScore('wt','A',1)">+</button><button class="s-btn s-btn-minus" onclick="addScore('wt','A',-1)">−</button></div></div>
+    <div class="score-card sb-card"><div class="score-name sb-name">Student B</div><div class="score-num sb-num" id="wtScoreB">0</div><div class="score-btns"><button class="s-btn s-btn-plus" onclick="addScore('wt','B',1)">+</button><button class="s-btn s-btn-minus" onclick="addScore('wt','B',-1)">−</button></div></div>
+  </div>
+</div>
+
+<!-- ══ SCOREBOARD ══ -->
+<div id="tab-score" class="tab-panel">
+  <div class="section-label">🏆 Final scores</div>
+  <div class="scoreboard" style="margin-bottom:16px;">
+    <div class="score-card sa-card"><div class="score-name sa-name">🎭 Student A</div><div class="score-num sa-num" id="totalA">—</div><div style="font-family:'Caveat',cursive;font-size:14px;color:var(--muted);margin-top:4px;">total points</div></div>
+    <div class="score-card sb-card"><div class="score-name sb-name">🎭 Student B</div><div class="score-num sb-num" id="totalB">—</div><div style="font-family:'Caveat',cursive;font-size:14px;color:var(--muted);margin-top:4px;">total points</div></div>
+  </div>
+
+  <button class="btn-spin" onclick="calcFinal()" style="width:100%;margin-bottom:16px;">🏆 Calculate winner</button>
+  <div id="winnerBox" style="display:none;background:var(--ink);border-radius:var(--radius);padding:22px;text-align:center;color:#F0ECEA;margin-bottom:20px;"></div>
+
+  <div class="section-label">Points breakdown</div>
+  <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:14px;">
+      <thead>
+        <tr>
+          <th style="padding:10px 14px;text-align:left;background:var(--cream);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Activity</th>
+          <th style="padding:10px 14px;text-align:center;background:var(--pa-light);color:var(--pa);font-size:11px;letter-spacing:.1em;text-transform:uppercase;" id="thA">A</th>
+          <th style="padding:10px 14px;text-align:center;background:var(--pb-light);color:var(--pb);font-size:11px;letter-spacing:.1em;text-transform:uppercase;" id="thB">B</th>
+        </tr>
+      </thead>
+      <tbody id="scoreTable"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const GEMINI_API_KEY = 'AIzaSyCKO4_IBUGNYFcr_eCe2ibZPrqGddvbqmM';
+
+// ── SCORES ──
+const scores = {wu:{A:0,B:0},tb:{A:0,B:0},db:{A:0,B:0},rp:{A:0,B:0},wt:{A:0,B:0}};
+function addScore(game,player,val){
+  scores[game][player] = Math.max(0, scores[game][player]+val);
+  document.getElementById(game+'Score'+player).textContent = scores[game][player];
+}
+function calcFinal(){
+  const ta = Object.values(scores).reduce((s,g)=>s+g.A,0);
+  const tb = Object.values(scores).reduce((s,g)=>s+g.B,0);
+  document.getElementById('totalA').textContent = ta;
+  document.getElementById('totalB').textContent = tb;
+  buildScoreTable();
+  const wb = document.getElementById('winnerBox');
+  wb.style.display='block';
+  if(ta===tb){
+    wb.innerHTML='<div style="font-family:Cormorant Garamond,serif;font-size:28px;color:var(--gold);margin-bottom:6px;">🤝 It\'s a tie!</div><div style="font-size:14px;opacity:.8;">'+ta+' points each — you both win! 🎉</div>';
+  }else{
+    const winner = ta>tb?'Student A':'Student B';
+    const pts = Math.max(ta,tb);
+    wb.innerHTML='<div style="font-family:Cormorant Garamond,serif;font-size:28px;color:var(--gold);margin-bottom:6px;">🏆 '+winner+'</div><div style="font-size:14px;opacity:.8;">'+pts+' points — Congratulations! 🎉</div>';
+  }
+}
+function buildScoreTable(){
+  const rows=[{l:'🔥 Warm-up',k:'wu'},{l:'🃏 Taboo',k:'tb'},{l:'🎤 Debate',k:'db'},{l:'🎭 Role Play',k:'rp'},{l:'✍️ Write Together',k:'wt'}];
+  document.getElementById('scoreTable').innerHTML=rows.map(r=>
+    `<tr><td style="padding:10px 14px;border-top:1px solid var(--border);">${r.l}</td><td style="padding:10px 14px;border-top:1px solid var(--border);text-align:center;font-weight:700;">${scores[r.k].A}</td><td style="padding:10px 14px;border-top:1px solid var(--border);text-align:center;font-weight:700;">${scores[r.k].B}</td></tr>`
+  ).join('');
+}
+
+// ── TABS ──
+const TAB_ORDER=['warmup','taboo','debate','roleplay','write','score'];
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+  const idx=TAB_ORDER.indexOf(name);
+  document.getElementById('tabProgress').textContent=(idx+1)+' / '+TAB_ORDER.length;
+  document.querySelector('.tabs-wrap').scrollIntoView({behavior:'smooth',block:'start'});
+  if(name==='score') buildScoreTable();
+}
+
+// ── TIMERS ──
+const timers={};
+function timerToggle(id,mins){
+  if(!timers[id])timers[id]={secs:Math.round(mins*60),running:false,interval:null};
+  const t=timers[id];
+  if(t.running){clearInterval(t.interval);t.running=false;document.getElementById(id+'StartBtn').textContent='▶ Resume';document.getElementById(id+'StartBtn').className='timer-btn t-start';}
+  else{t.running=true;document.getElementById(id+'StartBtn').textContent='⏸ Pause';document.getElementById(id+'StartBtn').className='timer-btn t-start';t.interval=setInterval(()=>timerTick(id,mins),1000);}
+}
+function timerTick(id,mins){
+  const t=timers[id];
+  if(t.secs>0){t.secs--;renderTimer(id,mins);}
+  else{clearInterval(t.interval);t.running=false;document.getElementById(id+'StartBtn').textContent='▶ Start';document.getElementById(id+'StartBtn').className='timer-btn t-start';}
+}
+function timerReset(id,mins){
+  if(timers[id])clearInterval(timers[id].interval);
+  timers[id]={secs:Math.round(mins*60),running:false,interval:null};
+  renderTimer(id,mins);
+  document.getElementById(id+'StartBtn').textContent='▶ Start';
+  document.getElementById(id+'StartBtn').className='timer-btn t-start';
+}
+function renderTimer(id,mins){
+  const secs=timers[id]?timers[id].secs:Math.round(mins*60);
+  const m=Math.floor(secs/60),s=secs%60;
+  document.getElementById(id+'Timer').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  const pct=secs/(mins*60)*100;
+  const fill=document.getElementById(id+'Fill');
+  if(fill)fill.style.background=pct<20?'#dc2626':fill.style.background;
+}
+
+// ── TABOO ──
+const tabooCards=[
+  {word:'to be nominated',emoji:'📜',forbidden:'Oscar, award, name, list',hint:'It is what happens before you can win. The Academy puts your name on a list of possible winners.'},
+  {word:'to take home an award',emoji:'🏆',forbidden:'win, prize, Oscar, get',hint:'What you do when you leave the ceremony with something shiny and heavy. You carry it to your house.'},
+  {word:'to be hyped',emoji:'📢',forbidden:'excited, famous, popular, buzz',hint:'When everyone is talking about something before it even comes out. Social media is full of it.'},
+  {word:'to be snubbed',emoji:'😤',forbidden:'ignored, lost, award, unfair',hint:'When you expected to be on the list but you were not. Everyone is surprised and a bit angry for you.'},
+  {word:'record-breaking',emoji:'📈',forbidden:'record, best, most, history',hint:'When a number is so big that nobody has ever reached it before. Like 16 nominations in one night.'},
+  {word:'overrated',emoji:'👎',forbidden:'bad, disappointing, hype, rating',hint:'When people say something is amazing but you think they are giving it too much credit. The opposite of underrated.'},
+  {word:'underrated',emoji:'💎',forbidden:'good, ignored, underappreciated, overrated',hint:'When something is much better than people say. Not enough people talk about it, but they should.'},
+  {word:'to make waves',emoji:'🌊',forbidden:'waves, impact, famous, news',hint:'An idiom. When someone or something causes a lot of attention or changes things. Usually in a good way.'},
+  {word:'to live up to the hype',emoji:'✅',forbidden:'hype, expectations, good, meet',hint:'When something is exactly as good as everyone said it would be. It did not disappoint.'},
+  {word:'acceptance speech',emoji:'🎤',forbidden:'speech, Oscar, thanks, stage, talk',hint:'The thing winners say when they receive their award. They thank their mum, their agent, and God.'},
+  {word:'to blow someone away',emoji:'🤯',forbidden:'amaze, surprise, shock, impress',hint:'An idiom. When something is so good or unexpected that you are completely speechless. A film can do this to you.'},
+  {word:'host',emoji:'🎙',forbidden:'presenter, MC, show, ceremony',hint:'The person who runs the event. They make jokes, introduce winners, and stand on stage the whole evening.'},
+];
+let lastTaboo=-1;
+function drawTabooCard(){
+  let idx;do{idx=Math.floor(Math.random()*tabooCards.length);}while(idx===lastTaboo&&tabooCards.length>1);
+  lastTaboo=idx;
+  const c=tabooCards[idx];
+  document.getElementById('tabooEmoji').textContent=c.emoji;
+  document.getElementById('tabooWord').textContent=c.word;
+  document.getElementById('tabooForbidden').textContent='Forbidden words: '+c.forbidden;
+  document.getElementById('tabooHint').innerHTML='<strong style="color:var(--gold);">How to explain it:</strong> '+c.hint;
+  document.getElementById('tabooCard').style.display='block';
+  timerReset('tb',0.5);
+}
+
+// ── DEBATE ──
+const debateTopics=[
+  {topic:'The Oscars are still the most important film award in the world.',posA:'FOR — argue that the Oscars still matter and represent true excellence in cinema.',posB:'AGAINST — argue that the Oscars are outdated, biased, and no longer reflect what audiences care about.'},
+  {topic:'A film that has been hyped too much can never live up to expectations.',posA:'FOR — argue that excessive hype always ruins the experience. Give examples.',posB:'AGAINST — argue that great films can always overcome hype and still blow you away.'},
+  {topic:'The best acceptance speeches are the ones that make waves — not the polite, safe ones.',posA:'FOR — argue that a memorable, controversial speech is better than a boring thank-you list.',posB:'AGAINST — argue that acceptance speeches should be gracious and professional, not political.'},
+  {topic:'Animated films are always underrated at the Oscars compared to live-action.',posA:'FOR — argue that animated films never get nominated for major awards even when they deserve it.',posB:'AGAINST — argue that animated films have their own category and are celebrated appropriately.'},
+  {topic:'A record-breaking number of nominations is the best proof that a film is great.',posA:'FOR — argue that the industry recognising a film in many categories means it truly deserves it.',posB:'AGAINST — argue that nominations are political and a snubbed film can be just as good or better.'},
+];
+let lastDebate=-1;
+function drawDebate(){
+  let idx;do{idx=Math.floor(Math.random()*debateTopics.length);}while(idx===lastDebate&&debateTopics.length>1);
+  lastDebate=idx;
+  const d=debateTopics[idx];
+  document.getElementById('debateTopic').textContent='🎤 '+d.topic;
+  document.getElementById('debatePosA').textContent=d.posA;
+  document.getElementById('debatePosB').textContent=d.posB;
+  document.getElementById('debateArea').style.display='block';
+  timerReset('db',2);
+}
+
+// ── ROLE PLAY ──
+const rpScenarios=[
+  {emoji:'☕',situation:'Monday morning. You both work at the same office. You pass each other at the coffee machine.',
+   roleA:'You watched the entire Oscars ceremony. You have strong opinions about who was snubbed and who blew everyone away.',
+   cuesA:'nominated, snubbed, blown away, acceptance speech',
+   roleB:'You only saw the highlights online. You think the whole thing is overrated and you want to know if it lived up to the hype this year.',
+   cuesB:'overrated, live up to the hype, hyped, take home'},
+  {emoji:'🎬',situation:'You are both at a cinema. The film you just watched was nominated for 5 Oscars but did not win any.',
+   roleA:'You loved the film and think it was completely snubbed. You want to convince your friend it was robbed.',
+   cuesA:'snubbed, record-breaking, blown away, nominated',
+   roleB:'You liked the film but think the Oscars made the right choice. You argue that it was slightly overrated.',
+   cuesB:'overrated, live up to the hype, take home, make waves'},
+  {emoji:'📱',situation:'You are video-calling your friend. You have both just watched the same Oscar-winning film for the first time.',
+   roleA:'This is your first time watching a film that took home Best Picture. You are shocked by how good it was.',
+   cuesA:'for the first time, blown away, take home, nominated',
+   roleB:'You had heard so much about this film before watching it. You want to discuss whether it lived up to all the hype.',
+   cuesB:'hyped, live up to the hype, overrated/underrated, make waves'},
+  {emoji:'🏆',situation:'You are both at a party after the Oscars ceremony. One of you works in the film industry.',
+   roleA:'You are a film critic who has been following awards season. You want to talk about which films made waves this year.',
+   cuesA:'make waves, record-breaking, nominated, acceptance speech',
+   roleB:'You are an actor who was nominated but did not win. You feel snubbed but are trying to be gracious about it.',
+   cuesB:'nominated, snubbed, host, for the first time'},
+];
+let lastRP=-1;
+function drawRolePlay(){
+  let idx;do{idx=Math.floor(Math.random()*rpScenarios.length);}while(idx===lastRP&&rpScenarios.length>1);
+  lastRP=idx;
+  const s=rpScenarios[idx];
+  document.getElementById('rpEmoji').textContent=s.emoji;
+  document.getElementById('rpSituation').textContent=s.situation;
+  document.getElementById('rpRoleA').textContent=s.roleA;
+  document.getElementById('rpCuesA').textContent=s.cuesA;
+  document.getElementById('rpRoleB').textContent=s.roleB;
+  document.getElementById('rpCuesB').textContent=s.cuesB;
+  document.getElementById('rpArea').style.display='block';
+  timerReset('rp',3);
+}
+
+// ── WRITE TOGETHER ──
+const writePrompts=[
+  {prompt:'Write a short review (2 paragraphs) of this year\'s Oscars ceremony. Student A: cover the best moments and biggest wins. Student B: cover the surprises, snubs, and controversies.'},
+  {prompt:'Write a fictional acceptance speech for a film called "The Last Sunrise." Student A: the emotional beginning — thank people and explain the journey. Student B: the bold ending — make a statement that makes waves.'},
+  {prompt:'Write a two-paragraph opinion piece: "Is cinema still alive in the streaming age?" Student A: argue that cinema is thriving. Student B: argue that it is struggling to live up to the hype.'},
+];
+let currentWritePrompt=null;
+function drawWritePrompt(){
+  const idx=Math.floor(Math.random()*writePrompts.length);
+  currentWritePrompt=writePrompts[idx];
+  document.getElementById('writePromptText').textContent='📝 '+currentWritePrompt.prompt;
+  document.getElementById('writeArea').style.display='block';
+  document.getElementById('writeA').value='';
+  document.getElementById('writeB').value='';
+  document.getElementById('wtFeedbackA').innerHTML='';
+  document.getElementById('wtFeedbackB').innerHTML='';
+}
+
+async function checkWriteTogether(){
+  const btn=document.getElementById('wtCheckBtn');
+  const textA=document.getElementById('writeA').value.trim();
+  const textB=document.getElementById('writeB').value.trim();
+  if(!textA&&!textB)return;
+  btn.disabled=true;btn.textContent='⏳ Checking both…';
+  const vocabList='nominated, take home, hyped, overrated, underrated, live up to the hype, snubbed, record-breaking, blow away, make waves, host, acceptance speech, for the first time';
+  const sys='You are a warm English teacher for B1-B2 Russian-speaking students. Check this piece of pair writing. For each student paragraph: check vocab usage (are the target words used correctly and naturally?), grammar accuracy, and flow. Reply in Russian. Start each paragraph of feedback with the student label (Student A / Student B). Start lines with checkmark or cross emoji. Max 200 words total. Be encouraging.';
+  const prompt=currentWritePrompt?.prompt||'Write together using Oscar vocabulary.';
+  const user='Task: "'+prompt+'"\nTarget vocab: '+vocabList+'\nStudent A paragraph: "'+textA+'"\nStudent B paragraph: "'+textB+'"';
+  const fbA=document.getElementById('wtFeedbackA');
+  const fbB=document.getElementById('wtFeedbackB');
+  fbA.innerHTML='<div class="fb-note" style="font-style:italic;color:#aaa;">Checking…</div>';
+  try{
+    const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+GEMINI_API_KEY,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{role:'user',parts:[{text:sys+' '+user}]}],generationConfig:{temperature:.2,maxOutputTokens:3000}})});
+    const d=await r.json();
+    const reply=d.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    const lines=reply.split('\n');
+    let secA=[],secB=[],current=null;
+    for(const l of lines){
+      if(l.toLowerCase().includes('student a'))current='a';
+      else if(l.toLowerCase().includes('student b'))current='b';
+      else if(current==='a')secA.push(l);
+      else if(current==='b')secB.push(l);
+    }
+    fbA.innerHTML='<div style="font-size:11px;font-weight:700;color:var(--pa);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Student A</div>'+renderFeedback(secA.join('\n')||reply);
+    fbB.innerHTML='<div style="font-size:11px;font-weight:700;color:var(--pb);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Student B</div>'+renderFeedback(secB.join('\n')||'');
+  }catch(e){fbA.innerHTML='<div class="fb-err">Error: '+e.message+'</div>';}
+  btn.disabled=false;btn.textContent='✨ Check both paragraphs with AI';
+}
+
+function renderFeedback(reply){
+  return reply.split('\n').filter(l=>l.trim()).map(line=>{
+    if(line.startsWith('✅'))return'<div class="fb-ok">'+line+'</div>';
+    if(line.startsWith('❌'))return'<div class="fb-err">'+line+'</div>';
+    return'<div class="fb-note">'+line+'</div>';
+  }).join('');
+}
+</script>
+</body>
+</html>
