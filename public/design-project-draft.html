@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BeLang — Design Project Draft</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1C1C1E;
+    --ink2: #3A3A3C;
+    --muted: #6E6E73;
+    --cream: #F5F1EB;
+    --warm: #EDE8E0;
+    --accent: #8B1A1A;
+    --accent2: #C4622D;
+    --gold: #C9974A;
+    --border: #D8D3CB;
+    --white: #FDFCFA;
+    --section-pad: 72px 0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(245,241,235,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; }
+  .nav-logo svg { height: 28px; width: auto; }
+  .nav-links {
+    display: flex; gap: 6px; list-style: none;
+  }
+  .nav-links a {
+    font-size: 11px; font-weight: 500; color: var(--muted);
+    text-decoration: none; padding: 5px 10px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); background: var(--warm); }
+  .nav-links a.active { color: var(--accent); background: #F5E8E8; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 130px 0 80px;
+    background: linear-gradient(160deg, #1C2B3A 0%, #8B1A1A 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -80px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(201,151,74,0.12);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -40px; left: 10%;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 860px; margin: 0 auto; padding: 0 40px;
+    position: relative; z-index: 1;
+  }
+  .hero-label {
+    font-family: 'Caveat', cursive;
+    font-size: 18px; color: var(--gold);
+    margin-bottom: 20px; display: block;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 300; color: #fff;
+    line-height: 1.15; margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 15px; color: rgba(255,255,255,0.65);
+    max-width: 540px; margin-bottom: 40px;
+    font-weight: 300;
+  }
+  .hero-meta {
+    display: flex; gap: 32px; flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .hero-meta-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4); font-weight: 500;
+  }
+  .hero-meta-val {
+    font-size: 13px; color: rgba(255,255,255,0.85); font-weight: 400;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 40px; }
+
+  /* ── SECTION ── */
+  .section {
+    padding: var(--section-pad);
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-of-type { border-bottom: none; }
+
+  .section-num {
+    font-family: 'Caveat', cursive;
+    font-size: 15px; color: var(--gold);
+    display: block; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 3.5vw, 36px);
+    font-weight: 400; color: var(--ink);
+    margin-bottom: 32px; line-height: 1.2;
+  }
+  .section-title span {
+    color: var(--accent); font-style: italic;
+  }
+
+  /* ── PROSE ── */
+  .prose p {
+    color: var(--ink2); margin-bottom: 18px; font-size: 15px;
+    font-weight: 300; max-width: 680px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong { font-weight: 500; color: var(--ink); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 28px 0;
+    font-size: 14px; color: var(--ink2); font-weight: 300;
+    max-width: 680px;
+  }
+  .callout strong { display: block; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px; font-weight: 500; }
+
+  /* ── EVIDENCE CHIPS ── */
+  .evidence-row {
+    display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0;
+  }
+  .chip {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 20px; padding: 6px 14px;
+    font-size: 12px; color: var(--ink2); font-weight: 400;
+  }
+  .chip-accent {
+    background: #F5E8E8; border-color: #E8C4C4; color: var(--accent);
+  }
+
+  /* ── FEATURE GRID ── */
+  .feature-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px; margin: 28px 0;
+  }
+  .feature-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 12px; padding: 22px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .feature-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+  }
+  .feature-icon {
+    font-size: 22px; margin-bottom: 10px; display: block;
+  }
+  .feature-card h4 {
+    font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 6px;
+  }
+  .feature-card p {
+    font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6;
+  }
+
+  /* ── THEORY TABLE ── */
+  .theory-list { display: flex; flex-direction: column; gap: 16px; margin: 28px 0; }
+  .theory-item {
+    display: grid; grid-template-columns: 180px 1fr;
+    gap: 20px; align-items: start;
+    padding: 18px 22px;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .theory-name {
+    font-size: 13px; font-weight: 500; color: var(--accent);
+    padding-top: 2px;
+  }
+  .theory-desc {
+    font-size: 13px; color: var(--ink2); font-weight: 300; line-height: 1.65;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; margin: 28px 0; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 16px; top: 8px; bottom: 8px;
+    width: 1px; background: var(--border);
+  }
+  .tl-item {
+    display: flex; gap: 24px; margin-bottom: 20px; position: relative;
+  }
+  .tl-dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--white); border: 2px solid var(--border);
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; position: relative; z-index: 1;
+  }
+  .tl-dot.active { border-color: var(--accent); background: #F5E8E8; }
+  .tl-body { padding-top: 4px; }
+  .tl-phase {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--muted); margin-bottom: 4px; font-weight: 500;
+  }
+  .tl-title {
+    font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 4px;
+  }
+  .tl-desc {
+    font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6;
+  }
+
+  /* ── SCALE GRID ── */
+  .scale-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin: 28px 0;
+  }
+  .scale-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 12px; padding: 22px;
+  }
+  .scale-card h4 {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--muted); margin-bottom: 12px; font-weight: 500;
+  }
+  .scale-card ul {
+    list-style: none; display: flex; flex-direction: column; gap: 8px;
+  }
+  .scale-card ul li {
+    font-size: 13px; color: var(--ink2); font-weight: 300;
+    padding-left: 16px; position: relative; line-height: 1.55;
+  }
+  .scale-card ul li::before {
+    content: '–'; position: absolute; left: 0; color: var(--gold);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,0.5);
+    padding: 32px 40px; text-align: center;
+    font-size: 12px; font-weight: 300; letter-spacing: 0.04em;
+  }
+
+  /* ── FADE IN ── */
+  .section { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .section.visible { opacity: 1; transform: none; }
+  .hero { opacity: 1; transform: none; }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero-inner, .container { padding: 0 24px; }
+    .theory-item { grid-template-columns: 1fr; gap: 6px; }
+    .scale-grid { grid-template-columns: 1fr; }
+    .hero { padding: 100px 0 60px; }
+  }
+</style>
+<style>
+  .belang-wordmark {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+    display: inline-flex; align-items: baseline; gap: 0;
+    line-height: 1;
+  }
+  .belang-wordmark .be { color: var(--accent); }
+  .belang-wordmark .belong-o {
+    position: relative; display: inline-block;
+  }
+  .belang-wordmark .belong-o .letter-a {
+    color: var(--gold);
+  }
+  .belang-wordmark .lang { color: var(--ink); }
+
+  /* hero wordmark — bigger */
+  .hero-wordmark {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 7vw, 80px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .hero-wordmark .be-part { color: rgba(255,255,255,0.9); }
+  .hero-wordmark .a-letter { color: var(--gold); font-style: italic; }
+  .hero-wordmark .lang-part { color: rgba(255,255,255,0.55); }
+  .hero-wordmark-sub {
+    font-family: 'Caveat', cursive;
+    font-size: 14px; color: rgba(255,255,255,0.35);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 32px; display: block;
+  }
+  .hero-wordmark-sub em { color: var(--gold); font-style: normal; }
+
+  /* ── AI MOCKUP ── */
+  .ai-mockup-wrap {
+    margin: 36px 0 28px;
+    position: relative;
+  }
+  .ai-mockup {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 16px 56px rgba(27,45,64,0.12);
+    max-width: 680px;
+  }
+  .mockup-bar {
+    background: #1C2B3A;
+    padding: 10px 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .mockup-dots { display: flex; gap: 5px; }
+  .mockup-dots span {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+  }
+  .mockup-dots span:first-child { background: #FF5F57; }
+  .mockup-dots span:nth-child(2) { background: #FFBD2E; }
+  .mockup-dots span:nth-child(3) { background: #28CA41; }
+  .mockup-url {
+    flex: 1; background: rgba(255,255,255,0.07);
+    border-radius: 5px; padding: 4px 12px;
+    font-size: 11px; color: rgba(255,255,255,0.4);
+    font-family: monospace;
+  }
+  .mockup-body { padding: 0; }
+
+  /* lesson tab strip */
+  .mockup-tabs {
+    display: flex; border-bottom: 1px solid var(--border);
+    background: var(--warm); overflow-x: auto;
+  }
+  .mockup-tab {
+    padding: 10px 16px; font-size: 11px; color: var(--muted);
+    white-space: nowrap; border-bottom: 2px solid transparent;
+    font-weight: 500; cursor: default;
+  }
+  .mockup-tab.active {
+    color: var(--accent); border-bottom-color: var(--accent);
+    background: var(--white);
+  }
+
+  /* chat area */
+  .mockup-chat { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+
+  .chat-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--muted); font-weight: 500; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .chat-label::before {
+    content: '✦'; color: var(--gold); font-size: 10px;
+  }
+
+  .chat-bubble {
+    padding: 11px 15px; border-radius: 12px;
+    font-size: 13px; line-height: 1.6; max-width: 88%;
+  }
+  .chat-bubble.ai {
+    background: #F0F4F8; color: var(--ink2);
+    border-radius: 4px 12px 12px 12px;
+    align-self: flex-start;
+  }
+  .chat-bubble.ai .highlight { color: var(--accent); font-weight: 500; }
+  .chat-bubble.ai .correct { color: #2A7A4B; font-weight: 500; }
+  .chat-bubble.user {
+    background: var(--accent); color: #fff;
+    border-radius: 12px 4px 12px 12px;
+    align-self: flex-end;
+  }
+  .chat-lang-tag {
+    font-size: 10px; color: var(--muted); opacity: 0.7;
+    margin-top: 3px; display: block;
+  }
+
+  .mockup-input-row {
+    display: flex; gap: 8px; padding: 12px 20px;
+    border-top: 1px solid var(--border); background: var(--warm);
+    align-items: center;
+  }
+  .mockup-input {
+    flex: 1; background: var(--white);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 12px; font-size: 12px; color: var(--muted);
+    font-style: italic;
+  }
+  .mockup-send {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+
+  /* exercise visual */
+  .mockup-exercise { padding: 16px 20px; border-top: 1px solid var(--border); }
+  .ex-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--muted); margin-bottom: 10px; font-weight: 500;
+  }
+  .ex-sentence {
+    font-size: 13px; color: var(--ink); margin-bottom: 8px; line-height: 1.7;
+  }
+  .ex-blank {
+    display: inline-block; border-bottom: 2px solid var(--accent);
+    min-width: 80px; color: var(--accent); font-weight: 500;
+    padding: 0 4px; text-align: center;
+  }
+  .ex-check-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--ink); color: #fff;
+    border-radius: 6px; padding: 6px 14px; font-size: 11px; font-weight: 500;
+    margin-top: 6px;
+  }
+
+  .mockup-caption {
+    font-family: 'Caveat', cursive;
+    font-size: 14px; color: var(--muted);
+    margin-top: 12px; padding-left: 4px;
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">
+    <span class="belang-wordmark">
+      <span class="be">Be</span><span class="belong-o"><span class="letter-a">L</span></span><span class="lang">ang</span>
+    </span>
+  </span>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#context">Context</a></li>
+    <li><a href="#innovation">Innovation</a></li>
+    <li><a href="#theory">Theory</a></li>
+    <li><a href="#stakeholders">Stakeholders</a></li>
+    <li><a href="#scale">Scale</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <span class="hero-label">Design Project · Draft · March 2025</span>
+
+    <!-- BeLang wordmark: Be + L(A=O)ng = BeLong · Language -->
+    <div style="margin-bottom: 6px;">
+      <span class="hero-wordmark">
+        <span class="be-part">Be</span><span class="a-letter">L</span><span class="lang-part">ang</span>
+      </span>
+    </div>
+
+    <!-- concept line -->
+    <div style="display:flex; gap:0; margin-bottom: 36px; align-items:center; flex-wrap:wrap; row-gap: 6px;">
+      <span style="font-family:'Playfair Display',serif; font-size:clamp(13px,1.8vw,16px); color:rgba(255,255,255,0.28); letter-spacing:0.18em; text-transform:uppercase;">be</span>
+      <span style="font-family:'Playfair Display',serif; font-size:clamp(13px,1.8vw,16px); color:var(--gold); letter-spacing:0.18em; text-transform:uppercase; font-style:italic;">l</span>
+      <span style="font-family:'Playfair Display',serif; font-size:clamp(13px,1.8vw,16px); color:rgba(255,255,255,0.28); letter-spacing:0.18em; text-transform:uppercase;">ong</span>
+      <span style="color:rgba(255,255,255,0.18); margin:0 14px; font-size:12px;">·</span>
+      <span style="font-family:'Playfair Display',serif; font-size:clamp(13px,1.8vw,16px); color:rgba(255,255,255,0.28); letter-spacing:0.18em; text-transform:uppercase;">l</span>
+      <span style="font-family:'Playfair Display',serif; font-size:clamp(13px,1.8vw,16px); color:var(--gold); letter-spacing:0.18em; text-transform:uppercase; font-style:italic;">a</span>
+      <span style="font-family:'Playfair Display',serif; font-size:clamp(13px,1.8vw,16px); color:rgba(255,255,255,0.28); letter-spacing:0.18em; text-transform:uppercase;">nguage</span>
+      <span style="color:rgba(255,255,255,0.18); margin:0 14px; font-size:12px;">·</span>
+      <span style="font-family:'Caveat',cursive; font-size:clamp(14px,2vw,18px); color:rgba(255,255,255,0.35); letter-spacing:0.06em;">become</span>
+    </div>
+
+    <p class="hero-sub">An AI-powered platform that makes language learning personal, contextually relevant, and accessible for adult newcomers — wherever they are, whatever language they're learning.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Course</span>
+        <span class="hero-meta-val">EDUC / Design of Learning Environments</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Institution</span>
+        <span class="hero-meta-val">University of Pennsylvania, GSE</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Innovation Type</span>
+        <span class="hero-meta-val">AI-powered interactive English learning platform</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 1. PROBLEM STATEMENT -->
+<section class="section" id="problem">
+  <div class="container">
+    <span class="section-num">01 ·</span>
+    <h2 class="section-title">Problem <span>Statement</span></h2>
+    <div class="prose">
+      <p>When you immigrate to a new country, you face an immediate and urgent problem: life demands the local language before you have it. Job applications, doctor's appointments, lease agreements, school meetings — all of it happens in a language you may barely speak. You didn't choose this gap. You arrived with a full life, a career, an education, a mother tongue — and suddenly none of it transfers.</p>
+      <p>Standard language learning resources were not designed for this situation. Apps like Duolingo assume you have time, low stakes, and infinite patience for gamified repetition. Community ESL programs assume a generic learner with no prior linguistic framework. Both approaches ignore the most powerful asset adult immigrants actually have: deep fluency in another language. Instead of building on that, they treat it as irrelevant — or worse, as something to suppress.</p>
+      <p>The result is a structural mismatch. The errors that persist in immigrant learners' speech and writing — article omission, tense confusion, preposition transfer — are not random. They are structurally predictable from the learner's first language. Yet standard instruction almost never explains <em>why</em> they happen, only that they do. Without that explanation, the same mistakes repeat indefinitely, confidence erodes, and learners disengage.</p>
+    </div>
+
+    <div class="callout">
+      <strong>Evidence Base</strong>
+      Research consistently shows adult immigrant learners benefit from instruction that explicitly connects L1 and L2 structures (Cummins, 2000; Krashen, 1982). Global adult ESL dropout rates remain high — studies estimate 40–60% of learners disengage within six months of starting a new program (OECD, 2021). Needs assessment conducted through direct instruction with adult immigrant learners (BeLang, 2023–2024) confirmed the three most cited unmet needs: grammar explanation connected to their L1, real-life contextualization, and personalized AI feedback.
+    </div>
+
+    <div class="evidence-row">
+      <span class="chip">~281M international migrants worldwide (UN, 2020)</span>
+      <span class="chip">Language gap affects employment, housing, healthcare access globally</span>
+      <span class="chip chip-accent">L1 interference → unaddressed by generic ESL apps</span>
+      <span class="chip">High digital literacy in adult immigrant populations</span>
+    </div>
+
+    <div class="prose">
+      <p>Existing market alternatives — Duolingo, Babbel, YouTube channels, community ESL programs — either lack L1-aware scaffolding, lack specificity for individual interference patterns, or lack interactive AI feedback that responds to each learner's actual production. BeLang addresses this gap directly, for immigrants of any language background, anywhere in the world.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. CONTEXT & AUDIENCE -->
+<section class="section" id="context">
+  <div class="container">
+    <span class="section-num">02 ·</span>
+    <h2 class="section-title">Context <span>&amp; Audience</span></h2>
+    <div class="prose">
+      <p>BeLang operates as a fully digital, self-paced learning environment hosted on the BeLang platform. The learning context is primarily asynchronous — learners access lesson modules on their own schedule, from home, often around work and family obligations. This context demands that content be immediately engaging, emotionally approachable, and completable in under 90 minutes per lesson.</p>
+      <p>The primary learners are <strong>adult immigrants learning English</strong>, aged roughly 25–55, living in any English-speaking or English-dominant professional environment — the United States, Canada, the United Kingdom, Australia, or any country where English proficiency is a prerequisite for employment or social mobility. They typically have B1–B2 receptive English ability but struggle with productive grammar accuracy, particularly in written and formal spoken contexts. Many have professional or academic backgrounds in their home countries that are not recognized or fully transferable in their new context.</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <span class="feature-icon">👩‍💼</span>
+        <h4>Primary Learners</h4>
+        <p>Adult immigrants, B1–B2 level, working or seeking employment in English-dominant environments. High motivation, limited time, strong prior education.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">👩‍🏫</span>
+        <h4>Instructor / Designer</h4>
+        <p>Solo ESL practitioner with lived immigrant experience, currently enrolled in a graduate-level education program at UPenn GSE.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🏠</span>
+        <h4>Learning Environment</h4>
+        <p>Fully asynchronous, mobile-responsive, no required live sessions. Learners complete modules at home, on phones and laptops, globally.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🌐</span>
+        <h4>Platform</h4>
+        <p>BeLang's own platform, with interactive lesson pages embedding AI-powered practice feedback. Accessible from any device, anywhere in the world.</p>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Equity considerations are central to this context. Adult immigrants are often economically constrained during their first years in a new country, and formal language instruction can be prohibitively expensive. BeLang is designed to be financially accessible, with course pricing significantly below community college or private tutoring costs. Crucially, the platform supports learners' native languages — whatever those languages are — as a pedagogical resource rather than something to suppress. This L1-inclusive approach is both more effective and more respectful of the learner's full linguistic identity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. INNOVATION -->
+<section class="section" id="innovation">
+  <div class="container">
+    <span class="section-num">03 ·</span>
+    <h2 class="section-title">Proposed <span>Digital Innovation</span></h2>
+    <div class="prose">
+      <p>BeLang's core innovation is an <strong>AI-powered personal language tutor</strong> that adapts to each learner — their learning style, their schedule, their goals, and their native language. Rather than a static course you work through linearly, BeLang learns who you are and teaches you accordingly: when you have time, what you need most, and in a way that actually makes sense given the language you already speak.</p>
+      <p>Each lesson is organized into tabbed modules covering explanation, visual diagrams, comparative analysis, and practice — all powered by the Gemini API, which responds to each learner's actual written output rather than multiple-choice selection. The AI coach doesn't just check answers; it understands your pattern of errors, tracks what you've struggled with before, and adjusts what it teaches next.</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🎯</span>
+        <h4>Adapts to Your Learning Style</h4>
+        <p>The AI tracks how you learn — whether you need more visual explanations, more practice repetitions, or more real-life examples — and adjusts the lesson format accordingly.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📅</span>
+        <h4>Fits Your Calendar</h4>
+        <p>BeLang works around your schedule, not the other way around. Short on time today? A 10-minute focused drill. Have an hour? A full lesson with all five tabs. The platform adapts to when and how much you can give.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🗂</span>
+        <h4>Structured Lesson Modules</h4>
+        <p>Each lesson contains tabs for explanation, visual timeline, comparison, practice, and AI coaching. Learners navigate at their own pace with time estimates per section.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🤖</span>
+        <h4>AI That Actually Teaches</h4>
+        <p>The AI coach doesn't just mark answers right or wrong — it explains why, tracks your recurring mistakes across sessions, and focuses future practice on exactly what you haven't mastered yet.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🧠</span>
+        <h4>L1-Aware Instruction</h4>
+        <p>Every explanation acknowledges why specific errors are predictable from your home language. The AI connects new grammar to what you already know linguistically — rather than starting from zero.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🌍</span>
+        <h4>Real-Life Anchoring</h4>
+        <p>Grammar is introduced through situations adult immigrants actually face: job interviews, medical appointments, texting friends, dealing with landlords, talking to coworkers.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔊</span>
+        <h4>Pronunciation Integration</h4>
+        <p>Natural audio on grammar examples lets learners hear target structures repeatedly, supporting phonological acquisition alongside written form.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📊</span>
+        <h4>Mixed Exercise Types</h4>
+        <p>Each practice session combines fill-in-the-blank, multiple choice, sentence transformation, error correction, and free production — avoiding fatigue and supporting varied cognitive processing.</p>
+      </div>
+    </div>
+
+    <!-- Lesson Architecture Visual — fully inline styled -->
+    <div style="margin:32px 0; max-width:680px; font-family:'DM Sans',Helvetica,Arial,sans-serif;">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.09em;color:#6E6E73;font-weight:500;margin-bottom:14px;">Lesson architecture — how each module is structured</div>
+      <div style="display:flex;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08);border:1px solid #D8D3CB;">
+
+        <!-- sidebar tabs -->
+        <div style="background:#1C2B3A;padding:18px 14px;display:flex;flex-direction:column;gap:4px;min-width:132px;flex-shrink:0;">
+          <div style="font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.28);margin-bottom:6px;font-weight:500;">Lesson Tabs</div>
+          <div style="padding:7px 10px;border-radius:6px;background:rgba(201,151,74,0.2);color:#C9974A;font-size:11px;font-weight:600;">📖 Grammar</div>
+          <div style="padding:7px 10px;border-radius:6px;color:rgba(255,255,255,0.45);font-size:11px;">⏱ Timeline</div>
+          <div style="padding:7px 10px;border-radius:6px;color:rgba(255,255,255,0.45);font-size:11px;">⚖️ Compare</div>
+          <div style="padding:7px 10px;border-radius:6px;color:rgba(255,255,255,0.45);font-size:11px;">✏️ Practice</div>
+          <div style="padding:7px 10px;border-radius:6px;color:rgba(255,255,255,0.45);font-size:11px;">🤖 AI Coach</div>
+        </div>
+
+        <!-- content area -->
+        <div style="padding:18px;flex:1;min-width:0;background:#FDFCFA;">
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.09em;color:#6E6E73;margin-bottom:10px;font-weight:500;">📖 Grammar · ~20 min</div>
+
+          <!-- hook -->
+          <div style="background:#EDE8E0;border-radius:7px;padding:10px 13px;margin-bottom:10px;font-size:12px;color:#3A3A3C;line-height:1.6;">
+            <span style="font-size:10px;color:#6E6E73;display:block;margin-bottom:3px;">Real-life hook</span>
+            — "So what <strong style="color:#8B1A1A;">are you going to</strong> do about the lease?"<br>
+            — "Maybe I <strong style="color:#8B1A1A;">will</strong> call them tomorrow."
+          </div>
+
+          <!-- rule cards -->
+          <div style="display:flex;gap:8px;margin-bottom:10px;">
+            <div style="flex:1;background:#F5E8E8;border-left:3px solid #8B1A1A;border-radius:5px;padding:9px 11px;font-size:11px;color:#8B1A1A;">
+              <strong>Going to</strong><br><span style="color:#3A3A3C;font-size:10px;">planned before speaking</span>
+            </div>
+            <div style="flex:1;background:#EEF4FB;border-left:3px solid #4A6FA5;border-radius:5px;padding:9px 11px;font-size:11px;color:#2C5F8A;">
+              <strong>Will</strong><br><span style="color:#3A3A3C;font-size:10px;">decided right now</span>
+            </div>
+          </div>
+
+          <!-- error pairs -->
+          <div style="font-size:11px;color:#6E6E73;display:flex;flex-direction:column;gap:4px;">
+            <span>❌ <span style="color:#B03030;">I will meet her tomorrow</span> <span style="font-size:10px;">(if already arranged)</span></span>
+            <span>✅ <span style="color:#2A7A4B;">I'm going to meet her tomorrow</span></span>
+          </div>
+        </div>
+      </div>
+      <div style="font-family:'Caveat',cursive;font-size:14px;color:#6E6E73;margin-top:10px;padding-left:2px;">↑ Grammar tab — real-life hook, rule cards, error correction pairs</div>
+    </div>
+
+    <div class="callout">
+      <strong>Prototype Status</strong>
+      Two fully functional lesson pages have been developed and tested: <em>Present Tenses</em> (Present Simple, Continuous, Perfect) and <em>Going to vs. Will</em>. Both include complete grammar explanation, visual timeline diagrams, comparison tables, 8+ practice exercises with AI checking, and a contextualized AI coaching assistant. These serve as the design template for future modules.
+    </div>
+
+    <!-- AI Interface Mockup — fully inline styled -->
+    <div style="margin:36px 0 28px; max-width:680px;">
+      <!-- browser chrome -->
+      <div style="border-radius:14px; overflow:hidden; box-shadow:0 20px 60px rgba(27,45,64,0.16); border:1px solid #C8C3BB; font-family:'DM Sans',Helvetica,Arial,sans-serif;">
+
+        <!-- title bar -->
+        <div style="background:#2A2A2E; padding:10px 16px; display:flex; align-items:center; gap:10px;">
+          <div style="display:flex; gap:5px;">
+            <div style="width:10px;height:10px;border-radius:50%;background:#FF5F57;"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:#FFBD2E;"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:#28CA41;"></div>
+          </div>
+          <div style="flex:1;background:rgba(255,255,255,0.08);border-radius:5px;padding:4px 12px;font-size:11px;color:rgba(255,255,255,0.38);font-family:monospace;letter-spacing:0.02em;">belang.co · Going to vs. Will · AI Coach</div>
+        </div>
+
+        <!-- tab strip -->
+        <div style="display:flex; background:#EDE8E0; border-bottom:1px solid #D8D3CB; overflow-x:auto;">
+          <div style="padding:9px 14px;font-size:11px;color:#6E6E73;white-space:nowrap;font-weight:500;flex-shrink:0;">📖 Grammar</div>
+          <div style="padding:9px 14px;font-size:11px;color:#6E6E73;white-space:nowrap;font-weight:500;flex-shrink:0;">⏱ Timeline</div>
+          <div style="padding:9px 14px;font-size:11px;color:#6E6E73;white-space:nowrap;font-weight:500;flex-shrink:0;">⚖️ Compare</div>
+          <div style="padding:9px 14px;font-size:11px;color:#6E6E73;white-space:nowrap;font-weight:500;flex-shrink:0;">✏️ Practice</div>
+          <div style="padding:9px 14px;font-size:11px;color:#8B1A1A;white-space:nowrap;font-weight:600;border-bottom:2px solid #8B1A1A;background:#FDFCFA;flex-shrink:0;">🤖 AI Coach</div>
+        </div>
+
+        <div style="background:#FDFCFA;">
+
+          <!-- exercise row -->
+          <div style="padding:14px 18px;border-bottom:1px solid #EDE8E0;">
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.09em;color:#6E6E73;font-weight:500;margin-bottom:8px;">✏️ Your sentence — check with AI</div>
+            <div style="font-size:13px;color:#1C1C1E;line-height:1.7;margin-bottom:8px;">
+              Tomorrow I <span style="color:#8B1A1A;font-weight:600;border-bottom:2px solid #8B1A1A;padding:0 2px;">am going to</span> meet my manager about the new contract.
+            </div>
+            <div style="display:inline-flex;align-items:center;gap:5px;background:#1C2B3A;color:#fff;border-radius:6px;padding:6px 13px;font-size:11px;font-weight:500;">✦ Check with AI</div>
+          </div>
+
+          <!-- chat -->
+          <div style="padding:16px 18px;display:flex;flex-direction:column;gap:10px;">
+
+            <!-- coach label -->
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#C9974A;font-weight:600;display:flex;align-items:center;gap:5px;">✦ English Coach · AI</div>
+
+            <!-- user bubble -->
+            <div style="align-self:flex-end;max-width:82%;background:#8B1A1A;color:#fff;border-radius:12px 3px 12px 12px;padding:10px 14px;font-size:12px;line-height:1.55;">
+              Why can I say both "will" and "going to" here? Is one more correct?
+            </div>
+
+            <!-- AI bubble -->
+            <div style="align-self:flex-start;max-width:88%;background:#F0F4F8;color:#3A3A3C;border-radius:3px 12px 12px 12px;padding:10px 14px;font-size:12px;line-height:1.65;">
+              Both work, but they signal different things. <span style="color:#8B1A1A;font-weight:600;">"Going to"</span> = already planned before this moment. <span style="color:#2C5F8A;font-weight:600;">"Will"</span> = decision made right now.<br><br>
+              Since you said "about the new contract," this is clearly a scheduled meeting — so <span style="color:#2A7A4B;font-weight:600;">going to</span> fits best. ✓
+            </div>
+
+            <!-- user bubble 2 -->
+            <div style="align-self:flex-end;max-width:82%;background:#8B1A1A;color:#fff;border-radius:12px 3px 12px 12px;padding:10px 14px;font-size:12px;line-height:1.55;">
+              А можно объяснить по-русски?
+            </div>
+
+            <!-- AI bubble 2 — responds in Russian -->
+            <div style="align-self:flex-start;max-width:88%;background:#F0F4F8;color:#3A3A3C;border-radius:3px 12px 12px 12px;padding:10px 14px;font-size:12px;line-height:1.65;">
+              Конечно! В русском нет прямого аналога — вы скажете «встречусь» в обоих случаях. Именно поэтому это путает! <span style="color:#2A7A4B;font-weight:600;">Going to</span> = запланировано заранее. <span style="color:#2C5F8A;font-weight:600;">Will</span> = решение прямо сейчас.
+            </div>
+
+          </div>
+
+          <!-- input row -->
+          <div style="padding:10px 18px;border-top:1px solid #EDE8E0;background:#F5F1EB;display:flex;align-items:center;gap:8px;">
+            <div style="flex:1;background:#FDFCFA;border:1px solid #D8D3CB;border-radius:8px;padding:8px 12px;font-size:12px;color:#6E6E73;font-style:italic;">Ask anything about this lesson…</div>
+            <div style="width:30px;height:30px;border-radius:7px;background:#8B1A1A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">↑</div>
+          </div>
+
+        </div>
+      </div>
+      <!-- caption -->
+      <div style="font-family:'Caveat',cursive;font-size:14px;color:#6E6E73;margin-top:10px;padding-left:2px;">↑ AI Coach switches to the learner's native language on request — L1-aware, personalized feedback</div>
+    </div>
+
+    <div class="prose">
+      <p>Inclusivity is built into the design system. L1 support is available for learners regardless of their native language — the AI coach is instructed to acknowledge the learner's linguistic background when explaining errors, rather than treating every learner as a blank slate. The interface is mobile-responsive, works without login on any modern browser, and requires no software installation. Audio pronunciation is available but never required, accommodating learners in public spaces or with hearing differences.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. THEORETICAL FOUNDATIONS -->
+<section class="section" id="theory">
+  <div class="container">
+    <span class="section-num">04 ·</span>
+    <h2 class="section-title">Theoretical <span>Foundations</span></h2>
+    <div class="prose">
+      <p>BeLang's design is grounded in established second language acquisition theory and learning science, as well as frameworks from the course literature on digital innovation and technology integration. Rather than applying a single framework, the platform integrates complementary theories that together address the affective, cognitive, and social dimensions of adult immigrant language learning.</p>
+    </div>
+
+    <div class="theory-list">
+      <div class="theory-item">
+        <span class="theory-name">Comprehensible Input<br>(Krashen, 1982)</span>
+        <span class="theory-desc">Grammar is always introduced through real conversational context before formal rule explanation. Learners encounter the target structure in meaningful dialogue before seeing it labeled — meaning precedes form. Lesson hooks use authentic immigrant life scenarios to make the grammar feel necessary rather than academic.</span>
+      </div>
+      <div class="theory-item">
+        <span class="theory-name">Noticing Hypothesis<br>(Schmidt, 1990)</span>
+        <span class="theory-desc">Target structures are visually highlighted with color, bold, and contrast throughout explanations and examples. The visual timeline and comparison tabs make grammatical distinctions perceptually salient — learners cannot overlook the structural difference between, e.g., "will" and "going to" when it is rendered spatially on a timeline.</span>
+      </div>
+      <div class="theory-item">
+        <span class="theory-name">Affective Filter<br>(Krashen, 1982)</span>
+        <span class="theory-desc">Anxiety is a primary barrier for adult language learners. BeLang's design maintains a warm, non-judgmental tone throughout. AI feedback is framed as coaching, not grading. Mistakes are explicitly normalized. L1 support — the ability to receive explanations that acknowledge the learner's home language — reduces the vulnerability of engaging with L2 grammar without any familiar linguistic footing.</span>
+      </div>
+      <div class="theory-item">
+        <span class="theory-name">Contrastive Analysis<br>(Lado, 1957; Cummins, 2000)</span>
+        <span class="theory-desc">Rather than ignoring the learner's first language, BeLang leverages it. Explicit contrastive explanations help learners understand how their L1 maps (and mis-maps) onto English grammar — why certain errors are structurally predictable, not random. This treats L1 as a resource rather than an obstacle, applicable across any language background.</span>
+      </div>
+      <div class="theory-item">
+        <span class="theory-name">Digital Technology &amp; Learning<br>(National Academies, 2018)</span>
+        <span class="theory-desc">The <em>How People Learn II</em> chapter on Digital Technology identifies personalization, feedback, and motivation as the three critical levers for effective technology-supported learning. BeLang addresses all three: AI-generated individualized feedback, immediate response to learner production, and real-life relevance that sustains motivation across self-paced sessions.</span>
+      </div>
+      <div class="theory-item">
+        <span class="theory-name">Technology Integration Principles<br>(Kimmons, 2020)</span>
+        <span class="theory-desc">Effective technology integration is not about the tool — it is about whether the tool genuinely serves a learning goal that could not be achieved as well otherwise. BeLang's use of AI is justified precisely here: no static resource can respond to a learner's individual sentence production with contextually specific, L1-aware feedback. The AI creates affordances that are structurally impossible in traditional materials.</span>
+      </div>
+      <div class="theory-item">
+        <span class="theory-name">Generative AI in Education<br>(U.S. Dept. of Education, 2024)</span>
+        <span class="theory-desc">The DOE's <em>Designing for Education with Artificial Intelligence</em> guide emphasizes that AI in education must be learner-centered, transparent, and equity-focused. BeLang's AI coach is designed accordingly: it explains its reasoning (not just outputs a verdict), it responds in the learner's own language when possible, and it is accessible to learners who cannot afford private tutoring.</span>
+      </div>
+      <div class="theory-item">
+        <span class="theory-name">Zone of Proximal Development<br>(Vygotsky, 1978)</span>
+        <span class="theory-desc">The AI coaching assistant functions as a digital scaffolding agent, providing just-in-time support calibrated to each learner's production. Rather than supplying correct answers, the AI coach explains what went wrong and why, guiding the learner toward independent grammatical competence — the definition of scaffolded instruction within the ZPD.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. STAKEHOLDER ENGAGEMENT -->
+<section class="section" id="stakeholders">
+  <div class="container">
+    <span class="section-num">05 ·</span>
+    <h2 class="section-title">Stakeholder <span>Engagement Plan</span></h2>
+    <div class="prose">
+      <p>Meaningful stakeholder engagement is embedded throughout BeLang's design and iteration cycle, not treated as a one-time validation step. Penuel (2019) argues that sustainable innovation requires "infrastructuring" — the ongoing work of building relationships, tools, and routines that allow a design to be used and adapted equitably over time. Fischer (2021) frames this through the concept of "cultures of participation," where end users — in BeLang's case, the learners themselves — are positioned not just as consumers of a product but as co-designers of it. BeLang's engagement model is built on both principles.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot active">🔍</div>
+        <div class="tl-body">
+          <div class="tl-phase">Phase 1 — Discovery</div>
+          <div class="tl-title">Needs Assessment with Learners</div>
+          <div class="tl-desc">Informal interviews and direct instruction sessions with adult immigrant learners (BeLang students, 2023–2024) identified the core pain points: lack of L1-aware explanation, irrelevant or culturally distant examples, no personalized feedback, and anxiety around making mistakes. This data directly shaped all design decisions.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot active">🛠</div>
+        <div class="tl-body">
+          <div class="tl-phase">Phase 2 — Prototype Testing</div>
+          <div class="tl-title">Iterative Feedback on Lesson Pages</div>
+          <div class="tl-desc">Prototype lessons are shared with active learners via the BeLang platform. Learners complete exercises and interact with the AI assistant, then provide qualitative feedback via informal conversation and written responses. Specific attention is paid to: clarity of L1-aware explanations, relevance of examples to immigrant life, perceived difficulty of exercises, and quality of AI feedback.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">🤝</div>
+        <div class="tl-body">
+          <div class="tl-phase">Phase 3 — Community Expansion</div>
+          <div class="tl-title">Immigrant Community Partnerships</div>
+          <div class="tl-desc">Planned outreach to immigrant community organizations — social media communities, mutual aid networks, immigrant lifestyle and diaspora content creators across language groups. These partners provide both distribution and a channel for gathering feedback from a broader, more linguistically diverse learner sample.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">📋</div>
+        <div class="tl-body">
+          <div class="tl-phase">Phase 4 — Ongoing Co-Design</div>
+          <div class="tl-title">Learner-Driven Content Prioritization</div>
+          <div class="tl-desc">A standing feedback mechanism (short post-lesson survey, direct messaging channel) allows learners to nominate grammar topics they need, report confusion points, and suggest real-life situations for future lesson hooks. This creates a low-friction, ongoing co-design relationship rather than a one-time user study.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Equity Note</strong>
+      Stakeholder engagement is designed to reach learners who are often excluded from EdTech user research: working adults with limited time, those without institutional affiliations, and recent arrivals with lower digital confidence. Engagement happens on their terms — through platforms they already use (Instagram, Telegram) rather than formal research recruitment.
+    </div>
+  </div>
+</section>
+
+<!-- 6. SCALE & SUSTAINABILITY -->
+<section class="section" id="scale">
+  <div class="container">
+    <span class="section-num">06 ·</span>
+    <h2 class="section-title">Scalability <span>&amp; Sustainability</span></h2>
+    <div class="prose">
+      <p>BeLang is designed from the ground up for solo-founder sustainability and iterative scale. Because each lesson is a self-contained interactive page — not a custom-built app with complex infrastructure — the cost of creating, hosting, and maintaining content remains low even as the library grows. The BeLang platform handles enrollment, payment processing, and content delivery, allowing the instructional design work to remain the primary focus.</p>
+    </div>
+
+    <div class="scale-grid">
+      <div class="scale-card">
+        <h4>Scalability Pathways</h4>
+        <ul>
+          <li>Lesson template can be replicated for new grammar topics without rebuilding infrastructure</li>
+          <li>AI prompts can be updated to reflect new lesson content without code changes</li>
+          <li>Design system allows a second instructor or collaborator to produce new content following established patterns</li>
+          <li>Platform-agnostic output could be hosted on any LMS or delivered through partner organizations</li>
+          <li>L1-support model can be extended to any immigrant language group without redesigning the core platform</li>
+        </ul>
+      </div>
+      <div class="scale-card">
+        <h4>Sustainability Factors</h4>
+        <ul>
+          <li>Subscription-based revenue model with tiered plans — basic access, full AI coaching, and premium personalization at different price points</li>
+          <li>Low marginal cost per additional learner once content is built</li>
+          <li>AI API costs scale with usage but remain predictable and manageable at each tier</li>
+          <li>Core language content remains relevant over multi-year timescales — grammar does not change</li>
+          <li>Instructor's ongoing teaching practice generates continuous insight for content improvement</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>The longer-term vision includes expanding the lesson library to cover the full range of error patterns most common among adult immigrant learners: article use, preposition selection, conditional structures, phrasal verbs, and register switching between formal and informal English. A companion homework module series is planned alongside each lesson, providing spaced practice that reinforces and extends core lesson content.</p>
+      <p>Morel et al. (2019) distinguish between scaling <em>up</em> (reaching more people), scaling <em>out</em> (spreading to new contexts), and scaling <em>deep</em> (changing norms and beliefs). BeLang's current phase is scaling up within its initial learner community. The longer-term aspiration is scaling out — adapting the model to new language groups and geographies while preserving the pedagogical core. McDonald et al. (2006) note that exemplary interventions often fail to scale because fidelity to the design gets lost; BeLang's template-based architecture directly addresses this by encoding the design system into replicable, documented lesson structures.</p>
+      <p>Sustainability is also tied to the instructor's professional development: graduate training in the economics and design of education directly informs the platform's evolution, creating a feedback loop between academic research and practical implementation. The project is positioned to connect with capstone work at the conclusion of the graduate program, potentially expanding into a more formally researched intervention with documented learning outcomes across diverse learner populations.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="references" style="background:var(--warm);">
+  <div class="container">
+    <span class="section-num">Ref ·</span>
+    <h2 class="section-title">Key <span>References</span></h2>
+    <div class="prose" style="font-size:13px; line-height:1.8;">
+      <p>Fischer, G. (2021). End-User Development: Empowering Stakeholders with Artificial Intelligence, Meta-Design, and Cultures of Participation. In <em>End-User Development</em>. Springer.</p>
+      <p>Kimmons, R. (2020). Technology Integration: Effectively Integrating Technology in Educational Settings. In <em>The K-12 Educational Technology Handbook</em>. EdTechBooks.</p>
+      <p>Krashen, S. D. (1982). <em>Principles and Practice in Second Language Acquisition.</em> Pergamon Press.</p>
+      <p>McDonald, S.-K., Keesler, V. A., Kauffmann, N. J., &amp; Schneider, B. (2006). Scaling up exemplary interventions. <em>Educational Researcher, 35</em>(3), 15–24.</p>
+      <p>Morel, R. P., Coburn, C., Catterson, A. K., &amp; Higgs, J. (2019). The Multiple Meanings of Scale: Implications for Researchers and Practitioners. <em>Educational Researcher.</em></p>
+      <p>National Academies of Sciences, Engineering, and Medicine. (2018). Digital Technology (Chapter 8). In <em>How People Learn II: Learners, Contexts, and Cultures.</em> National Academies Press.</p>
+      <p>Penuel, W. R. (2019). Infrastructuring as a Practice of Design-Based Research for Supporting and Studying Equitable Implementation and Sustainability of Innovations. <em>Journal of the Learning Sciences, 28</em>(4–5), 659–677.</p>
+      <p>Schmidt, R. (1990). The role of consciousness in second language learning. <em>Applied Linguistics, 11</em>(2), 129–158.</p>
+      <p>U.S. Department of Education, Office of Educational Technology. (2024). <em>Designing for Education with Artificial Intelligence: An Essential Guide for Developers.</em> Washington, D.C.</p>
+      <p>Vygotsky, L. S. (1978). <em>Mind in Society: The Development of Higher Psychological Processes.</em> Harvard University Press.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  BeLang · Design Project Draft · University of Pennsylvania GSE · March 2025
+</footer>
+
+<script>
+  // Scroll-triggered section reveal
+  const sections = document.querySelectorAll('.section');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.07 });
+  sections.forEach(s => obs.observe(s));
+
+  // Active nav link
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sectionEls = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sectionEls.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + cur) a.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
