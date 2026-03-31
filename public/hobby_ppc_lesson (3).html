@@ -990,7 +990,7 @@ ${answers.map((a,i) => `${i+1}. Prompt: "${a.prompt}" | Correct form: "${a.corre
 For each: ✅ correct (accept minor spelling/subject pronoun differences), ❌ + correct form if wrong. One line each. End: "Score: X/7". Friendly tone.`;
 
   try {
-    const r = await fetch('/api/check', {
+    const r = await fetch('/api/gemini', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
     });
@@ -1055,7 +1055,7 @@ ${sentences.map((s,i) => `${i+1}. Task (RU): "${s.ru}" | Grammar: ${s.tag} (${s.
 For each: grammar correct? vocab used naturally? If error: explain simply + give corrected version. 2-3 lines max each. End with encouragement.`;
 
   try {
-    const r = await fetch('/api/check', {
+    const r = await fetch('/api/gemini', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
     });
@@ -1248,7 +1248,7 @@ ${entries.map((e,i) => `${i+1}. Word/phrase: "${e.word}"\n   Sentence A: "${e.s1
 For each word: is the expression used correctly and naturally? If wrong, explain simply and give a corrected version. If good, say what works well. 2-3 lines per word. Warm, encouraging tone. End with a short overall comment.`;
 
   try {
-    const r = await fetch('/api/check', {
+    const r = await fetch('/api/gemini', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
     });
