@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Present Perfect Activities — ESL Lesson</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --coral: #E04530;
+  --coral-light: #E85840;
+  --dark: #F7F4F0;
+  --dark2: #EDE8E2;
+  --card: #FFFFFF;
+  --card2: #F5F1EC;
+  --text: #1A1410;
+  --muted: #6B5E52;
+  --muted2: #8A7A6E;
+  --green: #2A7A4A;
+  --red: #B53030;
+  --blue: #2A6A9A;
+  --r: 12px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: var(--text); min-height: 100vh; font-size: 15px; line-height: 1.65; }
+
+/* HEADER */
+.hdr { background: linear-gradient(150deg, #fff 0%, #FFF0EC 50%, #fff 100%); border-bottom: 2px solid var(--coral); padding: 26px 18px 18px; text-align: center; position: relative; overflow: hidden; }
+.hdr::before { content: '◎'; position: absolute; top: -15px; left: 5%; font-size: 120px; color: rgba(224,69,48,0.05); pointer-events: none; }
+.hdr h1 { font-family: 'Playfair Display', serif; font-size: clamp(20px,5vw,32px); color: var(--text); margin-bottom: 5px; line-height: 1.25; }
+.hdr h1 em { color: var(--coral); font-style: italic; }
+.hdr .sub { color: var(--muted); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; }
+.tl { display: flex; justify-content: center; gap: 5px; margin-top: 13px; flex-wrap: wrap; }
+.tl-chip { background: rgba(224,69,48,0.08); border: 1px solid rgba(224,69,48,0.2); border-radius: 20px; padding: 3px 10px; font-size: 11px; color: var(--coral); }
+
+/* TABS */
+.tabs-nav { display: flex; overflow-x: auto; background: #fff; border-bottom: 2px solid #E8E0D8; -webkit-overflow-scrolling: touch; scrollbar-width: none; justify-content: center; }
+.tabs-nav::-webkit-scrollbar { display: none; }
+.tab-btn { flex: 0 0 auto; padding: 13px 14px; background: none; border: none; color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all .2s; }
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--coral); border-bottom-color: var(--coral); background: rgba(224,69,48,0.04); }
+
+.pane { display: none; padding: 20px 16px 50px; max-width: 700px; margin: 0 auto; }
+.pane.active { display: block; }
+
+/* TYPOGRAPHY */
+.label { font-size: 10.5px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--coral); margin-bottom: 7px; margin-top: 26px; }
+.label:first-child { margin-top: 0; }
+h2 { font-family: 'Playfair Display', serif; font-size: 21px; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
+h3 { font-size: 14px; font-weight: 600; color: var(--blue); margin: 18px 0 8px; }
+p { color: var(--muted); margin-bottom: 9px; font-size: 14.5px; }
+strong { color: var(--text); font-weight: 500; }
+
+/* CARDS */
+.card { background: var(--card); border: 1px solid #E0D8D0; border-radius: var(--r); padding: 16px; margin-bottom: 11px; }
+.card-hi { border-color: rgba(224,69,48,0.25); background: #FFF8F6; }
+.card-blue { border-color: rgba(42,106,154,0.25); background: #F5F8FC; }
+.card-green { border-color: rgba(42,122,74,0.25); background: #F5FBF7; }
+
+/* GRAMMAR BOX */
+.gbox { background: #FFF5F3; border-left: 3px solid var(--coral); border-radius: 0 var(--r) var(--r) 0; padding: 14px 16px; margin: 12px 0; }
+.gbox .formula { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--coral); margin-bottom: 6px; }
+
+/* PILLS */
+.pill { display: inline-block; border-radius: 20px; padding: 2px 9px; font-size: 12px; margin: 2px; }
+.pill-just  { background: rgba(42,106,154,0.1); border: 1px solid rgba(42,106,154,0.3); color: #1A5A8A; }
+.pill-already { background: rgba(42,122,74,0.1); border: 1px solid rgba(42,122,74,0.3); color: #1A5A30; }
+.pill-yet   { background: rgba(224,69,48,0.1); border: 1px solid rgba(224,69,48,0.3); color: var(--coral); }
+
+/* INPUTS */
+.inp { background: #fff; border: 1px solid #D8D0C8; border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 10px 12px; width: 100%; outline: none; transition: border-color .2s; }
+.inp:focus { border-color: var(--coral); }
+.inp.ok  { border-color: var(--green); background: #F0FAF4; color: #1A6A3A; }
+.inp.err { border-color: var(--red);   background: #FDF0F0; color: #8A2020; }
+
+/* BUTTONS */
+.btn-main { display: block; width: 100%; padding: 13px; background: var(--coral); border: none; border-radius: var(--r); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 14.5px; font-weight: 600; cursor: pointer; margin-top: 18px; transition: opacity .2s; }
+.btn-main:hover { opacity: .88; }
+.btn-main:disabled { opacity: .45; cursor: default; }
+.btn-ghost { display: block; width: 100%; padding: 12px; background: #fff; border: 1px solid #D8D0C8; border-radius: var(--r); color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 500; cursor: pointer; margin-top: 10px; transition: background .2s; }
+.btn-ghost:hover { background: #F5F0EA; }
+.btn-small { display: inline-block; padding: 7px 14px; background: var(--coral); border: none; border-radius: 8px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: opacity .2s; }
+.btn-small:hover { opacity: .85; }
+
+/* AI BOX */
+.ai-box { display: none; margin-top: 14px; padding: 14px 16px; background: #F5F1EC; border: 1px solid #D8D0C8; border-radius: var(--r); font-size: 13.5px; color: var(--text); white-space: pre-wrap; line-height: 1.75; }
+.ai-box.show { display: block; }
+
+/* STEP BADGE */
+.step { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--coral); color: #fff; border-radius: 50%; font-size: 11.5px; font-weight: 700; margin-right: 7px; flex-shrink: 0; }
+.step-row { display: flex; align-items: flex-start; margin-bottom: 11px; }
+.step-row .sc { flex: 1; font-size: 14px; color: var(--text); }
+
+/* BRIDGE */
+.bridge { background: #FFF5F3; border: 1px dashed rgba(224,69,48,0.3); border-radius: var(--r); padding: 11px 14px; margin: 22px 0 0; font-size: 13px; color: var(--muted); font-style: italic; }
+.bridge strong { color: var(--coral); font-style: normal; }
+
+/* SENTENCE COMPLETE EX */
+.sc-item { background: #fff; border: 1px solid #E0D8D0; border-radius: var(--r); padding: 14px; margin-bottom: 11px; }
+.sc-context { font-size: 14px; color: var(--text); margin-bottom: 8px; font-weight: 500; }
+.sc-prompts { display: flex; flex-direction: column; gap: 8px; }
+.sc-row { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--muted); flex-wrap: wrap; }
+.sc-tag { display: inline-block; font-size: 10.5px; padding: 1px 7px; border-radius: 4px; font-weight: 600; letter-spacing: .5px; flex-shrink: 0; }
+.tag-but { background: rgba(224,69,48,0.1); color: var(--coral); }
+.tag-and { background: rgba(42,122,74,0.1); color: #1A5A30; }
+.tag-so  { background: rgba(42,106,154,0.1); color: #1A5A8A; }
+.sc-reveal { display: none; background: #F5F1EC; border-left: 3px solid var(--coral); padding: 8px 12px; border-radius: 0 8px 8px 0; margin-top: 8px; font-size: 13.5px; color: var(--text); font-style: italic; }
+.sc-reveal.show { display: block; }
+
+/* PHOTO CARDS */
+.photo-card { background: #fff; border: 1px solid #E0D8D0; border-radius: var(--r); padding: 14px; margin-bottom: 12px; }
+.photo-card .photo-desc { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 10px; }
+.photo-card .photo-emoji { font-size: 36px; text-align: center; padding: 12px; background: var(--dark2); border-radius: 8px; margin-bottom: 10px; }
+.pp-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.pp-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; min-width: 90px; padding-top: 11px; }
+.pp-label.already { color: #1A5A30; }
+.pp-label.yet { color: var(--coral); }
+.pp-field { flex: 1; }
+
+/* NEWS CARDS */
+.news-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+.news-card { background: #fff; border: 1px solid #E0D8D0; border-radius: 10px; padding: 13px; cursor: pointer; transition: all .2s; text-align: center; }
+.news-card:hover { border-color: rgba(224,69,48,0.35); }
+.news-card.selected { background: #FFF5F3; border-color: var(--coral); }
+.news-card.matched-ok { background: #F0FAF4; border-color: var(--green); }
+.news-card.matched-err { background: #FDF0F0; border-color: var(--red); }
+.news-card .news-emoji { font-size: 24px; margin-bottom: 5px; }
+.news-card .news-text { font-size: 13px; color: var(--text); font-weight: 500; }
+.clue-card { background: #F5F8FC; border: 1px solid rgba(42,106,154,0.2); border-radius: 10px; padding: 12px; margin-bottom: 8px; cursor: pointer; transition: all .2s; }
+.clue-card:hover { border-color: rgba(42,106,154,0.4); }
+.clue-card.selected { background: #EAF0F8; border-color: #2A6A9A; }
+.clue-card.matched-ok { background: #F0FAF4; border-color: var(--green); cursor: default; }
+.clue-card.matched-err { background: #FDF0F0; border-color: var(--red); }
+.clue-text { font-size: 13.5px; color: var(--text); font-style: italic; }
+
+/* TRUTH OR LIE */
+.tol-card { background: #fff; border: 2px solid #E0D8D0; border-radius: var(--r); padding: 16px; margin-bottom: 10px; cursor: pointer; transition: all .2s; text-align: center; }
+.tol-card:hover { border-color: rgba(224,69,48,0.3); transform: scale(1.01); }
+.tol-card.picked { border-color: var(--coral); background: #FFF5F3; }
+.tol-card .tol-emoji { font-size: 28px; margin-bottom: 6px; }
+.tol-card .tol-text { font-size: 14px; font-weight: 500; color: var(--text); }
+.tol-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 12px 0; }
+.verdict-box { background: #fff; border: 1px solid #E0D8D0; border-radius: var(--r); padding: 14px; margin-top: 12px; }
+.verdict-btns { display: flex; gap: 8px; margin-top: 10px; }
+.verdict-btn { flex: 1; padding: 11px; border-radius: 9px; border: 1px solid; font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 500; cursor: pointer; transition: transform .15s; }
+.vb-truth { background: rgba(42,122,74,0.1); border-color: rgba(42,122,74,0.4); color: #1A5A30; }
+.vb-lie   { background: rgba(224,69,48,0.1); border-color: rgba(224,69,48,0.4); color: var(--coral); }
+.verdict-btn:hover { transform: scale(1.02); }
+
+/* SPEAKING */
+.sp-card { background: #fff; border: 1px solid #E0D8D0; border-radius: var(--r); padding: 15px; margin-bottom: 10px; }
+.sp-q { font-size: 15px; color: var(--text); margin-bottom: 5px; }
+.sp-ru { font-size: 12.5px; color: var(--muted2); font-style: italic; margin-bottom: 8px; }
+.scaffold { background: #FFF5F3; border-left: 2px solid rgba(224,69,48,0.35); border-radius: 0 7px 7px 0; padding: 10px 12px; font-size: 13px; color: var(--muted); }
+.scaffold p { font-size: 13px; margin-bottom: 4px; }
+.scaffold p:last-child { margin-bottom: 0; }
+
+/* SCORE */
+.score-row { text-align: center; font-size: 13px; color: var(--muted); margin: 10px 0; }
+.score-row span { color: var(--coral); font-size: 17px; font-weight: 600; }
+
+/* TABLE */
+.cmp { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; }
+.cmp th { background: rgba(224,69,48,0.08); color: var(--coral); padding: 8px 10px; text-align: left; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .8px; }
+.cmp td { padding: 8px 10px; border-bottom: 1px solid #EDE8E2; color: var(--muted); vertical-align: top; }
+.cmp td strong { color: var(--text); }
+.cmp tr:last-child td { border: none; }
+
+@media(max-width:480px) {
+  .news-grid { grid-template-columns: 1fr; }
+  .tol-cards-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>Present Perfect — <em>just, already, yet</em></h1>
+  <p class="sub">A2/B1 · Activities · 75 min · 4–5 students</p>
+  <div class="tl">
+    <div class="tl-chip">① Warm-up 10 min</div>
+    <div class="tl-chip">② Grammar 12 min</div>
+    <div class="tl-chip">③ Just/Already/Yet 15 min</div>
+    <div class="tl-chip">④ News game 13 min</div>
+    <div class="tl-chip">⑤ Photos 12 min</div>
+    <div class="tl-chip">⑥ Truth or Lie 13 min</div>
+  </div>
+</div>
+
+<div class="tabs-nav">
+  <button class="tab-btn active" onclick="switchTab('warmup',this)">① Warm-up</button>
+  <button class="tab-btn" onclick="switchTab('grammar',this)">② Grammar</button>
+  <button class="tab-btn" onclick="switchTab('sentences',this)">③ Complete</button>
+  <button class="tab-btn" onclick="switchTab('news',this)">④ News</button>
+  <button class="tab-btn" onclick="switchTab('photos',this)">⑤ Photos</button>
+  <button class="tab-btn" onclick="switchTab('tol',this)">⑥ Truth or Lie</button>
+</div>
+
+<!-- ═══ WARM-UP ═══ -->
+<div id="tab-warmup" class="pane active">
+  <div class="label">① Warm-up · 10 minutes</div>
+  <h2>What has happened today?</h2>
+  <p>Look at the pictures. What do you think has happened? Use Present Perfect to describe each situation.</p>
+
+  <div id="warmup-cards"></div>
+  <button class="btn-main" id="wu-btn" onclick="checkWarmup()">Check my sentences ✓</button>
+  <div class="ai-box" id="wu-result"></div>
+  <button class="btn-ghost" onclick="resetWarmup()">↺ Clear</button>
+
+  <h3>Now talk about your morning</h3>
+  <div class="sp-card">
+    <div class="sp-q">Tell your partner: something that has blown you away recently + something you are hyped about + something you haven't done yet but want to.</div>
+    <div class="sp-ru">Расскажи: что тебя недавно поразило + чего ты очень ждёшь + что ещё не сделал, но хочешь.</div>
+    <div class="scaffold">
+      <p>✦ I've just been blown away by... because...</p>
+      <p>✦ I've been really hyped about... for a while.</p>
+      <p>✦ I haven't ... yet, but I'd love to...</p>
+    </div>
+  </div>
+
+  <div class="bridge">
+    <strong>Bridge to Grammar →</strong> You've just used <em>already</em>, <em>yet</em> and maybe <em>just</em>. Let's understand exactly when and how to use them.
+  </div>
+</div>
+
+<!-- ═══ GRAMMAR ═══ -->
+<div id="tab-grammar" class="pane">
+  <div class="label">② Grammar · 12 minutes</div>
+  <h2>just · already · yet</h2>
+  <p>Three signal words that always come with Present Perfect. Each one has a different feeling.</p>
+
+  <div class="gbox">
+    <div class="formula">have/has + past participle</div>
+    <p style="font-size:13.5px;color:var(--muted);">She <strong>has eaten</strong>. &nbsp;|&nbsp; They <strong>have arrived</strong>. &nbsp;|&nbsp; I <strong>haven't finished</strong> yet.</p>
+  </div>
+
+  <div class="card card-hi" style="margin-top:14px;">
+    <div class="step-row">
+      <span class="step">1</span>
+      <div class="sc">
+        <strong>JUST</strong> <span class="pill pill-just">just</span> — very recently, a moment ago
+        <p style="margin-top:4px; font-size:13.5px;">"I've <strong>just</strong> got home." = I arrived a few minutes ago.</p>
+        <p style="font-size:13px; color:var(--muted);">Position: between <em>have</em> and the verb &nbsp;→&nbsp; <em>have <u>just</u> eaten</em></p>
+      </div>
+    </div>
+    <div class="step-row">
+      <span class="step">2</span>
+      <div class="sc">
+        <strong>ALREADY</strong> <span class="pill pill-already">already</span> — sooner than expected
+        <p style="margin-top:4px; font-size:13.5px;">"She's <strong>already</strong> finished!" = Wow, that was fast!</p>
+        <p style="font-size:13px; color:var(--muted);">Position: between <em>have</em> and the verb &nbsp;→&nbsp; <em>have <u>already</u> seen</em></p>
+      </div>
+    </div>
+    <div class="step-row">
+      <span class="step">3</span>
+      <div class="sc">
+        <strong>YET</strong> <span class="pill pill-yet">yet</span> — expected but not happened; used in ❌ and ❓
+        <p style="margin-top:4px; font-size:13.5px;">"I <strong>haven't</strong> called her <strong>yet</strong>." / "Have you eaten <strong>yet</strong>?"</p>
+        <p style="font-size:13px; color:var(--muted);">Position: always at the END of the sentence</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Quick reference</h3>
+  <table class="cmp">
+    <tr><th>Word</th><th>Use</th><th>Position</th><th>Example</th></tr>
+    <tr>
+      <td><strong>just</strong></td>
+      <td>very recent action</td>
+      <td>before verb</td>
+      <td>I've <strong>just</strong> eaten.</td>
+    </tr>
+    <tr>
+      <td><strong>already</strong></td>
+      <td>sooner than expected</td>
+      <td>before verb</td>
+      <td>She's <strong>already</strong> left!</td>
+    </tr>
+    <tr>
+      <td><strong>yet</strong></td>
+      <td>expected, not done (❌/❓)</td>
+      <td>end of sentence</td>
+      <td>I haven't called <strong>yet</strong>.</td>
+    </tr>
+  </table>
+
+  <h3>Quick check — fill in: just, already or yet?</h3>
+  <div id="qc-container"></div>
+  <button class="btn-main" id="qc-btn" onclick="checkQC()">Check ✓</button>
+  <div class="ai-box" id="qc-result"></div>
+  <button class="btn-ghost" onclick="resetQC()">↺ Try again</button>
+
+  <div class="bridge">
+    <strong>Bridge to Practice →</strong> Now let's use just, already and yet to complete real sentences.
+  </div>
+</div>
+
+<!-- ═══ COMPLETE SENTENCES ═══ -->
+<div id="tab-sentences" class="pane">
+  <div class="label">③ Complete the sentences · 15 minutes</div>
+  <h2>just, already, yet — in context</h2>
+  <p>Each situation has two sentences to complete. Choose the right word and write the PP form. Tap <strong>Show answer</strong> when you're ready.</p>
+  <p style="font-size:13px; color:var(--muted);">From the ESL Brains exercise — these are sample answers, your own ideas are great too!</p>
+
+  <div id="sc-container"></div>
+
+  <div class="bridge">
+    <strong>Bridge to News game →</strong> You've practised the grammar. Now let's use it to talk about real-life news.
+  </div>
+</div>
+
+<!-- ═══ NEWS GAME ═══ -->
+<div id="tab-news" class="pane">
+  <div class="label">④ Telling the News · 13 minutes</div>
+  <h2>What's the news?</h2>
+
+  <div class="label" style="margin-top:0;">Part A — Match the clue to the news · 5 min</div>
+  <p>Read each clue. Tap it, then tap the news headline it describes. <strong>Score: <span id="news-score">0</span>/3</strong></p>
+
+  <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+    <div style="flex:1; min-width:140px;">
+      <h4 style="font-size:11px; font-weight:600; text-transform:uppercase; color:var(--muted); letter-spacing:1px; margin-bottom:8px;">Clues</h4>
+      <div id="clues-container"></div>
+    </div>
+    <div style="flex:1; min-width:140px;">
+      <h4 style="font-size:11px; font-weight:600; text-transform:uppercase; color:var(--muted); letter-spacing:1px; margin-bottom:8px;">Headlines</h4>
+      <div id="headlines-container"></div>
+    </div>
+  </div>
+  <button class="btn-ghost" onclick="resetNewsMatch()">↺ Reset</button>
+
+  <div class="label" style="margin-top:24px;">Part B — Guess the news game · 8 min</div>
+  <p>Tap a card to reveal a piece of news. Give <strong>3 clues</strong> using Present Perfect — your classmates guess what happened. Don't say the news directly!</p>
+  <p style="font-size:13px; color:var(--muted2); margin-bottom:4px; font-style:italic;">Example: "I've just received an email. I'm excited about new responsibilities. I've always wanted to manage a team." → <em>I've got promoted!</em></p>
+
+  <div class="news-grid" id="news-cards-grid"></div>
+  <button class="btn-ghost" onclick="buildNewsCards()">↺ New cards</button>
+
+  <div class="bridge">
+    <strong>Bridge to Photos →</strong> Great use of PP for news! Now let's describe situations using <em>already</em> and <em>yet</em>.
+  </div>
+</div>
+
+<!-- ═══ PHOTOS ═══ -->
+<div id="tab-photos" class="pane">
+  <div class="label">⑤ Photos — already & yet · 12 minutes</div>
+  <h2>What has already happened? What hasn't happened yet?</h2>
+  <p>Look at each situation. Write <strong>2 things that have already happened</strong> and <strong>2 things that haven't happened yet</strong>. Then compare with your classmates!</p>
+  <p style="font-size:13px; color:var(--muted);">AI checks your sentences when you click Check.</p>
+
+  <div id="photos-container"></div>
+  <button class="btn-main" id="photos-btn" onclick="checkPhotos()">Check all sentences ✓</button>
+  <div class="ai-box" id="photos-result"></div>
+  <button class="btn-ghost" onclick="resetPhotos()">↺ Clear</button>
+
+  <div class="bridge">
+    <strong>Bridge to Truth or Lie →</strong> Last activity — the most fun one. Can you fool your classmates?
+  </div>
+</div>
+
+<!-- ═══ TRUTH OR LIE ═══ -->
+<div id="tab-tol" class="pane">
+  <div class="label">⑥ Truth or Lie · 13 minutes</div>
+  <h2>Have you ever...?</h2>
+  <p>One student picks a card and says <strong>"I have [done this]."</strong> using Present Perfect. Other students ask <strong>3 questions</strong> in Past Simple to find out if it's true. Then vote: Truth or Lie?</p>
+
+  <div class="card card-hi" style="margin-bottom:16px;">
+    <p style="font-size:13.5px; color:var(--text); margin-bottom:4px;"><strong>How to play:</strong></p>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:3px;">1. Student A taps a card → says "I have won a competition."</p>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:3px;">2. Others ask: "When was it?" / "Where did it happen?" / "How did you feel?"</p>
+    <p style="font-size:13px; color:var(--muted);">3. Everyone votes: Truth or Lie? Then A reveals!</p>
+  </div>
+
+  <p style="font-size:13px; color:var(--muted2); margin-bottom:10px; font-style:italic;">Tap a card to pick it for your turn:</p>
+  <div class="tol-cards-grid" id="tol-grid"></div>
+
+  <div class="verdict-box" id="verdict-box" style="display:none;">
+    <p style="font-size:14px; color:var(--text); margin-bottom:4px;"><strong>Vote:</strong> Is it truth or a lie?</p>
+    <p id="tol-picked-text" style="font-size:13.5px; color:var(--coral); font-style:italic; margin-bottom:0;"></p>
+    <div class="verdict-btns">
+      <button class="verdict-btn vb-truth" onclick="voteVerdict('truth')">✅ Truth!</button>
+      <button class="verdict-btn vb-lie" onclick="voteVerdict('lie')">❌ Lie!</button>
+    </div>
+    <div id="verdict-result" style="display:none; margin-top:10px; font-size:13.5px; color:var(--muted);"></div>
+  </div>
+
+  <h3>Free speaking — share your own</h3>
+  <div class="sp-card">
+    <div class="sp-q">Think of something unusual you have done in your life. Tell the group — use Present Perfect. They ask questions in Past Simple.</div>
+    <div class="sp-ru">Вспомни что-нибудь необычное что ты сделал(-а) в жизни. Расскажи группе.</div>
+    <div class="scaffold">
+      <p>✦ "I have [verb]..." → classmates ask "When did you...?" / "Where did you...?" / "Who did you...with?"</p>
+      <p>✦ Answer in Past Simple: "It was...", "I went...", "I felt..."</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══ TABS ═══
+function switchTab(id, btn) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ═══ WARM-UP CARDS ═══
+const warmupScenes = [
+  { emoji: '🤩🎬', desc: 'Your friend has just watched a new film.', hint: 'blown away / just...' },
+  { emoji: '📣🎉', desc: 'Everyone is talking about a new café that has just opened.', hint: 'hyped / already...' },
+  { emoji: '🎤🎊', desc: 'A person has just hosted a big company event.', hint: 'host / just...' },
+  { emoji: '🏆✨', desc: 'A colleague has just taken home the "Employee of the Year" award.', hint: 'take home / just...' },
+];
+
+function buildWarmup() {
+  const c = document.getElementById('warmup-cards');
+  if (!c) return;
+  c.innerHTML = '';
+  warmupScenes.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'card';
+    d.style.marginBottom = '10px';
+    d.innerHTML = `
+      <div style="font-size:36px;text-align:center;padding:10px;background:var(--dark2);border-radius:8px;margin-bottom:10px;">${s.emoji}</div>
+      <div style="font-size:14px;color:var(--text);margin-bottom:6px;font-weight:500;">${i+1}. ${s.desc}</div>
+      <div style="font-size:12px;color:var(--muted2);font-style:italic;">Hint: ${s.hint}</div>
+      <input class="inp" style="margin-top:8px;" placeholder="What has happened? Write a sentence..." id="wu-${i}">`;
+    c.appendChild(d);
+  });
+}
+
+// ═══ WARMUP CHECK ═══
+async function checkWarmup() {
+  const btn = document.getElementById('wu-btn');
+  const res = document.getElementById('wu-result');
+
+  const entries = warmupScenes.map((s, i) => ({
+    scene: s.desc,
+    hint: s.hint,
+    student: (document.getElementById('wu-' + i) || {value:''}).value.trim()
+  })).filter(e => e.student);
+
+  if (entries.length === 0) {
+    res.classList.add('show');
+    res.textContent = 'Please write at least one sentence first!';
+    return;
+  }
+
+  btn.disabled = true; btn.textContent = 'Checking...';
+  res.classList.add('show'); res.textContent = '⏳ Reading your sentences...';
+
+  const prompt = `Friendly English teacher. A2/B1 level. Students described situations using Present Perfect (just/already/yet) + vocab words like "blown away", "hyped", "host", "take home".
+
+${entries.map((e,i) => `${i+1}. Scene: "${e.scene}" (hint: ${e.hint})\n   Student wrote: "${e.student}"`).join('\n\n')}
+
+For each sentence: Is Present Perfect used correctly? Is the vocab word used naturally? If there is an error, explain simply and give a corrected version. If good, say what works well. 1-2 lines each. Warm, encouraging tone.`;
+
+  try {
+    const r = await fetch('/api/gemini', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+    });
+    const d = await r.json();
+    res.textContent = d.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
+  } catch(e) {
+    res.textContent = e.message && e.message.includes('pattern') ? 'Open this lesson on Vercel for AI checking to work. 📝' : 'Connection error — please try again.';
+  }
+  btn.disabled = false; btn.textContent = 'Check my sentences ✓';
+}
+
+function resetWarmup() {
+  warmupScenes.forEach((s, i) => {
+    const inp = document.getElementById('wu-' + i);
+    if (inp) { inp.value = ''; inp.className = 'inp'; }
+  });
+  const r = document.getElementById('wu-result');
+  r.classList.remove('show'); r.textContent = '';
+}
+const qcItems = [
+  { sentence: "I ___ just ___ (finish) my homework.", answer: "have just finished", hint: "just — very recent" },
+  { sentence: "She ___ ___ (already / leave) — she's not here.", answer: "has already left", hint: "already — sooner than expected" },
+  { sentence: "Have you eaten ___?", answer: "yet", hint: "yet — in questions" },
+  { sentence: "They ___ ___ (not / arrive) ___ — we're still waiting.", answer: "haven't arrived yet", hint: "yet — in negatives" },
+  { sentence: "He ___ just ___ (call) — he'll be here in 5 minutes.", answer: "has just called", hint: "just — very recent" },
+];
+
+function buildQC() {
+  const c = document.getElementById('qc-container');
+  if (!c) return;
+  c.innerHTML = '';
+  qcItems.forEach((item, i) => {
+    const d = document.createElement('div');
+    d.className = 'card';
+    d.style.marginBottom = '10px';
+    d.innerHTML = `<div style="font-size:12.5px;color:var(--muted2);font-style:italic;margin-bottom:5px;">${i+1}. Hint: ${item.hint}</div>
+      <div style="font-size:14.5px;color:var(--text);margin-bottom:8px;">${item.sentence}</div>
+      <input class="inp" id="qc-${i}" type="text" placeholder="Write the correct form...">`;
+    c.appendChild(d);
+  });
+}
+
+async function checkQC() {
+  const btn = document.getElementById('qc-btn');
+  const res = document.getElementById('qc-result');
+  btn.disabled = true; btn.textContent = 'Checking...';
+  res.classList.add('show'); res.textContent = '⏳ Checking...';
+
+  const answers = qcItems.map((item, i) => ({
+    sentence: item.sentence,
+    correct: item.answer,
+    student: (document.getElementById('qc-' + i) || {value:''}).value.trim()
+  }));
+
+  const prompt = `English teacher checking Present Perfect (just/already/yet) quick check. A2/B1 level.
+
+${answers.map((a,i) => `${i+1}. Sentence: "${a.sentence}"\n   Correct: "${a.correct}"\n   Student wrote: "${a.student}"`).join('\n\n')}
+
+For each: ✅ if correct (accept minor variations), ❌ + correct form if wrong. One line each. End: "Score: X/5". Friendly, encouraging tone.`;
+
+  try {
+    const r = await fetch('/api/gemini', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+    });
+    const d = await r.json();
+    const txt = d.candidates?.[0]?.content?.parts?.[0]?.text;
+    res.textContent = txt || 'No response. Please try again.';
+    if (txt) {
+      txt.split('\n').filter(l => /^\d+\./.test(l)).forEach((line, i) => {
+        const inp = document.getElementById('qc-' + i);
+        if (!inp) return;
+        if (line.includes('✅')) inp.classList.add('ok');
+        else if (line.includes('❌')) inp.classList.add('err');
+      });
+    }
+  } catch(e) {
+    res.textContent = e.message && e.message.includes('pattern') ? 'Open this lesson on Vercel for AI checking to work. 📝' : 'Connection error — please try again.';
+  }
+  btn.disabled = false; btn.textContent = 'Check ✓';
+}
+
+function resetQC() {
+  qcItems.forEach((q,i) => { const inp=document.getElementById('qc-'+i); if(inp){inp.value='';inp.className='inp';} });
+  const r=document.getElementById('qc-result'); r.classList.remove('show'); r.textContent='';
+}
+
+// ═══ SENTENCE COMPLETION (Ex 1) ═══
+const scData = [
+  {
+    context: "A. Sarah made a delicious lemon cake",
+    prompts: [
+      { tag: 'but', label: 'but', color: 'tag-but', reveal: "she hasn't told her kids about it yet." },
+      { tag: 'and', label: 'and', color: 'tag-and', reveal: "she has already given it to her neighbours." },
+    ]
+  },
+  {
+    context: "B. I have to buy a present for my friend",
+    prompts: [
+      { tag: 'but', label: 'but', color: 'tag-but', reveal: "I haven't decided what to choose yet." },
+      { tag: 'so', label: 'so', color: 'tag-so', reveal: "I've just asked her partner for some ideas." },
+    ]
+  },
+  {
+    context: "C. Rafa graduated from high school",
+    prompts: [
+      { tag: 'but', label: 'but', color: 'tag-but', reveal: "he hasn't decided what to do next yet." },
+      { tag: 'and', label: 'and', color: 'tag-and', reveal: "his parents have just thrown him a surprise party." },
+    ]
+  },
+  {
+    context: "D. My dog wants to go for a walk",
+    prompts: [
+      { tag: 'but', label: 'but', color: 'tag-but', reveal: "I haven't finished my team meeting yet." },
+      { tag: 'and', label: 'and', color: 'tag-and', reveal: "my lunch break has just started." },
+    ]
+  },
+  {
+    context: "E. I know I need to see my doctor",
+    prompts: [
+      { tag: 'so', label: 'so', color: 'tag-so', reveal: "I've just called her." },
+      { tag: 'and', label: 'and', color: 'tag-and', reveal: "I have already made an appointment for next week." },
+    ]
+  },
+  {
+    context: "F. My parents would love to see Paris",
+    prompts: [
+      { tag: 'but', label: 'but', color: 'tag-but', reveal: "they haven't saved enough money yet." },
+      { tag: 'so', label: 'so', color: 'tag-so', reveal: "I've just booked them tickets as an anniversary present." },
+    ]
+  },
+];
+
+function buildSC() {
+  const c = document.getElementById('sc-container');
+  if (!c) return;
+  c.innerHTML = '';
+
+  const exampleDiv = document.createElement('div');
+  exampleDiv.className = 'card card-blue';
+  exampleDiv.style.marginBottom = '14px';
+  exampleDiv.innerHTML = `<div style="font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#1A5A8A;margin-bottom:6px;">EXAMPLE</div>
+    <div style="font-size:14px;color:var(--text);margin-bottom:6px;font-weight:500;">I wrote an email to my boss yesterday,</div>
+    <div style="font-size:13.5px;color:var(--muted);margin-bottom:3px;">→ <strong>but</strong> I <span style="color:var(--coral)">haven't sent it</span> <strong>yet</strong>.</div>
+    <div style="font-size:13.5px;color:var(--muted);margin-bottom:3px;">→ <strong>so</strong> she's <strong>already</strong> <span style="color:var(--coral)">read</span> the report.</div>
+    <div style="font-size:13.5px;color:var(--muted);">→ <strong>and</strong> she has <strong>just</strong> <span style="color:var(--coral)">replied</span>.</div>`;
+  c.appendChild(exampleDiv);
+
+  scData.forEach((item, i) => {
+    const d = document.createElement('div');
+    d.className = 'sc-item';
+    let promptsHTML = item.prompts.map((p, j) => `
+      <div style="margin-bottom:8px;">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:4px;">
+          <span class="sc-tag ${p.color}">${p.label}</span>
+          Complete the sentence using PP + just / already / yet:
+        </div>
+        <textarea class="inp" id="sc-${i}-${j}" placeholder="...${p.tag} ..." style="resize:vertical;min-height:50px;"></textarea>
+        <div id="sc-rev-${i}-${j}" class="sc-reveal">
+          <span style="font-size:11px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;">Sample answer: </span>${item.context}, ${p.reveal}
+        </div>
+        <button class="btn-small" style="margin-top:5px;" onclick="showSCReveal(${i},${j})">Show sample answer</button>
+      </div>`).join('');
+
+    d.innerHTML = `<div class="sc-context">${item.context}...</div><div class="sc-prompts">${promptsHTML}</div>`;
+    c.appendChild(d);
+  });
+
+  // Add AI check button
+  const checkDiv = document.createElement('div');
+  checkDiv.innerHTML = `<button class="btn-main" id="sc-check-btn" onclick="checkSC()" style="margin-top:8px;">Check my sentences with AI ✓</button>
+    <div class="ai-box" id="sc-result"></div>
+    <button class="btn-ghost" onclick="resetSC()">↺ Clear</button>`;
+  c.appendChild(checkDiv);
+}
+
+function showSCReveal(i, j) {
+  document.getElementById('sc-rev-' + i + '-' + j).classList.add('show');
+}
+
+async function checkSC() {
+  const btn = document.getElementById('sc-check-btn');
+  const res = document.getElementById('sc-result');
+  btn.disabled = true; btn.textContent = 'Checking...';
+  res.classList.add('show'); res.textContent = '⏳ Reading your sentences...';
+
+  const entries = [];
+  scData.forEach((item, i) => {
+    item.prompts.forEach((p, j) => {
+      const val = (document.getElementById(`sc-${i}-${j}`) || {value:''}).value.trim();
+      if (val) entries.push({ context: item.context, conjunction: p.tag, student: val, sample: item.context + ', ' + p.reveal });
+    });
+  });
+
+  if (entries.length === 0) { res.textContent = 'Please write at least one sentence!'; btn.disabled=false; btn.textContent='Check my sentences with AI ✓'; return; }
+
+  const prompt = `Friendly English teacher. A2/B1 level. Students completed sentences using Present Perfect with just, already, or yet.
+
+${entries.map((e,i) => `${i+1}. Context: "${e.context}..." (conjunction: ${e.conjunction})\n   Student wrote: "${e.student}"\n   Sample answer: "${e.sample}"`).join('\n\n')}
+
+For each: Is PP used correctly? Is just/already/yet in the right position? Is the meaning logical? If there's an error, explain simply and give a corrected version. 2 lines max each. Warm tone.`;
+
+  try {
+    const r = await fetch('/api/gemini', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+    });
+    const d = await r.json();
+    res.textContent = d.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
+  } catch(e) {
+    res.textContent = e.message && e.message.includes('pattern') ? 'Open this lesson on Vercel for AI checking to work. 📝' : 'Connection error — please try again.';
+  }
+  btn.disabled = false; btn.textContent = 'Check my sentences with AI ✓';
+}
+
+function resetSC() {
+  scData.forEach((item, i) => {
+    item.prompts.forEach((p, j) => {
+      const inp = document.getElementById(`sc-${i}-${j}`);
+      const rev = document.getElementById(`sc-rev-${i}-${j}`);
+      if (inp) inp.value = '';
+      if (rev) rev.classList.remove('show');
+    });
+  });
+  const r=document.getElementById('sc-result'); if(r){r.classList.remove('show');r.textContent='';}
+}
+
+// ═══ NEWS MATCH ═══
+const newsMatchData = [
+  {
+    clue: "A. We've worked really hard, and it has finally happened. Now we can get a pet and grow food in the garden.",
+    headline: "My partner and I have bought a house!",
+    emoji: "🏠",
+    id: 'house'
+  },
+  {
+    clue: "B. She's been married for four years. She's really happy — it's been her dream. She's taken some time off work.",
+    headline: "My cousin has had a baby!",
+    emoji: "👶",
+    id: 'baby'
+  },
+  {
+    clue: "C. I've just received an email from the company. I'm excited about new responsibilities — I've always wanted to manage a team.",
+    headline: "I've got promoted!",
+    emoji: "🎉",
+    id: 'promoted'
+  },
+];
+
+let selectedClue = null;
+let newsScore = 0;
+let matchedNews = {};
+
+function buildNewsMatch() {
+  selectedClue = null; newsScore = 0; matchedNews = {};
+  document.getElementById('news-score').textContent = '0';
+
+  const cluesCont = document.getElementById('clues-container');
+  const headlinesCont = document.getElementById('headlines-container');
+  cluesCont.innerHTML = '';
+  headlinesCont.innerHTML = '';
+
+  const shuffledClues = [...newsMatchData].sort(() => Math.random() - 0.5);
+  const shuffledHeadlines = [...newsMatchData].sort(() => Math.random() - 0.5);
+
+  shuffledClues.forEach(item => {
+    const d = document.createElement('div');
+    d.className = 'clue-card';
+    d.id = 'clue-' + item.id;
+    d.dataset.id = item.id;
+    d.innerHTML = `<div class="clue-text">"${item.clue}"</div>`;
+    d.onclick = () => selectClue(d);
+    cluesCont.appendChild(d);
+  });
+
+  shuffledHeadlines.forEach(item => {
+    const d = document.createElement('div');
+    d.className = 'news-card';
+    d.id = 'headline-' + item.id;
+    d.dataset.id = item.id;
+    d.innerHTML = `<div class="news-emoji">${item.emoji}</div><div class="news-text">${item.headline}</div>`;
+    d.onclick = () => selectHeadline(d);
+    headlinesCont.appendChild(d);
+  });
+}
+
+function selectClue(card) {
+  if (card.classList.contains('matched-ok')) return;
+  document.querySelectorAll('.clue-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedClue = card;
+}
+
+function selectHeadline(card) {
+  if (!selectedClue || card.classList.contains('matched-ok')) return;
+  const clueId = selectedClue.dataset.id;
+  const headlineId = card.dataset.id;
+  if (clueId === headlineId) {
+    selectedClue.classList.remove('selected');
+    selectedClue.classList.add('matched-ok');
+    card.classList.add('matched-ok');
+    matchedNews[clueId] = true;
+    newsScore++;
+    document.getElementById('news-score').textContent = newsScore;
+  } else {
+    selectedClue.classList.add('matched-err');
+    card.classList.add('matched-err');
+    setTimeout(() => {
+      selectedClue.classList.remove('matched-err', 'selected');
+      card.classList.remove('matched-err');
+    }, 700);
+  }
+  selectedClue = null;
+}
+
+function resetNewsMatch() { buildNewsMatch(); }
+
+// ═══ NEWS GUESS CARDS ═══
+const newsItems = [
+  { emoji: '🏠', text: "I've bought a house!" },
+  { emoji: '👶', text: "My cousin has had a baby!" },
+  { emoji: '🎉', text: "I've got promoted!" },
+  { emoji: '🐕', text: "My neighbour has got a dog!" },
+  { emoji: '💼', text: "I've started a business!" },
+  { emoji: '✈️', text: "I've just booked a trip abroad!" },
+  { emoji: '💍', text: "My friend has got engaged!" },
+  { emoji: '🎓', text: "I've just finished my studies!" },
+  { emoji: '🏆', text: "My team has won a competition!" },
+  { emoji: '📺', text: "I've just watched an amazing series!" },
+  { emoji: '🚗', text: "I've just passed my driving test!" },
+  { emoji: '🍕', text: "I've just tried an incredible restaurant!" },
+];
+
+function buildNewsCards() {
+  const shuffled = [...newsItems].sort(() => Math.random() - 0.5).slice(0, 6);
+  const grid = document.getElementById('news-cards-grid');
+  grid.innerHTML = '';
+  shuffled.forEach(item => {
+    const d = document.createElement('div');
+    d.className = 'news-card';
+    d.innerHTML = `<div class="news-emoji" style="font-size:28px;">${item.emoji}</div><div class="news-text" style="display:none;">${item.text}</div><div style="font-size:12px;color:var(--muted);">Tap to reveal</div>`;
+    d.onclick = function() {
+      const txt = d.querySelector('.news-text');
+      const hint = d.querySelector('div:last-child');
+      if (txt.style.display === 'none') {
+        txt.style.display = 'block';
+        hint.style.display = 'none';
+        d.classList.add('selected');
+      } else {
+        txt.style.display = 'none';
+        hint.style.display = 'block';
+        d.classList.remove('selected');
+      }
+    };
+    grid.appendChild(d);
+  });
+}
+
+// ═══ PHOTOS ═══
+const photoScenes = [
+  {
+    emoji: '🤩🎬',
+    desc: 'She has just watched a film that everyone said was amazing. She looks speechless.',
+    hint: 'blown away / live up to the hype',
+    id: 'film'
+  },
+  {
+    emoji: '📣☕',
+    desc: 'A new coffee shop has opened. People are queuing outside. Everyone has been talking about it for weeks.',
+    hint: 'hyped / already / yet',
+    id: 'cafe'
+  },
+  {
+    emoji: '🎤👥',
+    desc: 'A person is standing in front of a crowd hosting a work event. They look confident.',
+    hint: 'host / just / already',
+    id: 'host'
+  },
+  {
+    emoji: '🏅🎉',
+    desc: 'Someone has just received an award at a ceremony. They are holding a trophy.',
+    hint: 'take home / nominated / just',
+    id: 'award'
+  },
+];
+
+function buildPhotos() {
+  const c = document.getElementById('photos-container');
+  if (!c) return;
+  c.innerHTML = '';
+  photoScenes.forEach(scene => {
+    const d = document.createElement('div');
+    d.className = 'photo-card';
+    d.innerHTML = `
+      <div class="photo-emoji">${scene.emoji}</div>
+      <div class="photo-desc">${scene.desc}</div>
+      <div style="font-size:11.5px;color:var(--coral);font-style:italic;margin-bottom:10px;">💡 Vocab hint: <strong>${scene.hint}</strong></div>
+      <div class="pp-row">
+        <div class="pp-label already">✅ Already</div>
+        <div class="pp-field">
+          <input class="inp" id="ph-${scene.id}-a1" placeholder="... has/have already ..." style="margin-bottom:6px;">
+          <input class="inp" id="ph-${scene.id}-a2" placeholder="... has/have already ...">
+        </div>
+      </div>
+      <div class="pp-row" style="margin-top:8px;">
+        <div class="pp-label yet">⏳ Yet</div>
+        <div class="pp-field">
+          <input class="inp" id="ph-${scene.id}-y1" placeholder="... hasn't/haven't ... yet." style="margin-bottom:6px;">
+          <input class="inp" id="ph-${scene.id}-y2" placeholder="... hasn't/haven't ... yet.">
+        </div>
+      </div>`;
+    c.appendChild(d);
+  });
+}
+
+async function checkPhotos() {
+  const btn = document.getElementById('photos-btn');
+  const res = document.getElementById('photos-result');
+  btn.disabled = true; btn.textContent = 'Checking...';
+  res.classList.add('show'); res.textContent = '⏳ Reading your sentences...';
+
+  const entries = photoScenes.map(s => ({
+    scene: s.desc,
+    already1: (document.getElementById(`ph-${s.id}-a1`) || {value:''}).value.trim(),
+    already2: (document.getElementById(`ph-${s.id}-a2`) || {value:''}).value.trim(),
+    yet1: (document.getElementById(`ph-${s.id}-y1`) || {value:''}).value.trim(),
+    yet2: (document.getElementById(`ph-${s.id}-y2`) || {value:''}).value.trim(),
+  })).filter(e => e.already1 || e.already2 || e.yet1 || e.yet2);
+
+  if (entries.length === 0) { res.textContent = 'Please write some sentences first!'; btn.disabled=false; btn.textContent='Check all sentences ✓'; return; }
+
+  const prompt = `Friendly English teacher. A2/B1 students. They wrote sentences about photos using "have already" and "haven't ... yet".
+
+${entries.map((e,i) => `Photo: "${e.scene}"\n  Already 1: "${e.already1}"\n  Already 2: "${e.already2}"\n  Yet 1: "${e.yet1}"\n  Yet 2: "${e.yet2}"`).join('\n\n')}
+
+For each sentence written (skip empty ones): Is "already" or "yet" used correctly? Is the position right? Is it logical for the photo? If error, give short correction. 1-2 lines each. Encouraging tone. End with overall score.`;
+
+  try {
+    const r = await fetch('/api/gemini', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+    });
+    const d = await r.json();
+    res.textContent = d.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
+  } catch(e) {
+    res.textContent = e.message && e.message.includes('pattern') ? 'Open this lesson on Vercel for AI checking to work. 📝' : 'Connection error — please try again.';
+  }
+  btn.disabled = false; btn.textContent = 'Check all sentences ✓';
+}
+
+function resetPhotos() {
+  photoScenes.forEach(s => {
+    ['a1','a2','y1','y2'].forEach(k => {
+      const inp = document.getElementById(`ph-${s.id}-${k}`);
+      if (inp) { inp.value = ''; inp.className = 'inp'; }
+    });
+  });
+  const r=document.getElementById('photos-result'); r.classList.remove('show'); r.textContent='';
+}
+
+// ═══ TRUTH OR LIE ═══
+const tolItems = [
+  { emoji: '🎤', text: 'hosted an event or a party', pp: 'I have hosted...', ru: 'организовал мероприятие или вечеринку' },
+  { emoji: '🤩', text: 'been blown away by a film or a show', pp: 'I have been blown away by...', ru: 'был поражён фильмом или шоу' },
+  { emoji: '🌊', text: 'made waves at work or at school', pp: 'I have made waves...', ru: 'наделал шума на работе или учёбе' },
+  { emoji: '🏆', text: 'taken home a prize or an award', pp: 'I have taken home...', ru: 'выиграл приз или награду' },
+  { emoji: '🎯', text: 'been nominated for something', pp: 'I have been nominated for...', ru: 'был номинирован на что-то' },
+  { emoji: '📣', text: 'been really hyped about something', pp: 'I have been so hyped about...', ru: 'очень ждал и был в предвкушении чего-то' },
+  { emoji: '😬', text: 'watched something totally overrated', pp: 'I have watched something totally overrated...', ru: 'смотрел что-то совершенно переоценённое' },
+  { emoji: '💎', text: 'discovered something underrated', pp: 'I have discovered something underrated...', ru: 'нашёл что-то недооценённое' },
+  { emoji: '✅', text: 'done something that lived up to the hype', pp: 'I have done something that lived up to the hype...', ru: 'сделал что-то что оправдало все ожидания' },
+  { emoji: '🎙️', text: 'hosted a meeting or a webinar', pp: 'I have hosted a meeting...', ru: 'вёл встречу или вебинар' },
+  { emoji: '🎉', text: 'been blown away by someone\'s performance', pp: 'I have been blown away by someone\'s performance...', ru: 'был поражён чьим-то выступлением' },
+  { emoji: '🚀', text: 'made waves with a new idea or project', pp: 'I have made waves with...', ru: 'произвёл фурор новой идеей или проектом' },
+  { emoji: '🏅', text: 'taken home something I worked really hard for', pp: 'I have taken home something I worked hard for...', ru: 'получил что-то за что много работал' },
+  { emoji: '🎬', text: 'been blown away by an ending of a book or film', pp: 'I have been blown away by an ending...', ru: 'был поражён концовкой книги или фильма' },
+  { emoji: '📺', text: 'watched something hyped that disappointed me', pp: 'I have watched something hyped that disappointed me...', ru: 'смотрел что-то hyped, что разочаровало' },
+  { emoji: '🌟', text: 'been nominated by my colleagues or friends', pp: 'I have been nominated by...', ru: 'был номинирован коллегами или друзьями' },
+];
+
+let currentTolItem = null;
+
+function buildTOL() {
+  const grid = document.getElementById('tol-grid');
+  grid.innerHTML = '';
+  const shuffled = [...tolItems].sort(() => Math.random() - 0.5);
+  shuffled.forEach((item) => {
+    const d = document.createElement('div');
+    d.className = 'tol-card';
+    d.innerHTML = `<div class="tol-emoji">${item.emoji}</div>
+      <div class="tol-text">${item.text}</div>
+      <div style="font-size:11px;color:var(--muted2);margin-top:3px;font-style:italic;">${item.ru}</div>`;
+    d.onclick = () => pickTOL(item, d);
+    grid.appendChild(d);
+  });
+}
+
+function pickTOL(item, card) {
+  document.querySelectorAll('.tol-card').forEach(c => c.classList.remove('picked'));
+  card.classList.add('picked');
+  currentTolItem = item;
+  const vbox = document.getElementById('verdict-box');
+  const ptxt = document.getElementById('tol-picked-text');
+  const vres = document.getElementById('verdict-result');
+  vbox.style.display = 'block';
+  ptxt.innerHTML = `Say: <strong>"${item.pp}"</strong><br><span style="font-size:12px;color:var(--muted2);font-style:italic;">${item.ru}</span>`;
+  vres.style.display = 'none';
+  vres.textContent = '';
+}
+
+function voteVerdict(vote) {
+  const vres = document.getElementById('verdict-result');
+  vres.style.display = 'block';
+  vres.textContent = vote === 'truth'
+    ? '✅ You voted: TRUTH! — Now the student reveals!'
+    : '❌ You voted: LIE! — Now the student reveals!';
+}
+
+// ═══ INIT ═══
+document.addEventListener('DOMContentLoaded', () => {
+  buildWarmup();
+  buildQC();
+  buildSC();
+  buildNewsMatch();
+  buildNewsCards();
+  buildPhotos();
+  buildTOL();
+});
+</script>
+</body>
+</html>
