@@ -990,12 +990,12 @@ ${answers.map((a,i) => `${i+1}. Prompt: "${a.prompt}" | Correct form: "${a.corre
 For each: ✅ correct (accept minor spelling/subject pronoun differences), ❌ + correct form if wrong. One line each. End: "Score: X/7". Friendly tone.`;
 
   try {
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
+    const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyCKO4_IBUGNYFcr_eCe2ibZPrqGddvbqmM', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 800, messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
     });
     const d = await r.json();
-    const txt = d.content.map(b => b.text || '').join('');
+    const txt = d.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
     res.textContent = txt;
     txt.split('\n').filter(l => /^\d+\./.test(l)).forEach((line, i) => {
       const inp = document.getElementById('gi-' + i);
@@ -1055,12 +1055,12 @@ ${sentences.map((s,i) => `${i+1}. Task (RU): "${s.ru}" | Grammar: ${s.tag} (${s.
 For each: grammar correct? vocab used naturally? If error: explain simply + give corrected version. 2-3 lines max each. End with encouragement.`;
 
   try {
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
+    const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyCKO4_IBUGNYFcr_eCe2ibZPrqGddvbqmM', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 900, messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
     });
     const d = await r.json();
-    res.textContent = d.content.map(b => b.text || '').join('');
+    res.textContent = d.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
   } catch(e) {
     res.textContent = 'Connection error. Please check with your teacher.';
   }
@@ -1241,12 +1241,12 @@ ${entries.map((e,i) => `${i+1}. Word: "${e.word}"\n   Sentence A: "${e.s1}"\n   
 For each word: check if the expression is used correctly and naturally. Is the meaning right? Does it fit the context? If there's an error, explain simply and give a corrected version. If it's good, say what makes it work well. 2-3 lines per word. Warm, encouraging tone. End with a short overall comment.`;
 
   try {
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
+    const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyCKO4_IBUGNYFcr_eCe2ibZPrqGddvbqmM', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 900, messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
     });
     const d = await r.json();
-    res.textContent = d.content.map(b => b.text || '').join('');
+    res.textContent = d.candidates?.[0]?.content?.parts?.[0]?.text || 'No response. Try again.';
   } catch(e) {
     res.textContent = 'Connection error. Please check with your teacher.';
   }
