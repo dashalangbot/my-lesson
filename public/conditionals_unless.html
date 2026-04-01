@@ -176,12 +176,12 @@ strong { color: var(–text); font-weight: 500; }
 </div>
 
 <div class="tabs-nav">
-  <button class="tab-btn active" onclick="switchTab('warmup',this)">① Warm-up</button>
-  <button class="tab-btn" onclick="switchTab('vocab',this)">② Vocab</button>
-  <button class="tab-btn" onclick="switchTab('grammar',this)">③ Grammar</button>
-  <button class="tab-btn" onclick="switchTab('unless',this)">④ Unless</button>
-  <button class="tab-btn" onclick="switchTab('practice',this)">⑤ Practice</button>
-  <button class="tab-btn" onclick="switchTab('speaking',this)">⑥ Speaking</button>
+  <button class="tab-btn active" onclick="condSwitchTab('warmup',this)">① Warm-up</button>
+  <button class="tab-btn" onclick="condSwitchTab('vocab',this)">② Vocab</button>
+  <button class="tab-btn" onclick="condSwitchTab('grammar',this)">③ Grammar</button>
+  <button class="tab-btn" onclick="condSwitchTab('unless',this)">④ Unless</button>
+  <button class="tab-btn" onclick="condSwitchTab('practice',this)">⑤ Practice</button>
+  <button class="tab-btn" onclick="condSwitchTab('speaking',this)">⑥ Speaking</button>
 </div>
 
 <!-- ══════════ WARM-UP ══════════ -->
@@ -553,7 +553,7 @@ strong { color: var(–text); font-weight: 500; }
 
 <script>
 // ═══ TABS ═══
-function switchTab(id, btn) {
+function condSwitchTab(id, btn) {
   document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
