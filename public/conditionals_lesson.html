@@ -98,8 +98,17 @@ strong { color: var(--text); font-weight: 500; }
 .btn-small { display: inline-block; padding: 6px 13px; background: var(--coral); border: none; border-radius: 7px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 500; cursor: pointer; transition: opacity .2s; }
 .btn-small:hover { opacity: .85; }
 
-.ai-box { display: none; margin-top: 14px; padding: 14px 16px; background: #F5F1EC; border: 1px solid #D8D0C8; border-radius: var(--r); font-size: 13.5px; color: var(--text); white-space: pre-wrap; line-height: 1.75; }
+.ai-box { display: none; margin-top: 14px; padding: 0; background: transparent; border: none; border-radius: var(--r); font-size: 13.5px; color: var(--text); line-height: 1.75; }
 .ai-box.show { display: block; }
+.fb-card { border-radius: var(--r); padding: 13px 15px; margin-bottom: 8px; border: 1px solid; }
+.fb-ok  { background: #F0FAF4; border-color: #2A7A4A; }
+.fb-err { background: #FFFBF0; border-color: #C8960A; }
+.fb-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+.fb-icon { font-size: 16px; }
+.fb-ok .fb-header  { color: #1A5A30; }
+.fb-err .fb-header { color: #8A6000; }
+.fb-body { font-size: 13.5px; color: var(--text); line-height: 1.65; }
+.fb-body em { font-style: italic; color: var(--coral); }
 
 .step { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--coral); color: #fff; border-radius: 50%; font-size: 11.5px; font-weight: 700; margin-right: 7px; flex-shrink: 0; }
 .step-row { display: flex; align-items: flex-start; margin-bottom: 11px; }
@@ -529,6 +538,34 @@ function switchTab(id, btn) {
   btn.classList.add('active');
 }
 
+// ═══ SHARED HELPERS ═══
+function renderFeedback(boxId, items) {
+  const box = document.getElementById(boxId);
+  box.classList.add('show');
+  box.innerHTML = items.map(item => `
+    <div class="fb-card ${item.ok ? 'fb-ok' : 'fb-err'}">
+      <div class="fb-header">
+        <span class="fb-icon">${item.ok ? '✅' : '💛'}</span>
+        <span>${item.ok ? 'Correct!' : 'Almost there'}</span>
+      </div>
+      <div class="fb-body">${item.text}</div>
+    </div>`).join('');
+}
+
+function parseStars(str) {
+  return str.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>');
+}
+
+async function callGemini(prompt) {
+  const r = await fetch('/api/gemini', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({contents:[{parts:[{text: prompt}]}]})
+  });
+  const d = await r.json();
+  const raw = d.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  return raw.replace(/```json\n?/g,'').replace(/```\n?/g,'').trim();
+}
+
 // ═══ VOCAB MATCH ═══
 const vmData = [
   { phrase: "come on over / drop by", def: "come to my place (warm invitation)" },
@@ -699,27 +736,19 @@ async function checkRewrite() {
   const btn = document.getElementById('rw-btn');
   const res = document.getElementById('rw-result');
   const entries = rwData.map((item, i) => ({
-    original: item.original, starter: item.starter,
-    sample: item.answer,
+    original: item.original, starter: item.starter, sample: item.answer,
     student: (document.getElementById('rw-' + i) || {value:''}).value.trim()
   })).filter(e => e.student);
-
-  if(!entries.length) { res.classList.add('show'); res.textContent = 'Please write at least one sentence!'; return; }
+  if (!entries.length) { res.classList.add('show'); res.innerHTML = '<div class="fb-card fb-err"><div class="fb-body">Please write at least one sentence!</div></div>'; return; }
   btn.disabled = true; btn.textContent = 'Checking...';
-  res.classList.add('show'); res.textContent = '⏳ Checking...';
-
-  const prompt = `English teacher. B1+. Students rewrote sentences using if/unless conditionals.
-
-${entries.map((e,i) => `${i+1}. Original: "${e.original}"\n   Starter: "${e.starter}..."\n   Sample: "${e.sample}"\n   Student: "${e.student}"`).join('\n\n')}
-
-For each: Is the conditional type correct? Is unless/if used right? Is the meaning the same as the original? If wrong, explain briefly + give correction. 1-2 lines each. Warm tone.`;
-
+  res.classList.add('show'); res.innerHTML = '<div class="fb-card fb-err" style="background:#F5F1EC;border-color:#D8D0C8;color:var(--muted);"><div class="fb-body">⏳ Checking...</div></div>';
+  const prompt = `English teacher. B1+. Students rewrote sentences using if/unless conditionals.\n\n${entries.map((e,i) => `${i+1}. Original: "${e.original}" | Starter: "${e.starter}..." | Sample: "${e.sample}" | Student: "${e.student}"`).join('\n')}\n\nReturn ONLY a JSON array, one object per sentence checked, no markdown fences, no extra text.\nFormat: [{"ok": true/false, "text": "plain text explanation, no asterisks. If wrong start with Correction: then corrected sentence. Max 2 sentences."}]`;
   try {
-    const r = await fetch('/api/gemini', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({contents:[{parts:[{text:prompt}]}]}) });
-    const d = await r.json();
-    res.textContent = d.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
+    const raw = await callGemini(prompt);
+    const parsed = JSON.parse(raw);
+    renderFeedback('rw-result', parsed.map(p => ({ ok: p.ok, text: parseStars(p.text) })));
   } catch(e) {
-    res.textContent = e.message?.includes('pattern') ? 'Open on Vercel for AI checking. 📝' : 'Connection error.';
+    res.innerHTML = '<div class="fb-card fb-err"><div class="fb-body">' + (e.message?.includes('pattern') ? 'Open on Vercel for AI checking. 📝' : 'Connection error — please try again.') + '</div></div>';
   }
   btn.disabled = false; btn.textContent = 'Check all ✓';
 }
@@ -760,8 +789,7 @@ async function checkGaps() {
   const btn = document.getElementById('gap-btn');
   const res = document.getElementById('gap-result');
   btn.disabled=true; btn.textContent='Checking...';
-  res.classList.add('show'); res.textContent='⏳ Checking...';
-
+  res.classList.add('show'); res.innerHTML = '<div class="fb-card fb-err" style="background:#F5F1EC;border-color:#D8D0C8;color:var(--muted);"><div class="fb-body">⏳ Checking...</div></div>';
   const answers = gapData.map((g,i) => ({
     sentence: g.pre + ' ___ ' + g.post + (g.post2 ? ' ___ ' + g.post2 : ''),
     correct: g.blank + (g.blank2 ? ' / ' + g.blank2 : ''),
@@ -769,30 +797,24 @@ async function checkGaps() {
     studentB: g.blank2 ? (document.getElementById('gi-'+i+'-b')||{value:''}).value.trim() : '',
     hint: g.hint
   }));
-
-  const prompt = `English teacher. B1+. Conditional gap-fill exercise.
-
-${answers.map((a,i) => `${i+1}. Sentence: "${a.sentence}"\n   Correct: "${a.correct}" | Student: "${a.studentA}${a.studentB ? ' / ' + a.studentB : ''}"`).join('\n\n')}
-
-For each: ✅ correct (accept minor variations), ❌ + correction if wrong. One line each. End: Score X/${gapData.length}.`;
-
+  const entries = answers.filter(a => a.studentA || a.studentB);
+  if (!entries.length) { res.innerHTML = '<div class="fb-card fb-err"><div class="fb-body">Please fill in at least one gap!</div></div>'; btn.disabled=false; btn.textContent='Check all ✓'; return; }
+  const prompt = `English teacher. B1+. Conditional gap-fill.\n\n${answers.map((a,i) => `${i+1}. "${a.sentence}" | Correct: "${a.correct}" | Student: "${a.studentA}${a.studentB ? ' / ' + a.studentB : ''}"`).join('\n')}\n\nReturn ONLY a JSON array, one object per sentence, no markdown fences, no extra text.\nFormat: [{"ok": true/false, "text": "plain text, no asterisks. If wrong: Correction: correct form. Max 1 sentence."}]`;
   try {
-    const r = await fetch('/api/gemini', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})});
-    const d = await r.json();
-    const txt = d.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
-    res.textContent = txt;
-    txt.split('\n').filter(l=>/^\d+\./.test(l)).forEach((line,i) => {
+    const raw = await callGemini(prompt);
+    const parsed = JSON.parse(raw);
+    renderFeedback('gap-result', parsed.map(p => ({ ok: p.ok, text: parseStars(p.text) })));
+    parsed.forEach((p,i) => {
       const a = document.getElementById('gi-'+i+'-a');
       const b = document.getElementById('gi-'+i+'-b');
-      if(line.includes('✅')) { if(a) a.classList.add('ok'); if(b) b.classList.add('ok'); }
-      else if(line.includes('❌')) { if(a) a.classList.add('err'); if(b) b.classList.add('err'); }
+      if(p.ok) { if(a) a.classList.add('ok'); if(b) b.classList.add('ok'); }
+      else { if(a) a.classList.add('err'); if(b) b.classList.add('err'); }
     });
   } catch(e) {
-    res.textContent = e.message?.includes('pattern') ? 'Open on Vercel for AI checking. 📝' : 'Connection error.';
+    res.innerHTML = '<div class="fb-card fb-err"><div class="fb-body">' + (e.message?.includes('pattern') ? 'Open on Vercel for AI checking. 📝' : 'Connection error.') + '</div></div>';
   }
   btn.disabled=false; btn.textContent='Check all ✓';
 }
-
 function resetGaps() {
   gapData.forEach((g,i) => {
     ['a','b'].forEach(k => { const inp=document.getElementById('gi-'+i+'-'+k); if(inp){inp.value='';inp.className='gap-inp';} });
@@ -828,23 +850,16 @@ async function checkWO() {
   const btn = document.getElementById('wo-btn');
   const res = document.getElementById('wo-result');
   const entries = woData.map((item,i) => ({...item, student:(document.getElementById('wo-'+i)||{value:''}).value.trim()})).filter(e=>e.student);
-  if(!entries.length) { res.classList.add('show'); res.textContent='Please write at least one sentence!'; return; }
+  if(!entries.length) { res.classList.add('show'); res.innerHTML='<div class="fb-card fb-err"><div class="fb-body">Please write at least one sentence!</div></div>'; return; }
   btn.disabled=true; btn.textContent='Checking...';
-  res.classList.add('show'); res.textContent='⏳ Reading your sentences...';
-
-  const prompt = `Friendly English teacher. B1+. Conditionals + neighbour vocabulary (drop by, come on over, driving me nuts, block party, next door, value privacy, etc.)
-
-Check these sentences:
-${entries.map((e,i) => `${i+1}. Task (RU): "${e.ru}" | Type: ${e.type} (${e.hint})\n   Student: "${e.student}"`).join('\n\n')}
-
-For each: correct conditional structure? vocab used naturally? If error: explain briefly + corrected version. 2 lines max. Encouraging. End with overall comment.`;
-
+  res.classList.add('show'); res.innerHTML='<div class="fb-card fb-err" style="background:#F5F1EC;border-color:#D8D0C8;color:var(--muted);"><div class="fb-body">⏳ Checking...</div></div>';
+  const prompt = `Friendly English teacher. B1+. Conditionals + neighbour vocab (drop by, driving me nuts, block party, next door, value privacy, etc.)\n\n${entries.map((e,i) => `${i+1}. Task: "${e.ru}" | Type: ${e.type} (${e.hint}) | Student: "${e.student}"`).join('\n')}\n\nReturn ONLY a JSON array, one object per sentence, no markdown fences, no extra text.\nFormat: [{"ok": true/false, "text": "plain text, no asterisks. Max 2 sentences. If wrong: Correction: corrected version."}]`;
   try {
-    const r = await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})});
-    const d = await r.json();
-    res.textContent = d.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
+    const raw = await callGemini(prompt);
+    const parsed = JSON.parse(raw);
+    renderFeedback('wo-result', parsed.map(p => ({ ok: p.ok, text: parseStars(p.text) })));
   } catch(e) {
-    res.textContent = e.message?.includes('pattern') ? 'Open on Vercel for AI checking. 📝' : 'Connection error.';
+    res.innerHTML='<div class="fb-card fb-err"><div class="fb-body">'+(e.message?.includes('pattern')?'Open on Vercel for AI checking. 📝':'Connection error.')+'</div></div>';
   }
   btn.disabled=false; btn.textContent='Check all sentences ✓';
 }
@@ -929,32 +944,22 @@ async function checkTransform() {
   const btn = document.getElementById('tf-ai-btn');
   const res = document.getElementById('tf-ai-result');
   const entries = transformData.map((item, i) => ({
-    original: item.original,
-    direction: item.direction,
-    sample: item.placeholder,
+    original: item.original, direction: item.direction, sample: item.placeholder,
     student: (document.getElementById('tr-' + i) || {value:''}).value.trim()
   })).filter(e => e.student);
-
-  if (!entries.length) { res.classList.add('show'); res.textContent = 'Please write at least one sentence!'; return; }
+  if (!entries.length) { res.classList.add('show'); res.innerHTML='<div class="fb-card fb-err"><div class="fb-body">Please write at least one sentence!</div></div>'; return; }
   btn.disabled = true; btn.textContent = 'Checking...';
-  res.classList.add('show'); res.textContent = '⏳ Checking...';
-
-  const prompt = `English teacher. B1+. Students rewrote sentences transforming "unless" ↔ "if...not". The meaning must stay the same.
-
-${entries.map((e,i) => `${i+1}. Original: "${e.original}"\n   Transform: ${e.direction}\n   Sample answer: "${e.sample}"\n   Student wrote: "${e.student}"`).join('\n\n')}
-
-For each: Does the meaning stay the same? Is unless/if correctly placed? Is the conditional form right? If wrong, explain briefly + corrected version. 1-2 lines each. Warm encouraging tone.`;
-
+  res.classList.add('show'); res.innerHTML='<div class="fb-card fb-err" style="background:#F5F1EC;border-color:#D8D0C8;color:var(--muted);"><div class="fb-body">⏳ Checking...</div></div>';
+  const prompt = `English teacher. B1+. Transform unless <-> if...not. Meaning must stay the same.\n\n${entries.map((e,i) => `${i+1}. Original: "${e.original}" | Transform: ${e.direction} | Sample: "${e.sample}" | Student: "${e.student}"`).join('\n')}\n\nReturn ONLY a JSON array, one object per sentence, no markdown fences, no extra text.\nFormat: [{"ok": true/false, "text": "plain text, no asterisks. Max 2 sentences. If wrong: Correction: corrected version."}]`;
   try {
-    const r = await fetch('/api/gemini', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({contents:[{parts:[{text:prompt}]}]}) });
-    const d = await r.json();
-    res.textContent = d.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
+    const raw = await callGemini(prompt);
+    const parsed = JSON.parse(raw);
+    renderFeedback('tf-ai-result', parsed.map(p => ({ ok: p.ok, text: parseStars(p.text) })));
   } catch(e) {
-    res.textContent = e.message?.includes('pattern') ? 'Open on Vercel for AI checking. 📝' : 'Connection error.';
+    res.innerHTML='<div class="fb-card fb-err"><div class="fb-body">'+(e.message?.includes('pattern')?'Open on Vercel for AI checking. 📝':'Connection error.')+'</div></div>';
   }
   btn.disabled = false; btn.textContent = 'Check all ✓';
 }
-
 function resetTransform() {
   transformData.forEach((t, i) => { const inp = document.getElementById('tr-' + i); if (inp) inp.value = ''; });
   const r = document.getElementById('tf-ai-result'); r.classList.remove('show'); r.textContent = '';
@@ -996,36 +1001,19 @@ async function checkUnlessWrite() {
     ru: item.ru, type: item.type, hint: item.hint,
     student: (document.getElementById('uw-' + i) || {value:''}).value.trim()
   })).filter(e => e.student);
-
-  if (!entries.length) { res.classList.add('show'); res.textContent = 'Please write at least one sentence!'; return; }
+  if (!entries.length) { res.classList.add('show'); res.innerHTML='<div class="fb-card fb-err"><div class="fb-body">Please write at least one sentence!</div></div>'; return; }
   btn.disabled = true; btn.textContent = 'Checking...';
-  res.classList.add('show'); res.textContent = '⏳ Reading your sentences...';
-
-  const prompt = `Friendly English teacher. B1+. Students wrote sentences with "unless" in different conditional types. Topic: neighbours, suburban life.
-
-Check these sentences:
-${entries.map((e,i) => `${i+1}. Task (RU): "${e.ru}" | Type: ${e.type} (${e.hint})\n   Student: "${e.student}"`).join('\n\n')}
-
-For each sentence check:
-1. Is "unless" used correctly (= if...not)?
-2. Is the conditional verb form correct for the type?
-3. Is "would" incorrectly placed after unless? (big error if so)
-4. Does the sentence make logical sense?
-
-If there's an error: explain it simply in 1 sentence + give the corrected version.
-If it's correct: say what works well.
-2-3 lines per sentence max. Very encouraging tone. End with a brief overall comment.`;
-
+  res.classList.add('show'); res.innerHTML='<div class="fb-card fb-err" style="background:#F5F1EC;border-color:#D8D0C8;color:var(--muted);"><div class="fb-body">⏳ Checking...</div></div>';
+  const prompt = `Friendly English teacher. B1+. Students wrote sentences with unless. Check: 1) unless used correctly (= if...not)? 2) correct conditional verb form for the type? 3) would after unless? (big error) 4) logical meaning?\n\n${entries.map((e,i) => `${i+1}. Task: "${e.ru}" | Type: ${e.type} (${e.hint}) | Student: "${e.student}"`).join('\n')}\n\nReturn ONLY a JSON array, one object per sentence, no markdown fences, no extra text.\nFormat: [{"ok": true/false, "text": "plain text, no asterisks. Max 2 sentences. If wrong: Correction: corrected version."}]`;
   try {
-    const r = await fetch('/api/gemini', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({contents:[{parts:[{text:prompt}]}]}) });
-    const d = await r.json();
-    res.textContent = d.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
+    const raw = await callGemini(prompt);
+    const parsed = JSON.parse(raw);
+    renderFeedback('uw-result', parsed.map(p => ({ ok: p.ok, text: parseStars(p.text) })));
   } catch(e) {
-    res.textContent = e.message?.includes('pattern') ? 'Open on Vercel for AI checking. 📝' : 'Connection error.';
+    res.innerHTML='<div class="fb-card fb-err"><div class="fb-body">'+(e.message?.includes('pattern')?'Open on Vercel for AI checking. 📝':'Connection error.')+'</div></div>';
   }
   btn.disabled = false; btn.textContent = 'Check my sentences ✓';
 }
-
 function resetUnlessWrite() {
   unlessWriteData.forEach((u, i) => { const t = document.getElementById('uw-' + i); if (t) t.value = ''; });
   const r = document.getElementById('uw-result'); r.classList.remove('show'); r.textContent = '';
