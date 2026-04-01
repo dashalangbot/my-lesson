@@ -745,7 +745,7 @@ async function checkRewrite() {
   const prompt = `English teacher. B1+. Students rewrote sentences using if/unless conditionals.\n\n${entries.map((e,i) => `${i+1}. Original: "${e.original}" | Starter: "${e.starter}..." | Sample: "${e.sample}" | Student: "${e.student}"`).join('\n')}\n\nReturn ONLY a JSON array, one object per sentence checked, no markdown fences, no extra text.\nFormat: [{"ok": true/false, "text": "plain text explanation, no asterisks. If wrong start with Correction: then corrected sentence. Max 2 sentences."}]`;
   try {
     const raw = await callGemini(prompt);
-    const parsed = JSON.parse(raw);
+    const parsed = safeParseJSON(raw);
     renderFeedback('rw-result', parsed.map(p => ({ ok: p.ok, text: parseStars(p.text) })));
   } catch(e) {
     res.innerHTML = '<div class="fb-card fb-err"><div class="fb-body">' + (e.message?.includes('pattern') ? 'Open on Vercel for AI checking. 📝' : 'Connection error — please try again.') + '</div></div>';
@@ -802,7 +802,7 @@ async function checkGaps() {
   const prompt = `English teacher. B1+. Conditional gap-fill.\n\n${answers.map((a,i) => `${i+1}. "${a.sentence}" | Correct: "${a.correct}" | Student: "${a.studentA}${a.studentB ? ' / ' + a.studentB : ''}"`).join('\n')}\n\nReturn ONLY a JSON array, one object per sentence, no markdown fences, no extra text.\nFormat: [{"ok": true/false, "text": "plain text, no asterisks. If wrong: Correction: correct form. Max 1 sentence."}]`;
   try {
     const raw = await callGemini(prompt);
-    const parsed = JSON.parse(raw);
+    const parsed = safeParseJSON(raw);
     renderFeedback('gap-result', parsed.map(p => ({ ok: p.ok, text: parseStars(p.text) })));
     parsed.forEach((p,i) => {
       const a = document.getElementById('gi-'+i+'-a');
@@ -856,7 +856,7 @@ async function checkWO() {
   const prompt = `Friendly English teacher. B1+. Conditionals + neighbour vocab (drop by, driving me nuts, block party, next door, value privacy, etc.)\n\n${entries.map((e,i) => `${i+1}. Task: "${e.ru}" | Type: ${e.type} (${e.hint}) | Student: "${e.student}"`).join('\n')}\n\nReturn ONLY a JSON array, one object per sentence, no markdown fences, no extra text.\nFormat: [{"ok": true/false, "text": "plain text, no asterisks. Max 2 sentences. If wrong: Correction: corrected version."}]`;
   try {
     const raw = await callGemini(prompt);
-    const parsed = JSON.parse(raw);
+    const parsed = safeParseJSON(raw);
     renderFeedback('wo-result', parsed.map(p => ({ ok: p.ok, text: parseStars(p.text) })));
   } catch(e) {
     res.innerHTML='<div class="fb-card fb-err"><div class="fb-body">'+(e.message?.includes('pattern')?'Open on Vercel for AI checking. 📝':'Connection error.')+'</div></div>';
@@ -953,7 +953,7 @@ async function checkTransform() {
   const prompt = `English teacher. B1+. Transform unless <-> if...not. Meaning must stay the same.\n\n${entries.map((e,i) => `${i+1}. Original: "${e.original}" | Transform: ${e.direction} | Sample: "${e.sample}" | Student: "${e.student}"`).join('\n')}\n\nReturn ONLY a JSON array, one object per sentence, no markdown fences, no extra text.\nFormat: [{"ok": true/false, "text": "plain text, no asterisks. Max 2 sentences. If wrong: Correction: corrected version."}]`;
   try {
     const raw = await callGemini(prompt);
-    const parsed = JSON.parse(raw);
+    const parsed = safeParseJSON(raw);
     renderFeedback('tf-ai-result', parsed.map(p => ({ ok: p.ok, text: parseStars(p.text) })));
   } catch(e) {
     res.innerHTML='<div class="fb-card fb-err"><div class="fb-body">'+(e.message?.includes('pattern')?'Open on Vercel for AI checking. 📝':'Connection error.')+'</div></div>';
@@ -1007,7 +1007,7 @@ async function checkUnlessWrite() {
   const prompt = `Friendly English teacher. B1+. Students wrote sentences with unless. Check: 1) unless used correctly (= if...not)? 2) correct conditional verb form for the type? 3) would after unless? (big error) 4) logical meaning?\n\n${entries.map((e,i) => `${i+1}. Task: "${e.ru}" | Type: ${e.type} (${e.hint}) | Student: "${e.student}"`).join('\n')}\n\nReturn ONLY a JSON array, one object per sentence, no markdown fences, no extra text.\nFormat: [{"ok": true/false, "text": "plain text, no asterisks. Max 2 sentences. If wrong: Correction: corrected version."}]`;
   try {
     const raw = await callGemini(prompt);
-    const parsed = JSON.parse(raw);
+    const parsed = safeParseJSON(raw);
     renderFeedback('uw-result', parsed.map(p => ({ ok: p.ok, text: parseStars(p.text) })));
   } catch(e) {
     res.innerHTML='<div class="fb-card fb-err"><div class="fb-body">'+(e.message?.includes('pattern')?'Open on Vercel for AI checking. 📝':'Connection error.')+'</div></div>';
