@@ -12,9 +12,8 @@ const HEADERS = {
   "content-type": "application/json",
 };
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   try {
-    // Step 1: Create session
     const sessionRes = await fetch("https://api.anthropic.com/v1/sessions", {
       method: "POST",
       headers: HEADERS,
@@ -28,12 +27,11 @@ export default async function handler(req, res) {
     const session = await sessionRes.json();
 
     if (!sessionRes.ok) {
-      throw new Error(`Failed to create session: ${JSON.stringify(session)}`);
+      return res.status(500).json({ error: "Session failed", detail: session });
     }
 
     const sessionId = session.id;
 
-    // Step 2: Send message
     const eventRes = await fetch(
       `https://api.anthropic.com/v1/sessions/${sessionId}/events`,
       {
@@ -53,11 +51,11 @@ export default async function handler(req, res) {
     const event = await eventRes.json();
 
     if (!eventRes.ok) {
-      throw new Error(`Failed to send event: ${JSON.stringify(event)}`);
+      return res.status(500).json({ error: "Event failed", detail: event });
     }
 
     return res.status(200).json({ ok: true, session_id: sessionId });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
-}
+};
