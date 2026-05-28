@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venture Case — BeLang | Daria Smirnova</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep-blue: #1D2D44;
+    --bluebird: #438BC4;
+    --sky-blue: #C7D9E5;
+    --light-beige: #F5EFEB;
+    --ink: #1D2D44;
+    --muted: #5b6b7f;
+    --accent: #C75450;
+    --rule: rgba(29,45,68,0.12);
+    --rule-strong: rgba(29,45,68,0.25);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--light-beige);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 16px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: 100vh;
+  }
+  /* ──────── Sidebar ──────── */
+  nav.sidebar {
+    background: var(--deep-blue);
+    color: var(--light-beige);
+    padding: 44px 28px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar .brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+  .sidebar .brand-sub {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--sky-blue);
+    opacity: 0.65;
+    margin-bottom: 8px;
+  }
+  .sidebar .author {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--sky-blue);
+    opacity: 0.7;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(199,217,229,0.15);
+  }
+  .sidebar .nav-section {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--bluebird);
+    margin: 22px 0 8px;
+    font-weight: 600;
+  }
+  .sidebar a {
+    display: block;
+    color: var(--sky-blue);
+    text-decoration: none;
+    padding: 6px 0;
+    font-size: 13.5px;
+    transition: color 0.15s, padding-left 0.15s;
+    line-height: 1.4;
+  }
+  .sidebar a:hover {
+    color: white;
+    padding-left: 6px;
+  }
+  .sidebar a .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--bluebird);
+    margin-right: 10px;
+    font-size: 13px;
+  }
+  /* ──────── Main ──────── */
+  main {
+    padding: 72px 88px 140px;
+    max-width: 920px;
+  }
+  .eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--bluebird);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  h1.title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    line-height: 1.02;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    margin: 0 0 20px;
+    color: var(--deep-blue);
+  }
+  h1.title em { color: var(--bluebird); font-style: italic; font-weight: 500; }
+  .lede {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1.45;
+    color: var(--muted);
+    margin: 0 0 56px;
+    max-width: 720px;
+    font-weight: 500;
+  }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    margin: 88px 0 6px;
+    color: var(--deep-blue);
+    line-height: 1.12;
+  }
+  h2 .h2-num {
+    font-style: italic;
+    color: var(--bluebird);
+    font-weight: 400;
+    margin-right: 16px;
+  }
+  .section-sub {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--deep-blue);
+    margin: 42px 0 14px;
+  }
+  h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--bluebird);
+    margin: 28px 0 10px;
+  }
+  p { margin: 0 0 18px; max-width: 740px; }
+  p.first-line:first-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    float: left;
+    line-height: 0.9;
+    padding: 8px 12px 0 0;
+    color: var(--bluebird);
+    font-weight: 500;
+  }
+  ul, ol { padding-left: 24px; margin: 0 0 20px; max-width: 740px; }
+  li { margin-bottom: 8px; }
+  /* ──────── Cards & callouts ──────── */
+  .card {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 26px 30px;
+    margin: 22px 0;
+    max-width: 760px;
+  }
+  .card.tight { padding: 20px 24px; }
+  .pull {
+    border-left: 3px solid var(--bluebird);
+    padding: 8px 0 8px 24px;
+    margin: 28px 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--deep-blue);
+    max-width: 720px;
+    line-height: 1.45;
+    font-weight: 500;
+  }
+  .pull-deep {
+    background: var(--deep-blue);
+    color: var(--light-beige);
+    padding: 32px 36px;
+    margin: 32px 0;
+    border-radius: 4px;
+    max-width: 760px;
+  }
+  .pull-deep .pull-eyebrow {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--bluebird);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .pull-deep .pull-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.45;
+    font-weight: 500;
+  }
+  .meta {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    background: var(--sky-blue);
+    color: var(--deep-blue);
+    padding: 4px 11px;
+    border-radius: 2px;
+    font-weight: 600;
+    margin-right: 8px;
+  }
+  .meta.warm { background: #f5d8c8; }
+  .meta.dark { background: var(--deep-blue); color: var(--sky-blue); }
+  /* ──────── Tables ──────── */
+  table {
+    width: 100%;
+    max-width: 780px;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 14px;
+    background: white;
+    border: 1px solid var(--rule);
+  }
+  th {
+    background: var(--deep-blue);
+    color: var(--sky-blue);
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+  }
+  td {
+    padding: 12px 14px;
+    border-top: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  td.num { font-variant-numeric: tabular-nums; text-align: right; }
+  td.label { font-weight: 600; color: var(--deep-blue); }
+  /* ──────── Stat blocks ──────── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 24px 0;
+    max-width: 780px;
+  }
+  .stat {
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 22px 20px;
+    text-align: left;
+    border-radius: 4px;
+  }
+  .stat .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    line-height: 1;
+    font-weight: 500;
+    color: var(--deep-blue);
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+  .stat .stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  /* ──────── Divider ornament ──────── */
+  .ornament {
+    text-align: center;
+    color: var(--bluebird);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    margin: 56px 0;
+    letter-spacing: 0.5em;
+    font-size: 14px;
+    opacity: 0.5;
+  }
+  /* ──────── Story divider (full bleed-ish) ──────── */
+  .story-divider {
+    margin: 96px 0 0;
+    padding: 56px 0 0;
+    border-top: 2px solid var(--deep-blue);
+  }
+  .story-divider .story-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--bluebird);
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .story-divider .story-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 500;
+    color: var(--deep-blue);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 12px;
+  }
+  .story-divider .story-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--muted);
+    max-width: 620px;
+  }
+  /* Small notes */
+  .footnote {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 10px;
+    max-width: 700px;
+  }
+  /* Responsive */
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.sidebar { position: static; height: auto; }
+    main { padding: 40px 24px 80px; }
+    h1.title { font-size: 44px; }
+    h2 { font-size: 32px; }
+    .stats { grid-template-columns: 1fr; }
+    .story-divider .story-title { font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav class="sidebar">
+  <div class="brand">BeLang</div>
+  <div class="brand-sub">Venture Case · Capstone 2026</div>
+  <div class="author">Daria Smirnova · M.S.Ed Entrepreneurship · Penn GSE</div>
+
+  <div class="nav-section">Frame</div>
+  <a href="#opening"><span class="num">00</span>Opening</a>
+  <a href="#summary"><span class="num">01</span>Executive Summary</a>
+
+  <div class="nav-section">Story 1 · Business Case</div>
+  <a href="#problem"><span class="num">02</span>The Problem</a>
+  <a href="#solution"><span class="num">03</span>The Solution</a>
+  <a href="#market"><span class="num">04</span>Market &amp; Sizing</a>
+  <a href="#competition"><span class="num">05</span>Competition</a>
+  <a href="#pricing"><span class="num">06</span>Pricing</a>
+  <a href="#gtm"><span class="num">07</span>Go-to-Market</a>
+  <a href="#financials"><span class="num">08</span>The Financial Model</a>
+
+  <div class="nav-section">Story 2 · Venture Story</div>
+  <a href="#origin"><span class="num">09</span>How BeLang Began</a>
+  <a href="#discovery"><span class="num">10</span>Discovery, Not Done in a Week</a>
+  <a href="#painmatrix"><span class="num">11</span>Pain Point Matrix</a>
+  <a href="#mve"><span class="num">12</span>The MVE</a>
+  <a href="#pivots"><span class="num">13</span>The Pivots</a>
+
+  <div class="nav-section">Story 3 · Journey</div>
+  <a href="#competencies"><span class="num">14</span>Competencies</a>
+  <a href="#pitches"><span class="num">15</span>Two Pitches</a>
+  <a href="#ai"><span class="num">16</span>AI Engagement</a>
+  <a href="#network"><span class="num">17</span>Network</a>
+  <a href="#identity"><span class="num">18</span>Founder Identity</a>
+
+  <div class="nav-section">Close</div>
+  <a href="#close"><span class="num">19</span>What's Next</a>
+  <a href="#appendix"><span class="num">20</span>Appendix</a>
+</nav>
+
+<main>
+
+<!-- ═══════════════════ 00 — OPENING ═══════════════════ -->
+<section id="opening">
+  <div class="eyebrow">UPenn GSE · Capstone Venture Case · May 2026</div>
+  <h1 class="title">The case for <em>BeLang</em>.</h1>
+  <p class="lede">Three stories told in sequence: the business I am building, the venture as it evolved, and what I learned about myself trying to build it.</p>
+
+  <div class="card">
+    <p style="margin:0;">This site brings the whole venture into one place. The pitch is in the deck. The financial model is in the spreadsheet. What I have written here is the rest of it — the reasoning, the false starts, the student conversations that quietly reshaped the product, the moments the idea changed because something I had been certain of stopped being true. I have tried to tell that part the way it actually happened.</p>
+  </div>
+
+  <div class="pull">Speak. Belong. Thrive.</div>
+</section>
+
+<!-- ═══════════════════ 01 — EXECUTIVE SUMMARY ═══════════════════ -->
+<section id="summary">
+  <h2><span class="h2-num">01</span>Executive Summary</h2>
+  <div class="section-sub">What BeLang is, and where it stands as of May 2026</div>
+
+  <p class="first-line">BeLang is a language-learning app designed for adults starting anew in a different country. It emerged from three and a half years of private teaching, working with people worldwide who wanted to learn the local language after moving. These students came from various countries, spoke different native languages, and had diverse reasons for relocating. A common theme appeared among them: existing options did not meet their needs, and the gap between what they sought and what was available was too significant to ignore.</p>
+
+  <p>Over the past nine months at Penn GSE, this teaching practice has begun to evolve into a business. My focus has been on three main areas: creating a product that can expand beyond my limited time, clarifying who the customer is, and determining the kind of company BeLang needs to become to serve those customers effectively. Along the way, I found a business partner. Lika helps lead product, content, and strategy alongside me. Together, we can create something far greater than what I could achieve alone.</p>
+
+  <p>Four interconnected factors make BeLang strong. The first is our niche, which has been largely ignored at the depth it requires—adult immigrants using language to rebuild their lives and identity. The second is our teaching method, designed specifically for this audience, based on contrastive analysis and transfer-based measurement instead of the in-app accuracy scores that many competitors rely on. The third is my personal experience, which informs almost every product decision I make rather than serving as a mere marketing angle. The fourth is how we incorporate AI; it is not just a feature on our website but a key element that allows us to scale a business model that was once labor-intensive.</p>
+
+  <p>Currently, BeLang has taught more than 200 students, generated $120,000 in revenue, and retained students for an average of eight months—close to three times the typical consumer edtech average. This growth occurred with very little spending on marketing, largely due to one founder sharing her lived experiences in Russian on Instagram. BeLang was chosen as a Semifinalist in the Milken-Penn GSE EBPC from around 500 applicants across 76 countries.</p>
+
+  <h3>Where the numbers point</h3>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">$235K</div><div class="stat-label">Year 1 Revenue (Base)</div></div>
+    <div class="stat"><div class="stat-num">$1.61M</div><div class="stat-label">Year 3 Revenue (Base)</div></div>
+    <div class="stat"><div class="stat-num">Month 1</div><div class="stat-label">Break-Even (Base Case)</div></div>
+  </div>
+
+  <p>The financial model — appended to this case — projects $235K in Year 1 revenue, $767K in Year 2, and $1.61M in Year 3 under the base scenario, with positive net income from month one. Peak cumulative cash deficit in the base case is $574. The mathematical minimum funding need is approximately $25,000 with a 35% safety buffer. I am raising $150,000 because the math of survival and the math of acceleration are different questions, and I am asking for the second.</p>
+
+  <h3>The three stories ahead</h3>
+  <p>Story 1 makes the business case using tools from Marketing and Finance. It covers the problem, solution, market sizing, competitive position, pricing, go-to-market strategy, and the model behind those numbers. Story 2 is the venture story. It details how the problem became more focused, how the persona became clearer, what changed between the first pitch and the final one, and what I learned from the minimum viable experiments. Story 3 is the entrepreneurial journey. It reflects on what I learned about myself during this process, how I collaborated with AI as a thinking partner instead of just a tool, where I still feel uneasy, and what the Capstone offered me that I did not expect.</p>
+</section>
+
+<!-- The remaining sections continue in the next files concatenated together. -->
+<!-- ═══════════════════ STORY 1 DIVIDER ═══════════════════ -->
+<div class="story-divider">
+  <div class="story-num">Story One</div>
+  <div class="story-title">The Business Case</div>
+  <div class="story-tagline">What BeLang is, who it serves, and why the numbers work.</div>
+</div>
+
+<!-- ═══════════════════ 02 — THE PROBLEM ═══════════════════ -->
+<section id="problem">
+  <h2><span class="h2-num">02</span>The Problem</h2>
+  <div class="section-sub">A specific person, not a market segment</div>
+
+  <p class="first-line">When I illustrate the problem BeLang aims to solve, I begin with a person. Her name in the pitch is Katya, but in reality, she embodies four years of teaching experience, late-night messages in my Instagram inbox, and questions my family asks when I visit. Katya is thirty years old. She left her country for political reasons. At home, she was a respected accountant; now, she cleans houses in the U.S. Her daughter is about to start school in a language Katya cannot yet hold a real conversation in. Her main goal isn't just to learn English; it's to communicate effectively with her daughter's teacher and understand exactly what's being said about her child. She wants to call the doctor without rehearsing sentences first. She seeks work that reflects her true self and aspires to build a life beyond the small Russian-speaking community, which currently feels safe yet limiting.</p>
+
+  <p>This is the problem I came to Penn to tackle, and I have spent the year refining my understanding of it. Many language-learning apps treat the problem as if Katya were back home, picking up a language as a hobby. She is not. Katya needs more than streaks and an annoying owl. She already has more grammar than she can use. She understands the conditional tense. She has flashcards somewhere. The issue is that grammar without context, practice, and emotional safety leads to silence in real conversations. And she cannot afford to be silent at her daughter's parent-teacher meeting.</p>
+
+  <p>There is a second layer beneath the practical one, and I believe it matters more than the first. The adults I work with didn't just lose a language when they moved; they lost the version of themselves that the old language represented. That version was funny, argued well at work, and could comfort a friend with the right words. Speaking broken English in your forties, after being articulate in your thirties, is not just a logistical problem. It wounds identity. Conventional ESL treats this as outside its focus. I think it is the main focus.</p>
+
+  <h3>The numbers behind the person</h3>
+  <p>Globally there are 304 million people living in a country they were not born in, according to the United Nations DESA International Migrant Stock report from 2024. In the United States alone, 47% of immigrants have limited English proficiency, per a 2023 Kaiser Family Foundation survey. The Russian-speaking diaspora in the U.S. and Canada — the beachhead I am building from — is roughly 4 million people, with concentrated communities in New York, New Jersey, Florida, California, and the Toronto area. These are not unreachable populations. They are concentrated, online, organized in Telegram channels with tens of thousands of members each, and they trust their own when they make purchase decisions.</p>
+
+  <h3>Why existing options fail her</h3>
+  <p>Katya has tried things. The pattern is consistent enough that I include it as part of my customer-discovery synthesis in Story 2. She tried Duolingo. It taught her that the cat drinks the milk. She tried a community college class, but the schedule did not work — community college runs on the rhythm of a student, not the rhythm of a working mother. She looked at private tutors on Preply, where rates run $30 to $80 an hour, which she could not afford. She joined a few free Facebook groups for English practice. They were chaotic, level-mixed, and the corrections came from strangers whose own English she had no way to evaluate. Nothing was built for her specifically, and the things that came closest were either too expensive, too rigid, or too generic to matter.</p>
+</section>
+
+<!-- ═══════════════════ 03 — THE SOLUTION ═══════════════════ -->
+<section id="solution">
+  <h2><span class="h2-num">03</span>The Solution</h2>
+  <div class="section-sub">What BeLang actually is, in plain language</div>
+
+  <p class="first-line">BeLang is a language-learning app created specifically for adult immigrants, combining three key elements: brief, context-driven lessons; an AI speaking coach called Ava; and a community of learners with the same problem. Currently, we are in the middle of moving from private practice to a full product, and everything is in development.</p>
+
+  <p>A new student begins by telling BeLang what she is here for. Not "I want to improve my English," which is what every onboarding form on the internet asks and which yields useless answers. Instead, the prompt is situational: "I moved from Belarus to the U.S. last year. I need English at work within twelve months because my employer is hiring native speakers for the next promotion track." Or: "My daughter starts kindergarten in September. I want to be able to talk to her teacher without preparing what to say." From that answer, BeLang builds her a curriculum that is hers — situational, sequenced, paced to her life rather than to the rhythm of a textbook.</p>
+
+  <p>When she gets stuck inside a lesson — and she will, because real language learning is mostly being stuck — the explanation comes in her native language. This reflects a pedagogical principle: contrastive analysis is more effective than monolingual immersion for adults, because they already have a fully-formed language to anchor to. Most platforms refuse to use the native language because they have built one tool that has to scale across every language pair and cannot afford the per-language pedagogy investment. We scale differently: one trusted creator per language. Pedagogy is the moat.</p>
+
+  <p>Speaking practice happens with Ava, who listens, responds instantly, gently corrects, and — importantly — never laughs, judges, or sighs at embarrassing mistakes. This is the feature my students have requested most often over the past two years, and the one I initially underestimated. The main barrier to adult learners speaking is the fear of embarrassment, and a patient, always-available, non-human conversation partner removes that risk from the loop.</p>
+
+  <p>And there is the community. A small thing, but the thing that makes the retention numbers work. Group lessons and a Telegram-based community give students a place to see other people like them making the same mistakes and getting through. The eight-month average retention I report — versus a three-month industry benchmark — is largely a function of this layer. People do not stay for the app. They stay for the people they meet inside it.</p>
+</section>
+
+<!-- ═══════════════════ 04 — MARKET ═══════════════════ -->
+<section id="market">
+  <h2><span class="h2-num">04</span>Market &amp; Sizing</h2>
+  <div class="section-sub">TAM, SAM, SOM — narrated, not just listed</div>
+
+  <p class="first-line">The Marketing course taught me to size markets carefully, with sources, and with humility about the leap from the addressable to the obtainable. The sizing I use in the pitch follows that discipline, and I want to walk through it here with the commentary that the deck doesn't have room for.</p>
+
+  <h3>TAM — $85 billion</h3>
+  <p>The total addressable market is global language learning, valued at $85 billion in 2025 with a compound annual growth rate of 22.9% (Global Market Insights). This is the largest defensible number; it captures every dollar spent on learning a language anywhere in the world, online or offline, adult or child, casual or professional. I do not pretend BeLang competes for all of this. I include it to anchor the size of the category, which is enormous and growing faster than most software categories.</p>
+
+  <h3>SAM — $22 billion</h3>
+  <p>The serviceable addressable market is online language learning specifically, valued at $22 billion in 2024 (Grand View Research). The migration from offline to online learning has accelerated post-pandemic and is most pronounced in adult learners, who have schedules that classroom-based learning cannot accommodate. Within that $22 billion, the segment that maps to BeLang's positioning — adult immigrants learning the language of their new country — is a meaningful subset, anchored by the UN's 304 million international migrants figure. AI-powered language apps grew over 200% year-over-year in 2024 (Sensor Tower), which tells me the moment to build in this space is now and not in five years.</p>
+
+  <h3>SOM — $6 million ARR by Year 3</h3>
+  <p>The serviceable obtainable market — what BeLang can credibly capture in three years — is $6 million ARR. This assumes 10,000 paying users at an annualized $600 ARPU, which is consistent with my pricing model (a blended $63 to $237 per month across tiers). The path to that number goes through the Russian-speaking diaspora first, then language by language, with one trusted creator partner per new language. This is the part of the sizing I have the most certainty about, because the first thousand of those ten thousand are already in some version of my orbit today — current students, Instagram followers, waitlist signups, family members of existing students. The diaspora is small enough to be reached and large enough to absorb significant growth before I need to expand to the next language.</p>
+
+  <h3>Why this sizing is conservative</h3>
+  <p>I want to flag a piece of internal discipline. I have seen sizing slides in Capstone pitches where the SOM was 10% of the SAM, and the SAM was the entire global market. The math is sometimes there; the credibility is not. My SOM is roughly 0.03% of my SAM and 0.007% of my TAM. I would rather be defensibly small and visibly conservative than impressively large and obviously hand-wavy.</p>
+
+  <div class="card tight">
+    <div class="meta warm">Funnel visual</div>
+    <p style="margin:8px 0 0;">The pitch deck includes the TAM-SAM-SOM concentric circles. The version in this case prioritizes the narrative and treats the visual as appendix material. The relevant chart is in the financial model under the Sales Funnel tab.</p>
+  </div>
+</section>
+<!-- ═══════════════════ 05 — COMPETITION ═══════════════════ -->
+<section id="competition">
+  <h2><span class="h2-num">05</span>Competition &amp; Competitive Advantage</h2>
+  <div class="section-sub">Where BeLang sits, and why nobody else can sit there yet</div>
+
+  <p class="first-line">Almost every language-learning pitch I have seen lists Duolingo, Babbel, and Rosetta Stone and then claims to be different. The differences are usually presented as features. I want to argue something more structural: the established players cannot serve Katya not because their products are bad, but because they were built around a different customer and have grown too large to retool around hers.</p>
+
+  <p>Duolingo is built for the casual learner who wants a streak and a habit. Its gamification is excellent. Its pedagogy for adults who need real-life functional language is poor. Babbel comes closer because it organizes content around topics, but the topics are tourist topics — restaurants, asking directions — not immigrant topics. Rosetta Stone is built on immersion and refuses native-language scaffolding on principle, which is a coherent pedagogical position for some learners and an actively counterproductive one for adults who are time-constrained and shame-sensitive. Preply and iTalki solve the human-tutor problem but cost between $30 and $80 an hour, putting them out of reach for the budget Katya can actually sustain. ELSA Speak is excellent at pronunciation in English specifically; it does not pretend to do anything else. Community college ESL classes exist and are often free, but they run on schedules that working immigrants cannot keep and rarely address the emotional and identity dimensions of starting over.</p>
+
+  <h3>The competitive matrix</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Capability</th>
+        <th>Duolingo</th>
+        <th>Babbel</th>
+        <th>Speak</th>
+        <th>Preply/iTalki</th>
+        <th>Community College</th>
+        <th>BeLang</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="label">AI personalization</td><td>Partial</td><td>No</td><td>Yes</td><td>No</td><td>No</td><td>Yes</td></tr>
+      <tr><td class="label">Adult newcomer focus</td><td>No</td><td>No</td><td>No</td><td>Partial</td><td>Partial</td><td>Yes</td></tr>
+      <tr><td class="label">Native-language support</td><td>No</td><td>No</td><td>Partial</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+      <tr><td class="label">Emotional + community layer</td><td>No</td><td>No</td><td>No</td><td>No</td><td>Partial</td><td>Yes</td></tr>
+      <tr><td class="label">Affordable for working adults</td><td>Yes</td><td>Yes</td><td>Partial</td><td>No</td><td>Partial</td><td>Yes</td></tr>
+    </tbody>
+  </table>
+  <p class="footnote">No competitor combines all five. Each of the five is a deliberate product decision; together they form a defensible position rather than a feature list.</p>
+
+  <h3>The moat is not a feature</h3>
+  <p>The hardest question I have been asked by mentors is some version of: "Why can't Duolingo just build this?" The honest answer is that they could, technically, but they will not — because the customer they would be building for is not the customer they have optimized seven years of product around, and the pivot costs them brand clarity. The deeper moat is one I am still building: the trust of a specific diaspora community, accumulated through years of being one of their own showing up in their feed every week. That is not copyable on a roadmap. The other moats — cultural and linguistic pedagogy depth per language pair, founder-led organic distribution, retention driven by community rather than features — are also accumulative. They get stronger with time, not weaker.</p>
+
+  <div class="pull">The moat is not a feature. The moat is years of being the person these specific people trust.</div>
+</section>
+
+<!-- ═══════════════════ 06 — PRICING ═══════════════════ -->
+<section id="pricing">
+  <h2><span class="h2-num">06</span>Pricing</h2>
+  <div class="section-sub">Three tiers, and why each one exists</div>
+
+  <p class="first-line">BeLang's pricing is structured in three tiers. Basic at $65 per month is self-study plus AI; Standard at $169 is a small group class plus AI; Pro at $249 is one-on-one plus AI. A three-month bundle takes 10% off, and somewhere between 30% and 50% of students choose the bundle depending on tier — Pro students bundle more often, which I attribute to higher commitment and higher cost-per-month making the discount more material.</p>
+
+  <p>The blended monthly revenue per student across the mix lands at $63 for Basic, $162 for Standard, and $237 for Pro. The implied lifetime values — assuming the churn rates from the financial model of 10% for Basic, 3% for Standard, and 2% for Pro — work out to roughly $630, $5,400, and $11,800 respectively. The Standard tier is the anchor; the expected mix is 20% Basic, 60% Standard, 20% Pro, which means most of the revenue comes from the tier where I have the most operational experience and the strongest retention signal.</p>
+
+  <h3>The anchoring logic</h3>
+  <p>The price is not anchored against Duolingo, which charges around $7 per month. It is anchored against private tutors on Preply and Cambly, which charge $90 to $250 per month for the equivalent number of sessions. Against that benchmark, BeLang Standard at $169 is meaningfully cheaper while delivering the AI layer, the community, and the native-language support that the private tutor cannot. This anchoring matters because the alternative my students consider when they cannot afford BeLang is not Duolingo — it is doing nothing and being frustrated about it.</p>
+
+  <h3>A small thing I learned about language in the pitch</h3>
+  <p>One of my Capstone peers, Mariana, gave me feedback on the pricing slide language. I had written: "less than a private tutor, but infinitely more accessible." She pointed out that the "but" framed the value as contrast — cheaper despite the limitations — when the real story is additive. The AI, the community, the availability outside tutoring hours are not concessions; they are gains. The cleaner phrasing is "less than a private tutor, and infinitely more accessible." A two-letter word changes the frame from defensive to confident. I have kept that lesson and applied it elsewhere in the document, in places where I noticed myself reaching for the apologetic "but" when the truthful conjunction was "and."</p>
+</section>
+
+<!-- ═══════════════════ 07 — GTM ═══════════════════ -->
+<section id="gtm">
+  <h2><span class="h2-num">07</span>Go-to-Market</h2>
+  <div class="section-sub">Founder as the channel</div>
+
+  <p class="first-line">For the past two years BeLang has acquired students through a single channel: my Instagram account, where I post in Russian about the practical and emotional realities of learning English as an immigrant. The acquisition cost is effectively zero. The conversion is high. The retention is the eight months I keep mentioning. None of these numbers can be replicated by a paid-acquisition team that is not me, and that has been both a strength and a constraint.</p>
+
+  <h3>How acquisition actually works today</h3>
+  <p>A Reel or a carousel post goes up. It says something real about the experience of learning English as an adult immigrant — a mistake I made, a phrase that took me three years to internalize, a story from a student. Comments come in. Some of those commenters move to my newsletter or to a Telegram channel I run. Some of those subscribers eventually take a free trial lesson. Some of those trial-takers convert to paid subscribers. The funnel works because the content is built for one audience and one audience only, and because the person making the content is recognizably one of them.</p>
+
+  <p>The financial model assumes a CAC of approximately $148, which incorporates a modest paid-ads layer the business does not currently run. I include the ad budget in the projection because at some point the organic channel will saturate and I will need to know what paid acquisition costs. In practice today, the actual CAC is closer to zero, which is why the unit economics are as strong as they are. The eventual CAC will rise. The model accounts for that, and the projected gross margins absorb it.</p>
+
+  <h3>The expansion playbook</h3>
+  <p>This is where the case for BeLang gets larger than English-for-Russian-speakers. The playbook I am running is replicable: identify a diaspora with sufficient density and willingness to pay, find one trusted creator inside it, build the language-pair pedagogy, launch. Spanish is the obvious next move, anchored to Mexican and Central American immigration patterns in the U.S. Arabic is a longer-term but high-impact possibility, anchored to recent MENA migration flows into Europe and North America. The pitch lists English, Spanish, German, French, and Arabic as five target languages at launch. I will be honest — and one of my Capstone peers, Jason, was honest with me first — that five at launch is aspirational. The realistic Year-1 product is English, with the platform architected for additional language pairs in Year 2.</p>
+
+  <h3>The B2B2C wedge</h3>
+  <p>There is a second channel I have started exploring and the seed round helps me operationalize: partnerships with refugee resettlement organizations, workforce development programs, and community colleges. These institutions have populations that need exactly what BeLang offers and budgets that cannot reach private tutoring. The unit economics of a B2B2C contract are different from D2C subscriptions — lower per-seat price, higher seat count, longer sales cycle, sticky once signed. I am not building the company on these contracts, but they are a meaningful adjacent layer for Year 2 and beyond.</p>
+</section>
+
+<!-- ═══════════════════ 08 — FINANCIALS ═══════════════════ -->
+<section id="financials">
+  <h2><span class="h2-num">08</span>The Financial Model</h2>
+  <div class="section-sub">A narrative overview of what the spreadsheet says</div>
+
+  <p class="first-line">The full financial model is appended to this case as a thirteen-tab workbook covering assumptions, the sales funnel, customer metrics, revenue, COGS and personnel, marketing, operating costs, the P&amp;L, cash flow, KPIs, scenarios, and sensitivities. What follows is the narrative — what the model assumes, what it produces, and why I trust it.</p>
+
+  <h3>Assumptions, briefly</h3>
+  <p>Pricing across three tiers, as described above. Monthly churn of 10% on Basic, 3% on Standard, and 2% on Pro, which produces implied average lifetimes of 10, 33, and 50 months respectively. These churn rates are anchored in two years of operating data from my teacher-led business; they are not aspirational. Marketing spend begins at $200 per month and compounds at 5% per month, with seasonal multipliers reflecting the well-documented ESL pattern of January and September spikes and a summer dip. COGS includes teacher pay per session at $42 for group classes (shared across four students, yielding $10.50 per student per session) and $17 per hour for one-on-one, plus AI token costs estimated at $1 per student per month based on Gemini API usage benchmarks.</p>
+
+  <h3>What the model produces</h3>
+  <table>
+    <thead>
+      <tr><th>Metric</th><th>Year 1</th><th>Year 2</th><th>Year 3</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="label">Active students (end of year)</td><td class="num">260</td><td class="num">620</td><td class="num">1,209</td></tr>
+      <tr><td class="label">Annual revenue</td><td class="num">$235,133</td><td class="num">$767,213</td><td class="num">$1,609,051</td></tr>
+      <tr><td class="label">Gross margin</td><td class="num">46%</td><td class="num">45%</td><td class="num">44%</td></tr>
+      <tr><td class="label">Net income</td><td class="num">$65,876</td><td class="num">$245,581</td><td class="num">$527,348</td></tr>
+      <tr><td class="label">Net margin</td><td class="num">28%</td><td class="num">32%</td><td class="num">33%</td></tr>
+      <tr><td class="label">Blended CAC</td><td class="num">$148</td><td class="num">$147</td><td class="num">$150</td></tr>
+    </tbody>
+  </table>
+
+  <p>The model breaks even in month one of the base case. The peak cumulative cash deficit across the entire 36-month projection is $574, occurring in month six. With a 35% safety buffer, the mathematical funding need is $776. The investment ask I am preparing to make is $150,000, and I want to address the gap between those two numbers directly.</p>
+
+  <h3>The three levels of the ask</h3>
+  <p>I think about funding in three layers, and I think being clear about which layer I am asking for is itself a discipline.</p>
+  <ul>
+    <li><strong>$25,000</strong> is the mathematical minimum — the model's cash gap plus buffer. It is what I would need to operate the business as it exists and grow it organically with the current operational model.</li>
+    <li><strong>$50,000</strong> is what the pitch deck names — enough to fund the platform build-out on Next.js + Supabase, prototype Ava across two languages, and bring on the first part-time engineering support.</li>
+    <li><strong>$150,000</strong> is what I am actually raising. It funds the platform, Ava across all five planned languages, the first two full-time engineering hires, and approximately twelve months of compressed timeline. The math of survival and the math of acceleration are different, and the seed round is for the second.</li>
+  </ul>
+
+  <h3>Scenarios</h3>
+  <p>The model includes three scenarios — bear, base, and bull — driven by four assumption levers: Standard tier churn (8% / 3% / 1.5%), starting ad budget ($1,200 / $1,800 / $2,200), CPM ($4 / $3 / $2.50), and lead-to-trial conversion (3% / 5% / 8%). The bear case produces $46K in Year 1 revenue, break-even at month 20, and a peak deficit of $59K — meaningfully worse but still survivable. The bull case produces $406K in Year 1, break-even by month 3, and net income of $2.06M by Year 3. The base case is the conservative midpoint, and it is the version I underwrite my projections against.</p>
+
+  <p>The sensitivity analysis identifies the Standard tier churn rate as the single most powerful lever. Moving from 3% to 8% destroys roughly $112K of Year 1 net income and pushes break-even out by nineteen months. This is why the operational work I do with current students — the community, the retention calls, the relationship — is not a soft layer. It is the load-bearing wall of the entire model.</p>
+
+  <div class="pull-deep">
+    <div class="pull-eyebrow">The financial spine of the case</div>
+    <div class="pull-body">BeLang is structurally low-CAC because the founder is the channel, structurally high-retention because the community is the product, and structurally variable-cost because teachers are paid per session. Those three properties are why the model breaks even from month one. They are not magic. They are the result of two years of disciplined operations before I started raising.</div>
+  </div>
+</section>
+<!-- ═══════════════════ STORY 2 DIVIDER ═══════════════════ -->
+<div class="story-divider">
+  <div class="story-num">Story Two</div>
+  <div class="story-title">How the Venture Evolved</div>
+  <div class="story-tagline">The decisions, the dead ends, the moments the company changed shape.</div>
+</div>
+
+<!-- ═══════════════════ 09 — ORIGIN ═══════════════════ -->
+<section id="origin">
+  <h2><span class="h2-num">09</span>How BeLang Began</h2>
+  <div class="section-sub">From a Teachable course to a venture</div>
+
+  <p class="first-line">I did not arrive at Penn with the venture I am graduating with. I arrived with a Teachable course. I had been teaching English to Russian-speaking immigrants for nearly three years, mostly through Instagram-driven word of mouth, and I had built a set of interactive HTML lessons hosted on Teachable that used the Gemini API for dialogue practice and ElevenLabs for audio. The lessons were good. The students were happy. I assumed the business I was building was a content library with a teacher attached.</p>
+
+  <p>The Problem-Defining Framework we worked through in the first weeks of the Capstone forced me to look at this differently. The framework asks you to separate the surface complaint from the underlying job, and then to separate the underlying job from the deeper need it serves. When I applied it honestly to my own students, the surface complaint was "I want better English." The underlying job was "I want to function in my new country without panic." And the deeper need — the one that took me months to admit was the real one — was identity. These adults were not customers buying lessons. They were people trying to get themselves back.</p>
+
+  <p>Once I named that, two things shifted. The first was scope: this was not a Russian-speaking-immigrants problem. It was an adult-immigrant problem, which exists in every language pair in every receiving country on earth. The second was positioning: BeLang was not a school. It was a path back to feeling like yourself in a language you did not grow up in. The course content stayed roughly the same. Everything else — the brand, the promise, the architecture, the ask — changed.</p>
+
+  <h3>The ideal customer, narrowed</h3>
+  <p>The Capstone work pushed me toward a much sharper ideal customer than the one I had been building for. "Russian-speaking adults learning English" is a demographic. "Adults who left a respected version of themselves behind and are trying to rebuild it in a language they did not grow up in" is a customer. The first is a market segment. The second is a person who recognizes herself in a piece of content and clicks to learn more. The second customer is who I now write for, build for, and price for.</p>
+
+  <div class="pull">The thing I was building changed less than the thing I thought I was building. That is what the Problem-Defining Framework gave me.</div>
+</section>
+
+<!-- ═══════════════════ 10 — DISCOVERY ═══════════════════ -->
+<section id="discovery">
+  <h2><span class="h2-num">10</span>Discovery, Not Done in a Week</h2>
+  <div class="section-sub">Two years of teaching as customer discovery</div>
+
+  <p class="first-line">I want to address something honestly. The rubric for this case asks for a data table of interviewees and an analysis of stakeholder feedback. The clean way to produce that artifact would be to have run ten or twelve formal customer-discovery interviews this term and write them up. I did not do that. The reason I did not do that is that I have been running customer discovery for nearly four years, and it has not looked like the textbook version. Each of the more than two hundred students I have taught was a multi-hour, multi-month conversation with a person inside my target market. Each one taught me something I could not have learned from a sixty-minute formal interview.</p>
+
+  <p>What I want to do instead is describe what that discovery has actually looked like, and what the consistent themes have been across the people I have learned from. I think this is the more truthful version of the artifact, and I would rather be truthful than tidy.</p>
+
+  <h3>Who I have actually learned from</h3>
+  <table>
+    <thead>
+      <tr><th>Profile</th><th>Time studying with me</th><th>What I learned from her</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="label">Kate / Sonya<br><span style="font-weight:400;color:var(--muted);font-size:13px;">DET prep, target 130+ then 145+</span></td>
+        <td>Multiple months, ongoing</td>
+        <td>The intensity of the test-prep use case is different from generalist ESL. There is a clear before-and-after metric, and that clarity reduces churn enormously. Suggests a future BeLang sub-product oriented around immigration-relevant credentials.</td>
+      </tr>
+      <tr>
+        <td class="label">Darina<br><span style="font-weight:400;color:var(--muted);font-size:13px;">Small-group adult learner</span></td>
+        <td>Ongoing</td>
+        <td>Strong learner who needed structured speaking practice between sessions. Reinforced the case for Ava — an always-available speaking partner is the bridge between weekly group classes and real-life usage.</td>
+      </tr>
+      <tr>
+        <td class="label">Yulia<br><span style="font-weight:400;color:var(--muted);font-size:13px;">Small-group adult learner</span></td>
+        <td>Ongoing</td>
+        <td>Brought emotional-safety needs to the front. The right pedagogy is also a permission structure: she did not need new grammar, she needed a place where it was safe to use the grammar she already had.</td>
+      </tr>
+      <tr>
+        <td class="label">Ana<br><span style="font-weight:400;color:var(--muted);font-size:13px;">Small-group adult learner</span></td>
+        <td>Ongoing</td>
+        <td>Showed me that progress is rarely linear and that motivation is fragile. Confirmed the importance of the community layer — peers stabilize commitment in a way that any individual tutor cannot.</td>
+      </tr>
+      <tr>
+        <td class="label">~200 prior students<br><span style="font-weight:400;color:var(--muted);font-size:13px;">Mixed adult learners, 2022–2025</span></td>
+        <td>Months to years</td>
+        <td>Cumulatively taught me that the eight-month retention I report is not luck. People stay because they have a person — me, currently, but the product needs to make that scale.</td>
+      </tr>
+      <tr>
+        <td class="label">DM correspondents<br><span style="font-weight:400;color:var(--muted);font-size:13px;">Instagram followers, not yet students</span></td>
+        <td>Single exchanges to ongoing</td>
+        <td>The biggest qualitative insight I get every week. Their questions reveal what is unsaid in the existing market: shame, isolation, fear of being "found out" at work. This is the unmet need the product has to speak to in onboarding.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>What the conversations consistently said</h3>
+  <p>Five themes show up repeatedly across years of these conversations. First: the practical and the emotional are not separable. The student who cannot make a doctor's appointment is also the student who cannot stop comparing herself to the person she used to be. Second: shame is the single biggest barrier to practice, and practice is the only thing that produces real progress. Third: time is the most expensive resource. The students who succeed are the ones for whom learning fits inside the cracks of an already-overloaded life. Fourth: trust precedes purchase. They buy from me because they have been watching me on Instagram for months, sometimes years. Cold acquisition is not how this market works. Fifth: the community is more important than any individual feature. People come for the lessons; they stay because of who they meet inside them.</p>
+
+  <p>I lean on these five themes constantly in product decisions. They are why onboarding is situational rather than diagnostic, why Ava is being built as a patient and judgment-free conversation partner, why the lessons are short, why the brand voice is recognizably mine, and why the community is operational from day one rather than a Year-2 feature.</p>
+</section>
+
+<!-- ═══════════════════ 11 — PAIN POINT MATRIX ═══════════════════ -->
+<section id="painmatrix">
+  <h2><span class="h2-num">11</span>The Pain Point Matrix</h2>
+  <div class="section-sub">From Marketing course, narrated for product implications</div>
+
+  <p class="first-line">The Marketing course taught me to map pain points along two axes: frequency and intensity. The most actionable pains are the ones that occur often and hurt badly when they do. I want to walk through the matrix I built for BeLang, because the placement of each pain drove a specific product decision.</p>
+
+  <table>
+    <thead>
+      <tr><th>Pain point</th><th>Frequency</th><th>Intensity</th><th>Product response</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="label">Fear of speaking on the phone</td><td>Weekly</td><td>High</td><td>Ava voice tutor as primary feature</td></tr>
+      <tr><td class="label">Missing crucial information from child's school</td><td>Monthly</td><td>Very high</td><td>Situational lessons on school communication</td></tr>
+      <tr><td class="label">Feeling "less than" at work</td><td>Daily</td><td>Medium-high</td><td>Professional English track, community of peers</td></tr>
+      <tr><td class="label">Cannot find a tutor who understands her experience</td><td>Episodic</td><td>High</td><td>Founder-led brand, Russian-speaking instructors</td></tr>
+      <tr><td class="label">Cost of one-on-one tutoring</td><td>Recurring</td><td>Medium</td><td>Tiered pricing with $65 entry point</td></tr>
+      <tr><td class="label">Time constraints around family and work</td><td>Constant</td><td>Medium</td><td>Short async lessons, on-demand practice</td></tr>
+      <tr><td class="label">Shame about asking the same question twice</td><td>Recurring</td><td>High</td><td>AI tutor that does not judge or remember embarrassment</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The pains I deliberately deprioritized</h3>
+  <p>Some pains showed up in the matrix that I chose not to build for. Test prep beyond DET — TOEFL, IELTS at scale — is a real pain but a different business with different competitors and different unit economics. Pure pronunciation training is a real pain but well-served by ELSA Speak and not where I can credibly differentiate. Translation needs are a real pain but Google Translate is good enough for most situations. The discipline of the matrix is not just where to invest. It is where to refuse to invest, so that the focused effort can compound.</p>
+</section>
+
+<!-- ═══════════════════ 12 — MVE ═══════════════════ -->
+<section id="mve">
+  <h2><span class="h2-num">12</span>The MVE</h2>
+  <div class="section-sub">Experiments, assumptions, learnings</div>
+
+  <p class="first-line">My minimum viable experiment is not a single launch. It is a series of layered tests over the past year, each one designed to validate or invalidate a specific assumption. I want to walk through them in order, because the sequence is part of how my thinking changed.</p>
+
+  <h3>Experiment one: The Teachable lessons</h3>
+  <p><strong>Assumption:</strong> Adult immigrants will pay for structured HTML lessons with AI-powered dialogue, hosted on Teachable, marketed exclusively through Instagram.</p>
+  <p><strong>How I tested it:</strong> Built the lessons, launched on Teachable, drove traffic from my Instagram account, sold subscriptions.</p>
+  <p><strong>What happened:</strong> The lessons sold. Engagement inside the lessons was high. Students reported finishing modules and feeling more confident. The assumption was validated on paying and using.</p>
+  <p><strong>What I learned anyway:</strong> The harder question was whether learning transferred outside the app. The data I could see in Teachable told me what students did inside lessons. It told me nothing about whether they actually started speaking more confidently at their daughter's school. This was the gap that drove me toward a different measurement framework.</p>
+
+  <h3>Experiment two: The Penn GSE design project</h3>
+  <p><strong>Assumption:</strong> A learner-experience design built around three transfer-oriented metrics — Error Recurrence Rate, Correction Uptake Rate, and Transfer Rate — would produce better long-term outcomes than traditional in-app accuracy scores.</p>
+  <p><strong>How I tested it:</strong> Built an interactive HTML story map as my learning environment design project, deployed on Vercel, with an embedded Claude API-powered AI coach demonstrating the principle.</p>
+  <p><strong>What I learned:</strong> The three-metric framework is the right level of abstraction. It is something I can build product around, and something I can explain to a non-pedagogist. Error Recurrence Rate asks: when a student makes an error, how often does the same error reappear in a similar context two weeks later? Correction Uptake Rate asks: when the system corrects an error, how often does the student successfully apply the correction next time? Transfer Rate asks the hardest question: when the student is in a real-life conversation outside the app, how often does practiced material show up in the wild? These three metrics together give a richer picture of actual learning than any accuracy score can. Building the demo proved to me that I could actually instrument these in product.</p>
+
+  <h3>Experiment three: Onboarding redesign</h3>
+  <p><strong>Assumption:</strong> Situational prompts ("What is the situation you most want to handle in English next month?") produce better personalization signal than proficiency questions ("How would you rate your English level?").</p>
+  <p><strong>How I tested it:</strong> Built an interactive HTML onboarding prototype in BeLang's brand system with Lika, replacing the proficiency-level questions with situational prompts and adding spoken input for level assessment.</p>
+  <p><strong>What I learned:</strong> The qualitative difference was striking. Situational prompts produced answers that were specific, useful for personalization, and emotionally engaging — students responded as if the system genuinely cared what they were trying to do. Spoken input changed the perceived intelligence of the system because the assessment was based on real speech, not a self-report. This experiment shaped the onboarding that will ship in the platform.</p>
+
+  <h3>Experiment four: The AI voice coach demo (Ava)</h3>
+  <p><strong>Assumption:</strong> A voice-first AI conversation partner, embedded in the lesson flow, would increase practice frequency and reduce the speaking-anxiety barrier.</p>
+  <p><strong>How I tested it:</strong> Built a Claude API-powered Ava demo as part of the design project, with ElevenLabs handling voice through the Sarah model.</p>
+  <p><strong>What I learned:</strong> The demo, even rough, produced visible behavior change in the small group of students who tried it. They practiced more often. They were less afraid. They wanted Ava to remember them between sessions. This last piece — persistence and memory — turned into the architectural backbone of the Next.js + Supabase platform I am now building.</p>
+
+  <h3>Experiment five: Pricing and positioning</h3>
+  <p><strong>Assumption:</strong> Pricing anchored against private tutors (not against Duolingo) would feel reasonable to my customers and meaningfully change the conversation about value.</p>
+  <p><strong>How I tested it:</strong> Live customer conversations during enrollment. Direct comparisons in marketing copy. Watching which tier students chose and why.</p>
+  <p><strong>What I learned:</strong> The anchor mattered. When students compared BeLang to Preply, they bought. When they compared it to Duolingo, they hesitated. The framing in my content and onboarding now consistently anchors against tutoring, not apps.</p>
+</section>
+
+<!-- ═══════════════════ 13 — PIVOTS ═══════════════════ -->
+<section id="pivots">
+  <h2><span class="h2-num">13</span>The Pivots</h2>
+  <div class="section-sub">The moments the venture changed shape</div>
+
+  <p class="first-line">A pivot is not just a change of mind. It is a moment when evidence forces a reframing that you cannot unsee. BeLang has had several. I want to be specific about each one, because the story of a venture is mostly the story of its pivots.</p>
+
+  <h3>Pivot one: From course to school</h3>
+  <p>The early version of BeLang — though it was not yet called BeLang — was a Teachable course. I was thinking of myself as a content creator who happened to have students. The pivot was realizing that what students wanted was not content. They wanted a school: a structure that held them accountable, a community that walked alongside them, a teacher who knew their name. This pivot is invisible from the outside because the product looked the same. Inside, it changed everything about how I operated. I started running group cohorts. I started doing retention calls. I started thinking of myself as someone running a school, which is a different identity than someone selling a course.</p>
+
+  <h3>Pivot two: EASE to BeLang</h3>
+  <p>My first recorded pitch in the Capstone introduced the venture as EASE — an English learning and community space for Russian-speaking adults. The name was fine. It was descriptive. It was small. The persona was Olesia from Belarus. The mission was "freedom, belonging, and opportunities." The market was clearly bounded: Russian speakers in the U.S. and Canada.</p>
+  <p>By the second recorded pitch, the venture was BeLang, the persona was Katya, and the mission was "Speak. Belong. Thrive." The mission had compressed from three abstract nouns into three actions. The market had expanded from a single diaspora to a globally scalable platform with a single diaspora as beachhead. The persona had sharpened from a generic immigrant mother to a specific woman with a daughter, a country left, and a particular emotional texture.</p>
+  <p>What forced the pivot was two things at once. The first was the realization that my product architecture — one trusted creator per language pair, native-language scaffolding, situational pedagogy — was language-agnostic, not Russian-specific. Limiting the venture to Russian was leaving real upside on the table. The second was the reframing that came from the Problem-Defining Framework: the deep need was identity, not English, and identity is universal across migrations. EASE described a tool. BeLang described a destination.</p>
+
+  <h3>Pivot three: Brand</h3>
+  <p>The earliest visual identity was a Navy and Burgundy palette with Cormorant Garamond and Caveat — boutique, literary, slightly academic. As the positioning sharpened, the brand needed to match. The current system — Deep Blue, Bluebird, Sky Blue, Light Beige, Cormorant Garamond paired with DM Sans — is warmer and more grounded. It reads as serious without reading as inaccessible. The brand is the first thing a new visitor encounters; making it match the actual emotional register of the product was not vanity, it was alignment.</p>
+
+  <h3>Pivot four: Onboarding</h3>
+  <p>I described this in the MVE section. The shift from proficiency-level diagnostics to situational prompts was a small UX change that produced a large change in how the product feels. The system now asks what you are trying to do in your life, not what level you are at. The level falls out of the spoken input. The signal is stronger and the experience is more human.</p>
+
+  <h3>What looks like a pivot but is not</h3>
+  <p>One thing I want to be careful about: the founder-led organic distribution is not a pivot or a stopgap. For a long time I thought of Instagram-as-channel as something I would graduate from when the business "got serious." During this Capstone year I came to understand that founder-as-channel is the channel. The trust is the product. Paid acquisition will eventually layer on top, but the foundation does not change. Naming this clearly was a sharpening, not a pivot, but it changed how I talk about the business in pitches.</p>
+</section>
+<!-- ═══════════════════ STORY 3 DIVIDER ═══════════════════ -->
+<div class="story-divider">
+  <div class="story-num">Story Three</div>
+  <div class="story-title">The Entrepreneurial Journey</div>
+  <div class="story-tagline">What I learned about myself trying to build this.</div>
+</div>
+
+<!-- ═══════════════════ 14 — COMPETENCIES ═══════════════════ -->
+<section id="competencies">
+  <h2><span class="h2-num">14</span>Growth in Entrepreneurial Competencies</h2>
+  <div class="section-sub">Where I moved, and where I am still moving</div>
+
+  <p class="first-line">The Capstone Learning Map describes a set of competencies that an entrepreneur develops across the year — opportunity recognition, customer empathy, resource orchestration, communication, resilience, and others. I want to talk about the ones where I felt real movement, rather than walking through all of them as if growth was uniform across the board. Growth is rarely uniform.</p>
+
+  <h3>Opportunity recognition</h3>
+  <p>I arrived at Penn able to recognize the opportunity inside my own demographic. I am leaving able to recognize the structural shape of the opportunity across demographics. What I could not do a year ago was articulate why the Russian-speaking diaspora is a beachhead rather than a market. Now I can — and I can articulate the playbook for entering the next diaspora, which is what makes this a venture and not a lifestyle business.</p>
+
+  <h3>Customer empathy</h3>
+  <p>This was already a strength, and I think it would have been arrogant of me to call it a growth area. What did grow was my willingness to test my empathy against frameworks. Empathy is necessary but not sufficient; the Problem-Defining Framework and the pain point matrix forced me to separate what I felt about my students from what they actually told me, and to act on the second when the two diverged. This was a discipline I did not have a year ago.</p>
+
+  <h3>Resource orchestration</h3>
+  <p>This is the competency I have moved on the most. A year ago, I did almost everything myself. Now I work in active partnership with my co-founder Lika on UX and engineering. I have built operational tooling — agents in Craft for sync notes, weekly check-ins, roadmap tracking, and trend monitoring — that let the two of us run a structured operation without spending all our time on coordination. I have learned to ask for things. I have learned to delegate before I am drowning, which is harder than learning to delegate when you are.</p>
+
+  <h3>Communication and pitching</h3>
+  <p>This is where I felt the most discomfort and the most growth. I will write about this at length in the next section, because the two recorded pitches are the artifact of that growth and the peer feedback is the texture of it.</p>
+
+  <h3>Resilience and self-knowledge</h3>
+  <p>I am an introvert who runs a business that requires constant outward energy. I knew this before I started. What I learned this year is that this is not a weakness to overcome — it is a constraint to design around. I structure my operations to protect recovery time. I have built tooling that absorbs the social cost of coordination so I can spend my energy on the work that only I can do. Naming this — and not pretending I am energized by every networking event — has made me a better operator, not a worse one.</p>
+
+  <p class="footnote">A note on the EMP: I did not have a complete pre-and-post EMP dataset to draw on. The growth I describe above is qualitative rather than quantitative, anchored in the work I did and the feedback I received. I would rather report the texture honestly than retrofit numbers I do not have.</p>
+</section>
+
+<!-- ═══════════════════ 15 — TWO PITCHES ═══════════════════ -->
+<section id="pitches">
+  <h2><span class="h2-num">15</span>Two Pitches</h2>
+  <div class="section-sub">EASE to BeLang, and what I learned in between</div>
+
+  <p class="first-line">The Capstone recorded two pitches across the year. The first introduced the venture as EASE. The second introduced it as BeLang. The distance between them is one of the most useful artifacts I have for understanding what changed in my thinking, and the peer feedback I received on the second is one of the most useful artifacts I have for understanding what still needs to.</p>
+
+  <h3>Pitch one: EASE</h3>
+  <p>The EASE pitch opened with a mission of "freedom, belonging, and opportunities" and asked the audience to imagine a "third place" — a space between work and home where an immigrant could rebuild her confidence. The persona was Olesia, a Belarusian woman who had moved with her family and woke up anxious about phone calls at work. The product was framed as three elements: short practical mini-lessons, an AI speaking coach named Ava, and a supportive community. The market was explicitly Russian-speaking adults in the U.S. and Canada.</p>
+
+  <p>Reading the transcript back now, the pitch is doing many things right. The persona is specific. The job-to-be-done is named clearly. The competitive gap is identified. The product has three legs that hang together. What it is doing wrong is being too small in scope and too soft in delivery. The mission is three abstract nouns, which is one too many and not action-oriented enough. The geographic limit forecloses the conversation about scale. The voice is gentle in places where it needed to be sharp.</p>
+
+  <h3>Pitch two: BeLang</h3>
+  <p>The BeLang pitch opened with five words: <em>Trapped. Alone. Afraid. Ashamed. Don't Belong.</em> It then introduced Katya, a thirty-year-old who left Belarus for political reasons, who had been a respected accountant and was now cleaning houses, whose Duolingo had taught her that the cat drinks the milk. It walked through the four-step Katya flow: goal-setting, personalized curriculum, native-language support when she gets stuck, and real-conversation practice with feedback. It cited 304 million migrants, 47% with limited English in the U.S., and 200 students taught with $120K in revenue and eight-month average retention. It sized the market at $85B TAM, $22B SAM, and $6M SOM. It walked through the competitive matrix. It explained pricing at $49 per month (the simplified pitch number; the actual model uses tiers). It laid out a 12-month roadmap. It asked for $50K with three specific introductions, then closed by inverting the opening five words into a vision: <em>Free. Connected. Confident. Proud. They Belong.</em></p>
+
+  <p>This pitch worked. It worked well enough that three of my Capstone peers wrote thoughtful, specific feedback that I want to honor by quoting from directly.</p>
+
+  <h3>What peers told me about BeLang</h3>
+  <p><strong>Mariana</strong> noticed that I was using Katya as a through-line and not just as an opening hook — that her story was woven through the problem, the solution, and the close, which she said gave the pitch a cohesive arc. She also identified two things that needed work. The first was a Duolingo reference at the start that left her wondering what my intention was; she wanted more framing around it. The second was the TAM/SAM/SOM section, which she felt moved too fast and did not make the audience feel the significance of the opportunity. She also caught a small thing in my pricing language: "less than a private tutor but infinitely more accessible" framed the value as contrast. "And" or "so" would have framed it as additive, which is what I actually meant.</p>
+
+  <p><strong>Jason</strong> said the competition slide was beautiful and effective, and that the design language across the deck was strong. His pushback was sharp and useful. He flagged two confusing statements: "She tried Duolingo but something about the cat drinks milk" was unclear without context, and a transition line about students "finding us through trust" was opaque to him. He pointed out that the product description could be clearer — particularly the native-language community support, which is a unique feature I was burying. He also flagged a tension I had not noticed in my own delivery: I was alternating between "I have" and "we have" depending on the slide, which made it unclear how much of the tutoring work was mine versus a team's. Finally, he noted that the "five target languages at launch" felt ambitious and unproven, given that I have only demonstrably served Russian speakers. He was right; the realistic Year-1 product is English, with architecture for additional language pairs.</p>
+
+  <p><strong>Ziyi</strong> wrote that the emotional opening worked, that the persona made the problem feel urgent and real, and that the founder-market fit was visible. Her clarifying question was the same as Jason's, asked differently: was BeLang primarily AI lessons, live conversation practice, community, or some combination? She wanted to see one concrete user journey end-to-end, from Instagram discovery to paid subscription to improved confidence. She also asked how the community and feedback components would scale beyond Russian-speaking immigrants — a fair version of the question every investor asks about a niche-led venture.</p>
+
+  <h3>What I took from this feedback</h3>
+  <p>Three things, concretely. First: I underexplained the product. The four-step Katya flow is clear when you understand what BeLang does; it is not enough exposition for someone meeting the company for the first time. Subsequent versions of the pitch and this case spend more time on the journey through the product. Second: I overpromised on language coverage. "Five target languages at launch" was aspirational language inherited from the strategic document; I have moved to "English at launch, four additional language pairs architected for Year 2." Third: the "I vs. we" issue Jason flagged is real and has been productive to sit with. There are parts of BeLang that are genuinely solo — my Instagram, my brand voice, my teaching. There are parts that are genuinely shared with Lika — UX, engineering, operational systems. There are parts where I lean on contracted instructors. Being clear about which "we" is which "we" is a discipline I had not been practicing.</p>
+
+  <p>The largest thing I took, though, is something none of them said directly: a good pitch is not the same as a good piece of storytelling. The EASE pitch was the better piece of storytelling — softer, more meandering, more personally voiced. The BeLang pitch is the better piece of communication for the audience and the moment. Learning when each is appropriate is a competency I did not have at the beginning of the year.</p>
+</section>
+
+<!-- ═══════════════════ 16 — AI ENGAGEMENT ═══════════════════ -->
+<section id="ai">
+  <h2><span class="h2-num">16</span>AI Engagement</h2>
+  <div class="section-sub">Tools, prompts, and what I learned about working with them</div>
+
+  <p class="first-line">The rubric asks for specificity here, and I want to give it. AI is not a single thing I used during the Capstone. It is at least four distinct things, each with its own learning curve, and I want to walk through each one with concrete examples.</p>
+
+  <h3>AI as a thinking partner</h3>
+  <p>The primary AI tool I worked with this year was Claude, used as a thinking partner across strategy, content, and design. The use cases ranged from refining the Problem-Defining Framework against my actual customer data, to pressure-testing pivot decisions, to drafting and editing the strategic document that underlies much of this case. The pattern I learned to use most effectively is what I have come to call <em>iterated framing</em>: start with a vague question, get a structured response back, name what is wrong with that response specifically, ask again with the correction baked in. The third or fourth iteration is usually where the actual thinking happens.</p>
+
+  <p>A concrete example: when I was sizing the market for the strategic document, my first prompt was something like "help me size the market for BeLang." The response was generic. I came back with the actual constraints — global TAM, beachhead through Russian-speaking diaspora, ARPU around $600 — and asked Claude to argue both sides of whether to lead with the global TAM or the diaspora-specific SOM. The conversation that produced was the conversation I would have wanted to have with a smart strategy partner, and it ended with me choosing the framing I actually use in the pitch: TAM global to anchor the size, SOM specific to demonstrate operational credibility.</p>
+
+  <h3>AI as a design partner</h3>
+  <p>For the Penn GSE design project this term — the interactive HTML story map hosted on Vercel — I worked with a combination of Claude for structure, Lovable for rapid prototyping, and Figma for high-fidelity UX. The workflow was roughly: sketch the concept in conversation with Claude, prototype in Lovable to test the interaction, refine in Figma when the interaction was right, hand-finish in code. Each tool was doing what it was best at. The principle I internalized is that AI tools are not interchangeable; they are specialists, and the work is to orchestrate the specialists.</p>
+
+  <h3>AI inside the product</h3>
+  <p>BeLang itself uses AI as a core component, and the year of working with these systems as a builder gave me much sharper instincts about how to deploy them inside my own product. Gemini API handles lesson dialogue. ElevenLabs handles voice, specifically the Sarah voice model. Claude API powers the current Ava demo while we build out the production version. Each of these decisions came out of testing alternatives and watching what students actually responded to. Voice mattered more than I expected; Sarah specifically — warm but professional — outperformed the more obviously "AI" voices in qualitative student feedback.</p>
+
+  <h3>AI for operations</h3>
+  <p>This is the use case that surprised me most. I built a set of agents inside Craft to handle operational work that was eating my and Lika's time. A Sync Agent that pulls action items out of meeting notes. A Weekly Sync Agent that compares this week's progress against last week's commitments. A Roadmap Agent that flags items that have slipped. A Trend Agent that watches industry signals relevant to BeLang's positioning. None of these is doing rocket-science work. Each of them is removing a small ongoing tax on my attention. The cumulative effect on operations is significant, and the build cost was about a day each.</p>
+
+  <h3>A specific prompt that worked</h3>
+  <p>I want to give one concrete example of a prompt pattern I came to rely on, because the rubric asks for it. When I was working through the competitive matrix for the pitch deck, I needed to make sure I was not steel-manning my own venture against straw-man versions of competitors. The prompt I used, roughly: "You are a partner at Owl Ventures evaluating BeLang. Argue as forcefully as you can that BeLang is undifferentiated from Duolingo, Babbel, and Speak. Be specific about why my competitive matrix is misleading. After the strongest argument, identify what BeLang would need to prove or change to defeat it." The response was uncomfortable to read and exactly what I needed. The version of the competitive matrix you see in this case is the version that survived that argument.</p>
+
+  <h3>What I learned about using AI well</h3>
+  <p>Two things, summarized. First: the bottleneck is rarely the model. It is the specificity of the prompt, which is to say the specificity of my own thinking. The discipline of writing a useful prompt is the discipline of knowing what I actually want. Second: AI is most useful for the work I can already do, where it accelerates me. It is least useful for the work I cannot do, where it produces plausible-looking output I cannot evaluate. I have learned to use AI in my zones of competence and to be cautious about using it in zones where my judgment is weak.</p>
+
+  <div class="pull">The point is not that I used AI. The point is that I learned to think with AI in a way I think most early-stage founders do not yet.</div>
+</section>
+
+<!-- ═══════════════════ 17 — NETWORK ═══════════════════ -->
+<section id="network">
+  <h2><span class="h2-num">17</span>Network and Recognition</h2>
+  <div class="section-sub">The conversations and external signals that shaped the year</div>
+
+  <p class="first-line">Networking is one of the entrepreneurial competencies the Capstone Learning Map calls out, and it is one I have approached with mixed feelings. I am not a natural networker; I find extended social interaction draining. What I have learned to do is treat networking as a research practice rather than a social one. Each conversation has a specific question I am trying to get answered.</p>
+
+  <h3>Milken-Penn EBPC Semifinalist</h3>
+  <p>BeLang was selected as a Semifinalist in the Milken-Penn GSE Education Business Plan Competition, from a pool of approximately 500 applicants across 76 countries. What I value about this credential is less the recognition itself and more what the application process taught me. Writing the EBPC submission forced me to articulate the business in a form that an outside evaluator could parse without context. That discipline shaped this case and shaped the pitch deck that followed.</p>
+
+  <h3>ASU+GSV Summit 2026</h3>
+  <p>I attended the ASU+GSV Summit this spring as part of the Capstone cohort and used it as concentrated time to validate specific hypotheses with people who would not otherwise have time for me. Four conversations mattered. Rob Lauber, the former Chief Learning Officer at McDonald's, was sharp on the B2B2C wedge and the conditions under which large employers will buy language training for immigrant workforces. Lisa Schumacher, also at McDonald's, deepened that conversation with operational specifics. Chris Hull from Otus gave me an honest read on the EdTech infrastructure landscape and where BeLang's architecture is sensible versus where I am overcomplicating. The curator from the Duolingo English Test had the most relevant pedagogical conversation — about how transfer is measured, where the existing tests fall short, and where a new entrant could credibly differentiate.</p>
+
+  <p>None of these became investors or partners on the spot. All of them became people whose advice I can return to as the venture grows. The point of those conversations was not transactional. It was epistemic.</p>
+
+  <h3>Penn GSE peer network</h3>
+  <p>The most consistently useful network of the year has been the Capstone cohort itself. The feedback from Mariana, Jason, and Ziyi quoted in the previous section is the most surface-visible example, but the real value has been ongoing — peers stress-testing my framings in office hours, founders in other domains catching blind spots I would not have caught alone, classmates who became early users and early critics. The Capstone is a peer education in a way I undervalued at the start.</p>
+</section>
+
+<!-- ═══════════════════ 18 — IDENTITY ═══════════════════ -->
+<section id="identity">
+  <h2><span class="h2-num">18</span>Founder Identity</h2>
+  <div class="section-sub">What I learned about myself trying to do this</div>
+
+  <p class="first-line">Here's what I learned about myself during these nine months. The rubric asks for surprises, setbacks, dead ends, discoveries — and the lessons I gained from them.</p>
+
+  <h3>The surprise about the work before the work</h3>
+  <p>The first surprise was how much work it takes before you actually find the problem. I came in thinking the process was simple: you have an idea, you build it, people like it. It is not that. First you do customer discovery. Then you talk to people. Then you map competitors. Then you ask yourself whether you can really separate from those competitors. Then you start building. And maybe — maybe — after all of that, the product is successful, and maybe it is not. The amount of work that sits in front of the build is much larger than the picture I had in my head when I started.</p>
+
+  <p>The second surprise was how much I would need to work on public speaking and presenting the venture. I did not expect that part to be this hard.</p>
+
+  <h3>The discovery about partnership</h3>
+  <p>Three months ago, I almost accidentally asked one person to become a partner in the business. I had not planned it. What I learned from that decision is how different it is to work with a partner, not just a collaborator. It is not only that two people can move faster than one. It is that the weekly meetings change your motivation. You could say "let's skip this week," but you do not, because you are responsible to someone now. You can divide the work and cover the parts you are not strong at. You stop being alone with the decisions.</p>
+
+  <h3>The hiccups</h3>
+  <p>I would not call them hiccups exactly, but there were moments where I had to sit with something uncomfortable. When I came into the program, I had it in my head that BeLang was a product that helps people learn a language faster, with a unique methodology, and that was where I should focus. Then, across many conversations with many different people, I realized that my superpower, my background, all the years of my work — they were never really about faster language learning. They were about helping people who had moved to a different country start over. I had not even thought of building a language app specifically for that. The moment I saw it clearly was one of those moments where you go <em>wow</em>.</p>
+
+  <h3>The dead end I am proud of</h3>
+  <p>For a while I explored adjacent career paths — ESL administration, corporate L&amp;D, MBB consulting — as parallel tracks while BeLang was finding its shape. I worked on a resume rewrite. I had real conversations. Looking back, I think I was searching for permission to stop building. The dead end was a real exploration, and what came out of it was the realization that the alternatives were less interesting to me than BeLang on its worst day. Naming that, even quietly to myself, was the moment I fully committed.</p>
+
+  <h3>What I am still working on</h3>
+  <p>Honestly, I am still working on being a salesperson for my own venture. I am still shy talking about it. In the culture I was raised in, you do not get to be overconfident. You stay quiet. You do the work behind the scenes. You do not say something until you have already done it. And saying things like "in three years this will be a million-dollar business" — sometimes I can barely picture it, because I have not done it yet, and the rule I grew up with is that if you promise something, you do it. If you are not sure you can do it, you do not promise.</p>
+
+  <p>So pitching is still hard for me. I still have a fear of public speaking. Presenting the venture in front of a room of people is not natural. I am still figuring out how to be a businessperson, because transitioning from teacher to entrepreneur is not just a job change. It is a different mindset, a different discipline, different processes — a whole world I was not ready for. And a lot of it is fighting yourself.</p>
+
+  <p>Concretely, the practices I am keeping: pitching with consistent energy across the full length of a pitch. Asking for money without apologizing for asking. Drawing harder lines between strategy work and operations work inside my own week. Trusting Lika with more of the product decisions she is genuinely better at than I am. Learning to do less in public-facing channels without sacrificing the trust that visibility has built. None of these are problems to solve. All of them are practices to keep.</p>
+
+  <h3>What I would tell next year's cohort</h3>
+  <p>There is a quote I heard a while ago: <em>you think you build a business, but the business builds you</em>. I like it because it is not really about the final result, the final destination. It is about the path itself, and about who you become along the way — as a person, as an entrepreneur, as someone who wants to make the world a little better.</p>
+
+  <p>We will need to pivot. We will need to be flexible. There will be hard things and challenging things on the road. Enjoy the path anyway. Be persistent, and at the same time flexible, and do your best at the goal in front of you.</p>
+
+  <div class="pull-deep">
+    <div class="pull-eyebrow">The real work of the year</div>
+    <div class="pull-body">The Capstone is not really about your venture. It is about figuring out what kind of entrepreneur you are, and then designing the business around that. The venture I am graduating with is the one that fits the person I have learned I am.</div>
+  </div>
+</section>
+<!-- ═══════════════════ CLOSE ═══════════════════ -->
+<div class="ornament">· · ·</div>
+
+<section id="close">
+  <h2><span class="h2-num">19</span>What's Next</h2>
+  <div class="section-sub">After Capstone</div>
+
+  <p class="first-line">What's next? Right now I am a Semifinalist of the Milken-Penn Business Plan Competition, and I still have a lot of work to do until August, when the finalists are announced. I really want to be one of them. But even if I am not, I will keep working on the venture. I will keep finding ways to invest in it, to bring investment in, to build it out.</p>
+
+  <p>Right now we are building the first version of the application. We will test it soon. In September, maybe earlier, we will launch the app. To be continued — I do not want to stop until I have done this, because I have been doing it for many years already, and I feel like I need to finish this before I start anything else.</p>
+
+  <p>I think I will be a serial entrepreneur. And I will find a way to make this venture well known, useful, and helpful for millions of people who carry this same pain — so that they will never feel ashamed, afraid, or lonely in a new country because of a language they do not yet speak.</p>
+</section>
+
+<!-- ═══════════════════ APPENDIX ═══════════════════ -->
+<section id="appendix">
+  <h2><span class="h2-num">20</span>Appendix</h2>
+  <div class="section-sub">Supporting materials</div>
+
+  <h3>Attached separately</h3>
+  <ul>
+    <li><strong>Financial model</strong> — 36-month projection across 13 tabs covering assumptions, sales funnel, customer metrics, revenue, COGS &amp; personnel, marketing, operating costs, P&amp;L, cash flow, KPIs &amp; milestones, scenarios (bear/base/bull), and sensitivities. Submitted as the Finance course deliverable.</li>
+    <li><strong>Pitch deck</strong> — 12-slide BeLang deck, final recorded version</li>
+    <li><strong>Strategic document</strong> — interactive HTML covering JTBD evolution, competitive matrix, TAM/SAM/SOM, 12-month roadmap (referenced throughout this case)</li>
+    <li><strong>Design project</strong> — interactive HTML story map on Vercel, with the three-metric measurement framework and Claude-API-powered Ava demo</li>
+  </ul>
+
+  <h3>Sources cited</h3>
+  <ul>
+    <li>UN DESA, International Migrant Stock 2024 — 304M international migrants globally</li>
+    <li>Kaiser Family Foundation, Survey of Immigrants 2023 — 47% of U.S. immigrants with limited English proficiency</li>
+    <li>Global Market Insights, Language Learning Market 2025 — $85B TAM, 22.9% CAGR</li>
+    <li>Grand View Research, Online Language Learning Market 2024 — $22B SAM</li>
+    <li>Sensor Tower, State of Mobile 2025 — AI language apps +200% YoY revenue</li>
+    <li>TechCrunch, Dec 2024 — Speak Series C funding round</li>
+  </ul>
+
+  <h3>A note on AI use in writing this case</h3>
+  <p>The case was drafted with Claude. The design was prepared by Claude. But all the content, all the data, the personal observations, and the editorial choices are mine. I used voice to tell my own thoughts.</p>
+</section>
+
+<div class="ornament">END OF CASE</div>
+
+</main>
+</div>
+</body>
+</html>
